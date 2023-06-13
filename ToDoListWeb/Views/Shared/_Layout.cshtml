@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>To Do List</title>
+        <link rel="stylesheet" href="~/css/site.css" />    
+    </head>
+    <body>
+    <div class="container">
+            <div class="LayoutLeft">
+                <a class="LayoutRef" href="@Url.Action("Index", "Home")">Home</a>
+                <a class="LayoutRef" href="@Url.Action("CreateTask", "Home")">Create Task</a>
+            </div>
+            <div class="main-content">
+                @RenderBody()
+            </div>
+        </div>
+        
+    </body>
+
+</html>

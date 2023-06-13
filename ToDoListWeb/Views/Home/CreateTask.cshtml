@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "_Layout";
+}
+<div>
+    <h3>Ввидите вашуу задачу</h3>
+
+    <form action="~/Home/GetTaskDb" method="post">
+        <label>Название задачи</label> <br />
+        <input type="text" name="TaskName" placeholder="Имя задачи" /> <br />
+        <label>Описание задачи</label> <br />
+        <textarea rows="10" cols="50" class="Textarea" type="text" name="TaskDescription" placeholder="Описание"></textarea> <br />
+        <label>Дата выполнение</label> <br />
+        <input type="date" name="TaskData" placeholder="Дата" /> <br />
+
+        <input type="submit" value="Создать">
+    </form>
+</div>

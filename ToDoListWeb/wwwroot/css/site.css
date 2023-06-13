@@ -1,0 +1,21 @@
+.LayoutLeft {
+    float: left;
+    width: 200px;
+    background-color: dimgrey;
+}
+
+.main-content {
+    flex-grow: 1;
+    background-color: #ffffff;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+.LayoutRef {
+    display: block;
+}
+.Textarea {
+    resize: none;
+}
