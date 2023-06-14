@@ -1,18 +1,34 @@
-﻿@{
-    Layout = "_Layout";
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>To Do List</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="LayoutLeft">
+            <a class="LayoutRef" href="@Url.Action("Index", "Home")">Home</a>
+            <a class="LayoutRef" href="@Url.Action("CreateTask", "Home")">Create Task</a>
+        </div>
+        <div class="main-content">
+            <div>
+                <h1 class="display-4">Ваши задачи</h1>
+                @foreach (ToDoTask item in ViewBag.AllTask)
+                {
+                    <h3 style="display: inline;">@item.Id</h3>
+                    <h3 style="display: inline;">@item.NameTask</h3>
+                    <p>@item.DescriptionTask</p>
+                    <p>@item.TaskTime</p>
+                    <p>@item.Status</p>
+                }
+                <p>ytuh</p>
+    
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
 @using ToDoListWeb.Entity;
 
-<div>
-    <h1 class="display-4">Ваши задачи</h1>
-    @foreach (ToDoTask item in ViewBag.AllTask)
-    {
-        <h3 style="display: inline;">@item.Id</h3>
-        <h3 style="display: inline;">@item.NameTask</h3>
-        <p>@item.DescriptionTask</p>
-        <p>@item.TaskTime</p>
-        <p>@item.Status</p>
-    }
-    <p>ytuh</p>
-    
-</div>
