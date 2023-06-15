@@ -1,27 +1,115 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-*{
-    font-size: "Montserrat";
+::-webkit-scrollbar{
+    display: none;
 }
 
-.LayoutLeft {
-    float: left;
-    width: 200px;
-    background-color: dimgrey;
+*{
+    font-family: "Montserrat";
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: #222;
+}
+
+.main-header {
+    padding: 20px 40px;
+    background: white;
+    border-bottom: 2px solid #9b9b9b;
+}
+
+.main-header h1{
+    color: #222;
 }
 
 .main-content {
-    flex-grow: 1;
     background-color: #ffffff;
+    display: flex;
 }
 
-.container {
+a{
+    text-decoration: none;
+    color: #222;
+    transition: 0.2s;
+}
+
+.aside {
+    width: 300px;
+    height: 800px;
+    background-color: #fff;
+    border-right: 2px solid #9b9b9b;
     display: flex;
-    height: 100vh;
+    flex-direction: column;
 }
-.LayoutRef {
-    display: block;
+
+.aside .button-container{
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
 }
-.Textarea {
+
+a:hover{
+    color: blue;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.container .main {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+.task-container, .editor {
+    margin: 20px;
+    border: 2px solid #9b9b9b;
+    transition: 0.2s;
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+}
+
+.task-container:hover{
+    border: 2px solid blue;
+}
+
+.container .header{
+    position: sticky;
+    top:0;
+    background: #fff;
+    border-bottom: 2px solid #9b9b9b;
+    padding: 20px 40px;
+}
+
+
+.textarea {
+    max-width: 400px;
+    max-height: 200px;
+    min-width: 200px;
+    min-height: 100px;
     resize: none;
+}
+
+/*For CreatTask.cshtml*/
+
+.submit{
+    background: #222;
+    color: whitesmoke;
+    margin-top: 30px;
+    transition: 0.2s;
+    padding: 10px;
+    border: none;
+    width: 100px;
+    font-size: 16px;
+}
+
+.submit:hover{
+    background: blue;
 }

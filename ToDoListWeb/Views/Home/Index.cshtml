@@ -5,27 +5,43 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <div class="container">
-        <div class="LayoutLeft">
-            <a class="LayoutRef" href="@Url.Action("Index", "Home")">Home</a>
-            <a class="LayoutRef" href="@Url.Action("CreateTask", "Home")">Create Task</a>
-        </div>
-        <div class="main-content">
-            <div>
-                <h1 class="display-4">Ваши задачи</h1>
+
+    <header class="main-header">
+        <h1>To Do List</h1>
+    </header>
+
+    <main class="main-content">
+
+        <aside class="aside">
+            <div class="button-container">
+                <a class="button" href="@Url.Action("Index", "Home")">Home</a>
+                <a class="button" href="@Url.Action("CreateTask", "Home")">Create Task</a>
+            </div>
+        </aside>
+
+        <div class="container">
+
+            <header class="header">
+                <h2>Your tasks</h2>
+            </header>
+
+            <main class="main">
                 @foreach (ToDoTask item in ViewBag.AllTask)
                 {
-                    <h3 style="display: inline;">@item.Id</h3>
-                    <h3 style="display: inline;">@item.NameTask</h3>
-                    <p>@item.DescriptionTask</p>
-                    <p>@item.TaskTime</p>
-                    <p>@item.Status</p>
+                    <div class="task-container">
+                        <h3 style="display: inline;">@item.Id</h3>
+                        <h3 style="display: inline;">@item.NameTask</h3>
+                        <p>@item.DescriptionTask</p>
+                        <p>@item.TaskTime</p>
+                        <p>@item.Status</p>
+                    </div>
                 }
-                <p>ytuh</p>
-    
-            </div>
+            </main>
+
+
         </div>
-    </div>
+
+    </main>
 
 </body>
 

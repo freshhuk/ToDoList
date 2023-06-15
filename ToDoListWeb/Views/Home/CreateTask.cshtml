@@ -1,17 +1,45 @@
-﻿@{
-    Layout = "_Layout";
-}
-<div>
-    <h3>Ввидите вашуу задачу</h3>
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>To Do List</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
 
-    <form action="~/Home/GetTaskDb" method="post">
-        <label>Название задачи</label> <br />
-        <input type="text" name="TaskName" placeholder="Имя задачи" /> <br />
-        <label>Описание задачи</label> <br />
-        <textarea rows="10" cols="50" class="Textarea" type="text" name="TaskDescription" placeholder="Описание"></textarea> <br />
-        <label>Дата выполнение</label> <br />
-        <input type="date" name="TaskData" placeholder="Дата" /> <br />
+    <header class="main-header">
+        <h1>To Do List</h1>
+    </header>
 
-        <input type="submit" value="Создать">
-    </form>
-</div>
+    <main class="main-content">
+
+        <aside class="aside">
+            <div class="button-container">
+                <a class="button" href="@Url.Action("Index", "Home")">Home</a>
+                <a class="button" href="@Url.Action("CreateTask", "Home")">Create Task</a>
+            </div>
+        </aside>
+
+        <div class="container">
+
+            <header class="header">
+                <h2>Create new task</h2>
+            </header>
+
+            <main class="main">
+                <div class="editor">
+                    <form action="~/Home/GetTaskDb" method="post">
+                        <label>Task name</label> <br />
+                        <input type="text" name="task-name" placeholder="Task name" /> <br />
+                        <label>Task description</label> <br />
+                        <textarea rows="10" cols="50" class="textarea" type="text" name="TaskDescription" placeholder="Description"></textarea> <br />
+                        <label>Date of completion</label> <br />
+                        <input type="date" name="task-date" placeholder="Date" /> <br />
+                        <input type="submit" value="Create" class="submit">
+                    </form>
+                </div>
+            </main>
+        </div>
+    </main>
+</body>
+
+</html>
