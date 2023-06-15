@@ -34,6 +34,11 @@
                         <p>@item.DescriptionTask</p>
                         <p>@item.TaskTime</p>
                         <p>@item.Status</p>
+                        @*Кнопка для удаления нашего Task, я думаю луче ее сделать сбоку*@
+                        <form method="post" action="~/Home/DeleteTaskDBb">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit">Delete</button>
+                        </form>
                     </div>
                 }
             </main>

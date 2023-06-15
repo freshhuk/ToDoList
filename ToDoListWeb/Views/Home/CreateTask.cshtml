@@ -29,11 +29,15 @@
                 <div class="editor">
                     <form action="~/Home/GetTaskDb" method="post">
                         <label>Task name</label> <br />
-                        <input type="text" name="task-name" placeholder="Task name" /> <br />
+                        @*(Это каментарий на Razor если что) в теге Label там где поле name не меняй его, это
+                            переменая на которую я ссылаюсь что б принять данные и записать их в базу данных
+                            ну и во всех Labal name это моя переменная
+                        *@
+                        <input type="text" name="TaskName" placeholder="Task name" /> <br />
                         <label>Task description</label> <br />
                         <textarea rows="10" cols="50" class="textarea" type="text" name="TaskDescription" placeholder="Description"></textarea> <br />
                         <label>Date of completion</label> <br />
-                        <input type="date" name="task-date" placeholder="Date" /> <br />
+                        <input type="date" name="TaskData" placeholder="Date" /> <br />
                         <input type="submit" value="Create" class="submit">
                     </form>
                 </div>

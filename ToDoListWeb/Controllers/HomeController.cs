@@ -13,7 +13,7 @@ namespace ToDoListWeb.Controllers
         {
             _logger = logger;
         }
-
+        //отсылаем наши данные на страницу
         [HttpGet]
         public IActionResult Index()
         {
@@ -24,7 +24,7 @@ namespace ToDoListWeb.Controllers
         {
             return View();
         }
-
+        //Принимаем данные из формы , и заносим их в бд
         [HttpPost]
         public IActionResult GetTaskDb(string TaskName, string TaskDescription, DateTime TaskData)
         {
@@ -46,6 +46,27 @@ namespace ToDoListWeb.Controllers
             //в поле где статус мы автоматом пишим в процесе так как
             //ее только создали и она в процесе выполнения
             return Redirect("~/");
+        }
+
+        //удалаяем нашу задачу из бд
+        [HttpPost]
+        public IActionResult DeleteTaskDBb(int Id)
+        {
+            using(var TaskDb = new TaskDbContex())
+            {
+                var Task = TaskDb.ToDoTask.Find(Id);
+                if (Task != null) 
+                {
+                    TaskDb.ToDoTask.Remove(Task);
+                    TaskDb.SaveChanges();
+                    return Redirect("~/");
+                }
+                else
+                {
+                    //потом можно вывести какую то ошибку но покачто просто кидает на главную
+                    return Redirect("~/");
+                }
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
