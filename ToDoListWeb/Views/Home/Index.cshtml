@@ -1,25 +1,13 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>To Do List</title>
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
+﻿@using ToDoListWeb.Entity;
 
-    <header class="main-header">
-        <h1>To Do List</h1>
-    </header>
-
-    <main class="main-content">
-
-        <aside class="aside">
-            <div class="button-container">
-                <a class="button" href="@Url.Action("Index", "Home")">Home</a>
-                <a class="button" href="@Url.Action("CreateTask", "Home")">Create Task</a>
-            </div>
-        </aside>
-
-        <div class="container">
+@*Тут мы подключаем наш слой который находится в папке Shared*@
+@{
+    Layout = "_Layout";
+}
+@*Тут код нашей страницы которая не относится к слою
+    (я не знаю как этот код автоматом сместить в лево сделаешь это сам а то странно смотрится)
+*@
+    
 
             <header class="header">
                 <h2>Your tasks</h2>
@@ -35,21 +23,22 @@
                         <p>@item.TaskTime</p>
                         <p>@item.Status</p>
                         @*Кнопка для удаления нашего Task, я думаю луче ее сделать сбоку*@
-                        <form method="post" action="~/Home/DeleteTaskDBb">
-                            <input type="hidden" name="id" value="@item.Id" />
+                        <form method="post" action="~/Task/DeleteTaskDBb">
+                            <input type="hidden" name="Id" value="@item.Id" />
                             <button type="submit">Delete</button>
                         </form>
+                        @*Кнопка которая переносит на страницу редоктировавние задачи*@
+                        <form method="get" action="~/Home/ChangeTaskPage">
+                            <input type="hidden" name="Id" value="@item.Id" />
+
+                            <button type="submit">Change</button>
+                        </form>
+                        
                     </div>
                 }
             </main>
+        
+    
 
-
-        </div>
-
-    </main>
-
-</body>
-
-</html>
-@using ToDoListWeb.Entity;
+    
 

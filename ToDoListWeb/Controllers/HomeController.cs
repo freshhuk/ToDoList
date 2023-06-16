@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using ToDoListWeb.Models;
+using System.Reflection.Metadata.Ecma335;
 using ToDoListWeb.Entity;
+using ToDoListWeb.Models;
 
 namespace ToDoListWeb.Controllers
 {
@@ -20,54 +21,23 @@ namespace ToDoListWeb.Controllers
             ViewBag.AllTask = new TaskDbContex().ToDoTask;
             return View();
         }
+
         public IActionResult CreateTask()
         {
             return View();
         }
-        //Принимаем данные из формы , и заносим их в бд
-        [HttpPost]
-        public IActionResult GetTaskDb(string TaskName, string TaskDescription, DateTime TaskData)
-        {
-            if (TaskName != null && TaskDescription != null && TaskData != null)
-            {
-                using(var TaskDb = new TaskDbContex()) 
-                {
-                    TaskDb.Add(new ToDoTask()
-                    {
-                        NameTask = TaskName,
-                        DescriptionTask = TaskDescription,
-                        TaskTime = TaskData,
-                        Status = "В процессе"
 
-                    });
-                    TaskDb.SaveChanges();
-                }
-            }
-            //в поле где статус мы автоматом пишим в процесе так как
-            //ее только создали и она в процесе выполнения
-            return Redirect("~/");
-        }
-
-        //удалаяем нашу задачу из бд
-        [HttpPost]
-        public IActionResult DeleteTaskDBb(int Id)
+        public IActionResult ChangeTaskPage(int Id)
         {
+            
             using(var TaskDb = new TaskDbContex())
             {
-                var Task = TaskDb.ToDoTask.Find(Id);
-                if (Task != null) 
-                {
-                    TaskDb.ToDoTask.Remove(Task);
-                    TaskDb.SaveChanges();
-                    return Redirect("~/");
-                }
-                else
-                {
-                    //потом можно вывести какую то ошибку но покачто просто кидает на главную
-                    return Redirect("~/");
-                }
+                ViewBag.ChangedTask = TaskDb.ToDoTask.Find(Id);
+                _logger.LogInformation(message: "Отправили данные о задаче которую изменяем");
             }
+            return View();
         }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

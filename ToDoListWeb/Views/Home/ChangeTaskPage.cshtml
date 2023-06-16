@@ -1,0 +1,36 @@
+﻿@*Применяем наш слой*@
+@{
+    Layout = "_Layout";
+}
+
+<header class="header">
+    <h2>Change your task</h2>
+</header>
+
+<main class="main">
+    <div class="editor">
+        <form action="~/Task/ChangeTaskDb" method="post">
+            <label>New task name</label> <br />
+            @*(Это каментарий на Razor если что) в теге Label там где поле name не меняй его, это
+            переменая на которую я ссылаюсь что б принять данные и записать их в базу данных
+            ну и во всех Labal name это моя переменная
+            *@
+            @*Тут в value значение которые хранились в нашей задачи*@
+            <input type="hidden" name="Id" value="@ViewBag.ChangedTask.Id" />
+            <input type="text" name="TaskName" placeholder="@ViewBag.ChangedTask.NameTask" /> <br />
+            <label>New task description</label> <br />
+            <textarea rows="10" cols="50" class="textarea" type="text" name="TaskDescription" placeholder="@ViewBag.ChangedTask.DescriptionTask"></textarea> <br />
+            <label>New date of completion</label> <br />
+            <input type="date" name="TaskData" placeholder="@ViewBag.ChangedTask.TaskTime" /> <br />
+            @*Это для изминение статуса выполнения задачи, тоесть выполненна или нет*@
+            <select name="TaskStatus">
+                <option value="В процессе" selected>В процессе</option>
+                <option value="Выполнено">Выполнено</option>
+                <option value="Не выполнено">Не выполнено</option>
+            </select>
+            <input type="submit" value="Create" class="submit">
+        </form>
+    </div>
+</main>
+
+

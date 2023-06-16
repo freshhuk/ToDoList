@@ -1,25 +1,9 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>To Do List</title>
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
+﻿@*Подключаем наш слой*@
+@{
+    Layout = "_Layout";
+}
 
-    <header class="main-header">
-        <h1>To Do List</h1>
-    </header>
-
-    <main class="main-content">
-
-        <aside class="aside">
-            <div class="button-container">
-                <a class="button" href="@Url.Action("Index", "Home")">Home</a>
-                <a class="button" href="@Url.Action("CreateTask", "Home")">Create Task</a>
-            </div>
-        </aside>
-
-        <div class="container">
+        
 
             <header class="header">
                 <h2>Create new task</h2>
@@ -27,7 +11,7 @@
 
             <main class="main">
                 <div class="editor">
-                    <form action="~/Home/GetTaskDb" method="post">
+                    <form action="~/Task/GetTaskDb" method="post">
                         <label>Task name</label> <br />
                         @*(Это каментарий на Razor если что) в теге Label там где поле name не меняй его, это
                             переменая на которую я ссылаюсь что б принять данные и записать их в базу данных
@@ -42,8 +26,5 @@
                     </form>
                 </div>
             </main>
-        </div>
-    </main>
-</body>
-
-</html>
+        
+ 

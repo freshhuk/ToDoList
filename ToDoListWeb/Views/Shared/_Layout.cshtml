@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>To Do List</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <header class="main-header">
+        <h1>To Do List</h1>
+    </header>
+
+    <main class="main-content">
+
+        <aside class="aside">
+            <div class="button-container">
+                <a class="button" href="@Url.Action("Index", "Home")">Home</a>
+                <a class="button" href="@Url.Action("CreateTask", "Home")">Create Task</a>
+            </div>
+        </aside>
+        @*Загруженая страница с папки Home*@
+        <div class="container">
+            @RenderBody()
+        </div>
+        
+    </main>
+
+</body>
+
+</html>
+        
