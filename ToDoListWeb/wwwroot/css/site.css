@@ -9,21 +9,22 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    color: #222;
 }
 
 .main-header {
+    position: relative;
     padding: 20px 40px;
-    background: white;
-    border-bottom: 2px solid #9b9b9b;
+    background: #222;
+    z-index: 10;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .main-header h1{
-    color: #222;
+    color: whitesmoke;
 }
 
 .main-content {
-    background-color: #ffffff;
+    background-color: whitesmoke;
     display: flex;
 }
 
@@ -35,11 +36,13 @@ a{
 
 .aside {
     width: 300px;
-    height: 800px;
-    background-color: #fff;
+    min-height: 700px;
+    background-color: white;
     border-right: 2px solid #9b9b9b;
     display: flex;
     flex-direction: column;
+    z-index: 1;
+
 }
 
 .aside .button-container{
@@ -74,18 +77,22 @@ a:hover{
     display: flex;
     flex-direction: column;
     width: 700px;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 4px 0px;
 }
 
-.task-container:hover{
+.task-container:hover {
     border: 2px solid blue;
+    box-shadow: #0000ff73 0px 0px 4px 0px;
 }
 
-.container .header{
+.container .header {
     position: sticky;
-    top:0;
-    background: #fff;
+    top: 0;
+    background: white;
     border-bottom: 2px solid #9b9b9b;
     padding: 20px 40px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 
@@ -99,17 +106,20 @@ a:hover{
 
 /*For CreatTask.cshtml*/
 
-.submit{
-    background: #222;
-    color: whitesmoke;
+.submit {
+    background: white;
+    color: #222;
     margin-top: 30px;
     transition: 0.2s;
     padding: 10px;
     border: none;
     width: 100px;
     font-size: 16px;
+    border-radius: 50px;
+    box-shadow: #222 0px 0px 2px, #222 0px 0px 0px 2px;
 }
 
 .submit:hover{
-    background: blue;
+    background: #222;
+    color: whitesmoke;
 }
