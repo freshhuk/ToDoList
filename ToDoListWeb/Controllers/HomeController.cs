@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
 
@@ -27,17 +26,26 @@ namespace ToDoListWeb.Controllers
             return View();
         }
 
+        public IActionResult Profile()
+        {
+            return View();
+        }
+        public IActionResult Settings()
+        {
+            return View();
+        }
+
         public IActionResult ChangeTaskPage(int Id)
         {
-            
-            using(var TaskDb = new TaskDbContex())
+
+            using (var TaskDb = new TaskDbContex())
             {
                 ViewBag.ChangedTask = TaskDb.ToDoTask.Find(Id);
                 _logger.LogInformation(message: "Отправили данные о задаче которую изменяем");
             }
             return View();
         }
-        
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

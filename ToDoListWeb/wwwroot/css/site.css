@@ -49,8 +49,19 @@ a{
     padding: 20px 40px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     position: sticky;
     top: 0;
+}
+
+.aside .button-container .button{
+    align-items: center;
+    display: flex;
+    margin: 10px 0px;
+}
+
+.aside .button-container .button .material-symbols-rounded{
+    font-size: 20px;
 }
 
 a:hover{
@@ -72,18 +83,63 @@ a:hover{
     margin: 20px;
     border: 2px solid #9b9b9b;
     transition: 0.2s;
-    padding: 30px;
+    padding: 20px;
     border-radius: 10px;
     display: flex;
-    flex-direction: column;
     width: 700px;
     background: white;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 4px 0px;
+}
+
+.editor form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.editor form label {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 5px;
+}
+
+.task-container{
+    flex-direction: row;
+    justify-content: space-between
+}
+
+.task-container .task{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.task-container .task > *{
+    margin: 5px;
 }
 
 .task-container:hover {
-    border: 2px solid blue;
-    box-shadow: #0000ff73 0px 0px 4px 0px;
+    border: 2px solid #656;
+
+}
+
+.task-container .button-container{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20px;
+}
+
+.task-container form .submit-button{
+    background: none;
+    border: none;
+    transition: 0.2s;
+}
+
+.task-container form .edit:hover {
+     color: #6262ff;
+}
+
+.task-container form .delete:hover{
+    color: rgb(255, 89, 89);
 }
 
 .container .header {
@@ -95,6 +151,7 @@ a:hover{
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
+/*For CreatTask.cshtml*/
 
 .textarea {
     max-width: 400px;
@@ -104,19 +161,27 @@ a:hover{
     resize: none;
 }
 
-/*For CreatTask.cshtml*/
+.text-input {
+    background: rgb(250, 250, 250);
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    margin-top: 5px;
+}
 
 .submit {
     background: white;
     color: #222;
-    margin-top: 30px;
     transition: 0.2s;
     padding: 10px;
     border: none;
-    width: 100px;
+    min-width: 100px;
+    max-width: max-content;
     font-size: 16px;
     border-radius: 50px;
     box-shadow: #222 0px 0px 2px, #222 0px 0px 0px 2px;
+    margin: 10px 5px;
 }
 
 .submit:hover{

@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<header class="header">
+    <h2>Settings</h2>
+</header>
+
+<main class="main">
+    <div class="editor">
+        <form action="~/Task/GetTaskDb" method="post">
+
+            @*(Это каментарий на Razor если что) в теге Label там где поле name не меняй его, это
+            переменая на которую я ссылаюсь что б принять данные и записать их в базу данных
+            ну и во всех Labal name это моя переменная
+            *@
+
+            <label>
+                Theme
+                <select class="text-input">
+                    <option value="Light">Light</option>
+                    <option value="Dark">Dark</option>
+                    <option value="Black">Black</option>
+                    <option value="Choose your theme" selected disabled hidden>Choose your theme</option>
+                </select>
+            </label>
+
+            <label>
+                Language
+                <select class="text-input">
+                    <option value="Ukrainian">Ukrainian</option>
+                    <option value="Polish">Polish</option>
+                    <option value="Slovak">Slovak</option>
+                    <option value="Czech">Czech</option>
+                    <option value="Slovenian">Slovenian</option>
+                    <option value="Croatian">Croatian</option>
+                    <option value="Bulgarian">Bulgarian</option>
+                    <option value="Romanian">Romanian</option>
+                    <option value="Italian">Italian</option>
+                    <option value="French">French</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="Portugalian">Portugalian</option>
+                    <option value="German">German</option>
+                    <option value="English">English</option>
+                    <option value="Swedish">Swedish</option>
+                    <option value="Danish">Danish</option>
+                    <option value="Norwegian">Norwegian</option>
+                    <option value="English">Lithuanian</option>
+                    <option value="Swedish">Latvian</option>
+                    <option value="Finnish">Finnish</option>
+                    <option value="Danish">Hungarian</option>
+                    <option value="Norwegian">Estonian</option>
+                    <option value="Choose your theme" selected disabled hidden>Choose your language</option>
+                </select>
+            </label>
+
+            <input type="submit" value="Save changes" class="submit">
+
+        </form>
+    </div>
+</main>

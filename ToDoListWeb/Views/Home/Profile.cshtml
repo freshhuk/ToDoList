@@ -1,10 +1,9 @@
-﻿@*Подключаем наш слой*@
-@{
+﻿@{
     Layout = "_Layout";
 }
 
 <header class="header">
-    <h2>Create new task</h2>
+    <h2>Profile</h2>
 </header>
 
 <main class="main">
@@ -17,23 +16,26 @@
             *@
 
             <label>
-                Task name
-                <input type="text" name="TaskName" placeholder="Task name" class="text-input" />
+                Your name
+                <input type="text" placeholder="Your name" class="text-input" />
             </label>
 
             <label>
-                Task description
-                <textarea rows="10" cols="50" class="textarea text-input" type="text" name="TaskDescription" placeholder="Description"></textarea>
+                Date of birth
+                <input type="date" placeholder="Date of birth" class="text-input" />
             </label>
 
             <label>
-                Date of completion
-                <input type="date" name="TaskData" placeholder="Date" class="text-input" />
+                Your sex
+                <select class="text-input">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Choose your sex" selected disabled hidden>Choose your sex</option>
+                </select>
             </label>
 
-            <input type="submit" value="Create" class="submit">
+            <input type="submit" value="Save changes" class="submit">
 
         </form>
     </div>
 </main>
-

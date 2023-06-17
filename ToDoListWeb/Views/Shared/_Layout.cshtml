@@ -3,6 +3,12 @@
 <head>
     <title>To Do List</title>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        .material-symbols-rounded {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48
+        }
+    </style>
 </head>
 <body>
 
@@ -14,8 +20,31 @@
 
         <aside class="aside">
             <div class="button-container">
-                <a class="button" href="@Url.Action("Index", "Home")">Home</a>
-                <a class="button" href="@Url.Action("CreateTask", "Home")">Create Task</a>
+                <a class="button" href="@Url.Action("Index", "Home")">
+                    <span class="material-symbols-rounded">
+                        home
+                    </span>
+                    Home
+                </a>
+                <a class="button" href="@Url.Action("CreateTask", "Home")">
+                    <span class="material-symbols-rounded">
+                        add
+                    </span>
+                    Create Task
+                </a>
+                
+                <a class="button" href="@Url.Action("Profile", "Home")">
+                    <span class="material-symbols-rounded">
+                        person
+                    </span>
+                    Profile
+                </a>
+                <a class="button" href="@Url.Action("Settings", "Home")">
+                    <span class="material-symbols-rounded">
+                        settings
+                    </span>
+                    Settings
+                </a>
             </div>
         </aside>
         @*Загруженая страница с папки Home*@
