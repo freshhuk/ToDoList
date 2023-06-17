@@ -20,16 +20,24 @@ namespace ToDoListWeb.Controllers
             {
                 using (var TaskDb = new TaskDbContex())
                 {
+
                     TaskDb.Add(new ToDoTask()
                     {
                         NameTask = TaskName,
                         DescriptionTask = TaskDescription,
-                        TaskTime = TaskData,
-                        Status = "В процессе"
+                        TaskTime = TaskData.Date,
+                        Status = "In progress"
 
                     });
                     TaskDb.SaveChanges();
                 }
+                
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "You have not completed all fields";
+                return RedirectToAction("CreateTask", "Home");
+           
             }
             //в поле где статус мы автоматом пишим в процесе так как
             //ее только создали и она в процесе выполнения
@@ -81,11 +89,13 @@ namespace ToDoListWeb.Controllers
                     }
                     else
                     {
-                        //потом можно вывести какую то ошибку но покачто просто кидает на главную
                         _logger.LogError(message:"Error data null");
-                        return Redirect("~/");
-                    }
+                        TempData["ErrorMessage"] = "You have not completed all fields";
+                        return RedirectToAction("ChangeTaskPage", "Home");
 
+
+
+                    }
                 }
                 else
                 {

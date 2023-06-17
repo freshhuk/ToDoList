@@ -36,10 +36,17 @@
             
             @*Это для изминение статуса выполнения задачи, тоесть выполненна или нет*@
             <select name="TaskStatus" class="text-input">
-                <option value="В процессе" selected>В процессе</option>
-                <option value="Выполнено">Выполнено</option>
-                <option value="Не выполнено">Не выполнено</option>
+                <option value="In progress" selected>In progress</option>
+                <option value="Done">Done</option>
+                <option value="Not done">Not done</option>
             </select>
+
+            @*Сообщение об ошибки если пользователь не ввел данные во все поля*@
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                <p>@ViewBag.ErrorMessage</p>
+
+            }
             <input type="submit" value="Save changes" class="submit">
         </form>
     </div>

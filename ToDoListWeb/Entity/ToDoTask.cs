@@ -1,4 +1,6 @@
-﻿namespace ToDoListWeb.Entity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ToDoListWeb.Entity
 {
     public class ToDoTask
     {
@@ -6,6 +8,8 @@
         public string NameTask { get; set; }
         public string DescriptionTask { get; set; }
         public string Status { get; set; }
+        
         public DateTime TaskTime { get; set; }
+
     }
 }

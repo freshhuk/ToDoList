@@ -30,7 +30,13 @@
                 Date of completion
                 <input type="date" name="TaskData" placeholder="Date" class="text-input" />
             </label>
-
+            @*Сообщение об ошибки если пользователь не ввел данные во все поля*@
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                <p>@ViewBag.ErrorMessage</p>
+                
+            }
+          
             <input type="submit" value="Create" class="submit">
 
         </form>

@@ -23,6 +23,10 @@ namespace ToDoListWeb.Controllers
 
         public IActionResult CreateTask()
         {
+            if (TempData.ContainsKey("ErrorMessage"))
+            {
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+            }
             return View();
         }
 
@@ -40,9 +44,25 @@ namespace ToDoListWeb.Controllers
 
             using (var TaskDb = new TaskDbContex())
             {
-                ViewBag.ChangedTask = TaskDb.ToDoTask.Find(Id);
+
+                var changedTask = TaskDb.ToDoTask.Find(Id);
+                if (changedTask == null)
+                {
+                    // В случае, если задача с указанным Id не найдена, перенаправляем на другую страницу или выводим сообщение об ошибке
+                    return RedirectToAction("Index", "Home");
+                }
+                ViewBag.ChangedTask = changedTask;
                 _logger.LogInformation(message: "Отправили данные о задаче которую изменяем");
             }
+            if (TempData.ContainsKey("ErrorMessage"))
+            {
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+            }
+            else
+            {
+                ViewBag.ErrorMessage = null; 
+            }
+
             return View();
         }
 
