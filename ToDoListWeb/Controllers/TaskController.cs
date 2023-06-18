@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
+using System.Threading.Tasks;
 
 namespace ToDoListWeb.Controllers
 {
@@ -14,14 +15,14 @@ namespace ToDoListWeb.Controllers
         }
         //Принимаем данные из формы , и заносим их в бд
         [HttpPost]
-        public IActionResult GetTaskDb(string TaskName, string TaskDescription, DateTime TaskData)
+        public async Task<IActionResult> GetTaskDb(string TaskName, string TaskDescription, DateTime TaskData)
         {
             if (TaskName != null && TaskDescription != null)
             {
                 using (var TaskDb = new TaskDbContex())
                 {
 
-                    TaskDb.Add(new ToDoTask()
+                    await TaskDb.AddAsync(new ToDoTask()
                     {
                         NameTask = TaskName,
                         DescriptionTask = TaskDescription,
@@ -29,7 +30,7 @@ namespace ToDoListWeb.Controllers
                         Status = "In progress"
 
                     });
-                    TaskDb.SaveChanges();
+                    await TaskDb.SaveChangesAsync();
                 }
                 
             }
@@ -46,15 +47,15 @@ namespace ToDoListWeb.Controllers
 
         //удалаяем нашу задачу из бд
         [HttpPost]
-        public IActionResult DeleteTaskDBb(int Id)
+        public async Task<IActionResult> DeleteTaskDBb(int Id)
         {
             using (var TaskDb = new TaskDbContex())
             {
-                var Task = TaskDb.ToDoTask.Find(Id);
+                var Task = await TaskDb.ToDoTask.FindAsync(Id);
                 if (Task != null)
                 {
                     TaskDb.ToDoTask.Remove(Task);
-                    TaskDb.SaveChanges();
+                    await TaskDb.SaveChangesAsync();
                     return Redirect("~/");
                 }
                 else
