@@ -1,17 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 namespace ToDoListWeb.Entity
 {
     public class TaskDbContex : DbContext
     {
         public DbSet<ToDoTask> ToDoTask { get; set; }
 
+        private readonly IConfiguration _configuration;
+
+        public TaskDbContex(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\MSSQLLocalDB;
-                  DataBase=Task_EntityCoreDb;
-                  Trusted_Connection=True;"
-                );
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+
         }
     }
 }

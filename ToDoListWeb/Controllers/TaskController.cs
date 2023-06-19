@@ -1,25 +1,36 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
+
 using System.Threading.Tasks;
 
 namespace ToDoListWeb.Controllers
 {
     public class TaskController : Controller
     {
+        /// <summary>
+        /// For Logging
+        /// </summary>
         private readonly ILogger<TaskController> _logger;
+        private readonly TaskDbContex _dbContext;
 
-        public TaskController(ILogger<TaskController> logger)
+
+        public TaskController([FromServices] TaskDbContex dbContext, ILogger<TaskController> logger)
         {
+            _dbContext = dbContext;
             _logger = logger;
         }
+
+
+
+
         //Принимаем данные из формы , и заносим их в бд
         [HttpPost]
         public async Task<IActionResult> GetTaskDb(string TaskName, string TaskDescription, DateTime TaskData)
         {
             if (TaskName != null && TaskDescription != null)
             {
-                using (var TaskDb = new TaskDbContex())
+                using (var TaskDb = _dbContext)
                 {
 
                     await TaskDb.AddAsync(new ToDoTask()
@@ -49,7 +60,7 @@ namespace ToDoListWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteTaskDBb(int Id)
         {
-            using (var TaskDb = new TaskDbContex())
+            using (var TaskDb = _dbContext)
             {
                 var Task = await TaskDb.ToDoTask.FindAsync(Id);
                 if (Task != null)
@@ -68,9 +79,9 @@ namespace ToDoListWeb.Controllers
 
         //метод для изминения нашей задачи в бд
         [HttpPost]
-        public IActionResult ChangeTaskDb(int Id, string TaskName, string TaskDescription, DateTime TaskData, string TaskStatus)
+        public async Task<IActionResult> ChangeTaskDb(int Id, string TaskName, string TaskDescription, DateTime TaskData, string TaskStatus)
         {
-            using (var TaskDb = new TaskDbContex())
+            using (var TaskDb = _dbContext)
             {
                 var Task = TaskDb.ToDoTask.Find(Id);
                 if (Task != null)
@@ -84,7 +95,7 @@ namespace ToDoListWeb.Controllers
                         Task.TaskTime = TaskData;
                         Task.Status = TaskStatus;
                         
-                        TaskDb.SaveChanges();
+                        await TaskDb.SaveChangesAsync();
                         _logger.LogInformation(message: "Данные записались");
                         return Redirect("~/");
                     }

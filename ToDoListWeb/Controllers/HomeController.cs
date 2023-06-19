@@ -1,23 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
 
 namespace ToDoListWeb.Controllers
 {
+
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<TaskController> _logger;
+        private readonly TaskDbContex _dbContext;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController([FromServices] TaskDbContex dbContext, ILogger<TaskController> logger)
         {
+            _dbContext = dbContext;
             _logger = logger;
         }
         //отсылаем наши данные на страницу
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.AllTask = new TaskDbContex().ToDoTask;
+            ViewBag.AllTask = _dbContext.ToDoTask;
             return View();
         }
 
@@ -42,7 +47,7 @@ namespace ToDoListWeb.Controllers
         public IActionResult ChangeTaskPage(int Id)
         {
 
-            using (var TaskDb = new TaskDbContex())
+            using (var TaskDb = _dbContext)
             {
 
                 var changedTask = TaskDb.ToDoTask.Find(Id);
