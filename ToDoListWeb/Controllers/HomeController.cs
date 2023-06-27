@@ -20,8 +20,9 @@ namespace ToDoListWeb.Controllers
         }
         //отсылаем наши данные на страницу
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            await _dbContext.Database.EnsureCreatedAsync();
             ViewBag.AllTask = _dbContext.ToDoTask;
             return View();
         }
