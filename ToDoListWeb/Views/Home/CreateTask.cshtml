@@ -33,7 +33,7 @@
             @*Сообщение об ошибки если пользователь не ввел данные во все поля*@
             @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
             {
-                <p>@ViewBag.ErrorMessage</p>
+                <p class="error-message">@ViewBag.ErrorMessage</p>
                 
             }
           

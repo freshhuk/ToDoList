@@ -20,31 +20,36 @@
             <input type="hidden" name="Id" value="@ViewBag.ChangedTask.Id" />
 
             <label>
-                New task name
+                Task name
                 <input type="text" name="TaskName" placeholder="@ViewBag.ChangedTask.NameTask" class="text-input" />
             </label>
             
            
             <label>
-                New task description
+                Task description
                 <textarea rows="10" cols="50" class="textarea text-input" type="text" name="TaskDescription" placeholder="@ViewBag.ChangedTask.DescriptionTask"></textarea>
             </label>
             <label>
-                New date of completion
+                Date of completion
                 <input type="date" name="TaskData" placeholder="@ViewBag.ChangedTask.TaskTime" class="text-input" />
             </label>
             
             @*Это для изминение статуса выполнения задачи, тоесть выполненна или нет*@
-            <select name="TaskStatus" class="text-input">
-                <option value="In progress" selected>In progress</option>
-                <option value="Done">Done</option>
-                <option value="Not done">Not done</option>
-            </select>
+
+            <label>
+                Task status
+                <select name="TaskStatus" class="text-input">
+                    <option value="In progress" selected>In progress</option>
+                    <option value="Done">Done</option>
+                    <option value="Not done">Not done</option>
+                </select>
+            </label>
+            
 
             @*Сообщение об ошибки если пользователь не ввел данные во все поля*@
             @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
             {
-                <p>@ViewBag.ErrorMessage</p>
+                <p class="error-message">@ViewBag.ErrorMessage</p>
 
             }
             <input type="submit" value="Save changes" class="submit">

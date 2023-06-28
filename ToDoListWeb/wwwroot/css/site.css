@@ -111,10 +111,15 @@ a:hover{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 100%;
 }
 
 .task-container .task > *{
     margin: 5px;
+}
+
+.task-container .task .task-id{
+    font-weight: 400;
 }
 
 .task-container:hover {
@@ -180,11 +185,24 @@ a:hover{
     max-width: max-content;
     font-size: 16px;
     border-radius: 50px;
-    box-shadow: #222 0px 0px 2px, #222 0px 0px 0px 2px;
+    box-shadow: #9b9b9b 0px 0px 1.5px, #9b9b9b 0px 0px 0px 1.5px;
     margin: 10px 5px;
 }
 
-.submit:hover{
-    background: #222;
-    color: whitesmoke;
-}
+    .submit:hover {
+        background: #222;
+        box-shadow: #222 0px 0px 1.5px, #222 0px 0px 0px 1.5px;
+        color: whitesmoke;
+    }
+
+    .submit:active {
+        background: #6262ff;
+        box-shadow: #6262ff 0px 0px 1.5px, #6262ff 0px 0px 0px 1.5px;
+    }
+
+    .error-message{
+        padding:10px;
+        background: rgb(255, 89, 89);
+        border: 2px solid red;
+        border-radius: 25px;
+    }

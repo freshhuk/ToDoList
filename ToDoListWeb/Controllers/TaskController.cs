@@ -47,7 +47,7 @@ namespace ToDoListWeb.Controllers
             }
             else
             {
-                TempData["ErrorMessage"] = "You have not completed all fields";
+                TempData["ErrorMessage"] = "Fill the rest of fields!";
                 return RedirectToAction("CreateTask", "Home");
            
             }
