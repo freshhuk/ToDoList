@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using ToDoListWeb.Entity;
@@ -6,7 +7,7 @@ using ToDoListWeb.Models;
 
 namespace ToDoListWeb.Controllers
 {
-
+    //[Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<TaskController> _logger;
@@ -17,6 +18,12 @@ namespace ToDoListWeb.Controllers
         {
             _dbContext = dbContext;
             _logger = logger;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult StartPage()
+        {
+            return View();
         }
         //отсылаем наши данные на страницу
         [HttpGet]

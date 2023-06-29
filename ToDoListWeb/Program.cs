@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ToDoListWeb.Entity;
+using ToDoListWeb.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,38 @@ builder.Services.AddScoped<TaskDbContex>(provider =>
     var configuration = provider.GetRequiredService<IConfiguration>();
     return new TaskDbContex(configuration);
 });
+
+#region for logging aand register
+    //Role
+    builder.Services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<TaskDbContex>()
+        .AddDefaultTokenProviders();
+    //Config
+    builder.Services.Configure<IdentityOptions>(options =>
+    {
+        //минимальноя длина пороля
+        options.Password.RequiredLength = 8;
+        //максимум повторных попыток ввода пороля-имени
+        options.Lockout.MaxFailedAccessAttempts = 10;
+        //бан на время после исчерпания попыток
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+
+        options.Lockout.AllowedForNewUsers = true;
+    });
+    //coockie
+    builder.Services.ConfigureApplicationCookie(options =>
+    {
+        options.Cookie.HttpOnly = true;
+        //нужно заново войти в аккаунт после 7 дней бездействия
+        options.ExpireTimeSpan = TimeSpan.FromDays(7);
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
+        options.SlidingExpiration = true;
+
+    });
+#endregion
+
+
 
 var app = builder.Build();
 
