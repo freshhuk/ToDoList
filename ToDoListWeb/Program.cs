@@ -19,16 +19,25 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
 builder.Services.AddDbContext<TaskDbContex>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddDbContext<UserDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("UserConnection")));
+
+
 builder.Services.AddScoped<TaskDbContex>(provider =>
 {
     var configuration = provider.GetRequiredService<IConfiguration>();
     return new TaskDbContex(configuration);
 });
 
+builder.Services.AddScoped<UserDbContext>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    return new UserDbContext(configuration);
+});
 #region for logging aand register
-    //Role
-    builder.Services.AddIdentity<User, IdentityRole>()
-        .AddEntityFrameworkStores<TaskDbContex>()
+//Role
+builder.Services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<UserDbContext>()
         .AddDefaultTokenProviders();
     //Config
     builder.Services.Configure<IdentityOptions>(options =>
@@ -72,10 +81,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=StartPage}/{id?}");
+    
 
 app.Run();

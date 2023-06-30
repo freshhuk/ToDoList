@@ -1,0 +1,27 @@
+﻿@model ToDoListWeb.Models.UserLogin;
+
+
+<h1>Залогінтесь</h1>
+<form asp-action="Login" asp-antiforgery="true">
+    @*For Errors*@
+    <div asp-validation-summary="ModelOnly"></div>
+    @*For return url, dont tuch*@
+    <input type="hidden" asp-for="ReturnUrl"/>
+
+
+    <label>
+        Your Login
+        <input asp-for="LoginProp" placeholder="Login"/>
+    </label>
+
+    <label>
+        Your Password
+        <input asp-for="Password" placeholder="Password"/>
+    </label>
+    <button type="submit">Login</button>
+</form>
+
+@*Кнопка для того что б перейти к регестрации(На случай если нет аккаунта) знаю так делают просто*@
+<a class="button" href="@Url.Action("Register", "Account")">
+    Зарегестрироватся
+</a>

@@ -1,5 +1,5 @@
 ﻿@using ToDoListWeb.Entity;
-
+@using ToDoListWeb.Models;
 @*Тут мы подключаем наш слой который находится в папке Shared*@
 @{
     Layout = "_Layout";
@@ -14,50 +14,53 @@
 </header>
 
 <main class="main">
-    @foreach (ToDoTask item in ViewBag.AllTask)
-    {
-        @if(item.Status != "Выполнено")
+    
+        @foreach (ToDoTask item in ViewBag.AllTask)
         {
-            <div class="task-container">
+            @if(item.Status != "Выполнено")
+            {
+                <div class="task-container">
 
-            <div class="task">
-                <h3 class="task-id" style="display: inline;">@item.Id</h3>
-                <h2 style="display: inline;">@item.NameTask</h2>
-                <p>@item.DescriptionTask</p>
-                <p>@item.TaskTime</p>
-                <p>@item.Status</p>
+                <div class="task">
+                    <h3 class="task-id" style="display: inline;">@item.Id</h3>
+                    <h2 style="display: inline;">@item.NameTask</h2>
+                    <p>@item.DescriptionTask</p>
+                    <p>@item.TaskTime</p>
+                    <p>@item.Status</p>
                 
-            </div>
+                </div>
 
-            <div class="button-container">
+                <div class="button-container">
 
-                @*Кнопка которая переносит на страницу редоктировавние задачи*@
-                <form method="get" action="~/Home/ChangeTaskPage">
-                    <input type="hidden" name="Id" value="@item.Id" />
+                    @*Кнопка которая переносит на страницу редоктировавние задачи*@
+                    <form method="get" action="~/Home/ChangeTaskPage">
+                        <input type="hidden" name="Id" value="@item.Id" />
 
-                    <button type="submit" class="edit submit-button">
-                        <span class="material-symbols-rounded">
-                            edit_note
-                        </span>
-                    </button>
+                        <button type="submit" class="edit submit-button">
+                            <span class="material-symbols-rounded">
+                                edit_note
+                            </span>
+                        </button>
 
-                </form>
+                    </form>
 
-                @*Кнопка для удаления нашего Task, я думаю луче ее сделать сбоку*@
-                <form method="post" action="~/Task/DeleteTaskDBb">
-                    <input type="hidden" name="Id" value="@item.Id"/>
+                    @*Кнопка для удаления нашего Task, я думаю луче ее сделать сбоку*@
+                    <form method="post" action="~/Task/DeleteTaskDBb">
+                        <input type="hidden" name="Id" value="@item.Id"/>
 
-                    <button type="submit" class="delete submit-button">
-                        <span class="material-symbols-rounded">
-                            delete
-                        </span>
-                    </button>
-                </form>
+                        <button type="submit" class="delete submit-button">
+                            <span class="material-symbols-rounded">
+                                delete
+                            </span>
+                        </button>
+                    </form>
 
-            </div>
+                </div>
 
-            </div>
-        }
+                </div>
+            }
         
-    }
+        }
+    
+
 </main>

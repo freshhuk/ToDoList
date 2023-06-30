@@ -7,26 +7,35 @@ using ToDoListWeb.Models;
 
 namespace ToDoListWeb.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<TaskController> _logger;
         private readonly TaskDbContex _dbContext;
+        private readonly UserDbContext _userdbContext;
 
 
-        public HomeController([FromServices] TaskDbContex dbContext, ILogger<TaskController> logger)
+        public HomeController([FromServices] TaskDbContex dbContext, ILogger<TaskController> logger, UserDbContext userdbContext)
         {
             _dbContext = dbContext;
+            _userdbContext = userdbContext;
             _logger = logger;
         }
-        [HttpGet]
+        
+
+        
+ 
         [AllowAnonymous]
-        public IActionResult StartPage()
+        [HttpGet]
+        public async Task<IActionResult> StartPage()
         {
+            await _userdbContext.Database.EnsureCreatedAsync();
             return View();
         }
+        
         //отсылаем наши данные на страницу
         [HttpGet]
+        
         public async Task<IActionResult> Index()
         {
             await _dbContext.Database.EnsureCreatedAsync();

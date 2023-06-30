@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using ToDoListWeb.Entity;
@@ -11,14 +12,17 @@ namespace ToDoListWeb.Controllers
     {
         private readonly TaskDbContex _dbContext;
 
+        private readonly ILogger<TaskController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(TaskDbContex dbContext, SignInManager<User> signInManager, UserManager<User> userManager)
+        public AccountController(TaskDbContex dbContext, SignInManager<User> signInManager, UserManager<User> userManager, ILogger<TaskController> logger)
         {
             _dbContext = dbContext;
+            
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         //метод открывает форму для логина
@@ -53,35 +57,60 @@ namespace ToDoListWeb.Controllers
 
         }
         //открывает форму для регестрации
+        
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View(new UserRegistration());
         }
+
+         
         //сам метод регестрации
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegistration model)
         {
-           if(ModelState.IsValid)
-           {
+
+            if (ModelState.IsValid)
+            {
+                _logger.LogInformation(message: "Успешно1");
                 var user = new User { UserName = model.LoginProp };
-                var createResult = await _userManager.CreateAsync(user, model.Password);
-                if (createResult.Succeeded)
+
+                try
                 {
-                    // Создание базы данных, если она не существует
-                    await _dbContext.Database.EnsureCreatedAsync();
-                    await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    foreach (var identityError in createResult.Errors)
+                    var createResult = await _userManager.CreateAsync(user, model.Password);
+                    if (createResult.Succeeded)
                     {
-                        ModelState.AddModelError("", identityError.Description);
+                        _logger.LogInformation(message: "Успешно 2x");
+                        await _dbContext.Database.EnsureCreatedAsync();
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    if (!createResult.Succeeded)
+                    {
+                        foreach (var error in createResult.Errors)
+                        {
+                            _logger.LogError(error.Description);
+                        }
+                    }
+                    else
+                    {
+                        _logger.LogInformation(message: "Регистрация прошла с ошибкой");
+                        foreach (var identityError in createResult.Errors)
+                        {
+                            ModelState.AddModelError("", identityError.Description);
+                        }
                     }
                 }
-           }
-           return View(model);
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка при создании пользователя");
+                    // Обработка исключения или возврат пользователю сообщения об ошибке
+                    ModelState.AddModelError("", "Произошла ошибка при создании пользователя.");
+                }
+            }
+
+            return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
