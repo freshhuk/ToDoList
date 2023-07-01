@@ -31,7 +31,7 @@ namespace ToDoListWeb.Controllers
         {
             return View(new UserLogin()
             {
-                ReturnUrl = returnUrl
+                ReturnUrl = !string.IsNullOrEmpty(returnUrl) ? returnUrl : "/"
             });
         }
         //сам метод для логина
@@ -40,6 +40,7 @@ namespace ToDoListWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                _logger.LogWarning(message: "Медель не валидна");
                 var loginResult = await _signInManager.PasswordSignInAsync(model.LoginProp, model.Password,
                     false,
                     lockoutOnFailure: false);
@@ -50,8 +51,42 @@ namespace ToDoListWeb.Controllers
                         return Redirect(model.ReturnUrl);
                     }
                     return RedirectToAction("Index", "Home");
-                }    
+                }
+                else if (loginResult.IsLockedOut)
+                {
+                    // Логика при заблокированной учетной записи
+                    _logger.LogWarning("Учетная запись заблокирована.");
+                    ModelState.AddModelError("", "Учетная запись заблокирована.");
+                }
+                else if (loginResult.IsNotAllowed)
+                {
+                    // Логика, если пользователь не разрешен для входа
+                    _logger.LogWarning("Пользователь не разрешен для входа.");
+                    ModelState.AddModelError("", "Пользователь не разрешен для входа.");
+                }
+                else
+                {
+                    // Логика при неудачной аутентификации
+                    _logger.LogError("Ошибка аутентификации.");
+                    ModelState.AddModelError("", "Ошибка аутентификации.");
+                }
             }
+            else
+            {
+                // Код при невалидной модели
+                
+
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        _logger.LogWarning(error.ErrorMessage);
+                    }
+                }
+
+                ModelState.AddModelError("", "Пользователь не найден");
+            }
+
             ModelState.AddModelError("", "Пользователь не найден");
             return View(model);
 

@@ -38,6 +38,12 @@
             <input type="submit" value="Save changes" class="submit">
 
         </form>
+        @*Выход из аккаунта*@
+        <form action="/Account/Logout" method="post">
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Sign out" class="submit">
+
+        </form>
     </div>
 
     

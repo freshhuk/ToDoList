@@ -1,27 +1,36 @@
 ﻿@model ToDoListWeb.Models.UserLogin;
 
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation/1.19.3/jquery.validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
+    </head>
+    <body>
+        <h1>Залогінтесь</h1>
+        <form action="/Account/Login" method="post">
+            @Html.AntiForgeryToken()
 
-<h1>Залогінтесь</h1>
-<form asp-action="Login" asp-antiforgery="true">
-    @*For Errors*@
-    <div asp-validation-summary="ModelOnly"></div>
-    @*For return url, dont tuch*@
-    <input type="hidden" asp-for="ReturnUrl"/>
+            <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+            <div>
+                <label for="LoginProp">Логин:</label>
+                <input type="text" id="LoginProp" name="LoginProp" required />
+            </div>
+
+            <div>
+                <label for="Password">Пароль:</label>
+                <input type="password" id="Password" name="Password" required />
+            </div>
+
+            <button type="submit">Войти</button>
+        </form>
+
+        @*Кнопка для того что б перейти к регестрации(На случай если нет аккаунта) знаю так делают просто*@
+        <a class="button" href="@Url.Action("Register", "Account")">
+            Зарегестрироватся
+        </a>
+
+    </body>
+</html>
 
 
-    <label>
-        Your Login
-        <input asp-for="LoginProp" placeholder="Login"/>
-    </label>
-
-    <label>
-        Your Password
-        <input asp-for="Password" placeholder="Password"/>
-    </label>
-    <button type="submit">Login</button>
-</form>
-
-@*Кнопка для того что б перейти к регестрации(На случай если нет аккаунта) знаю так делают просто*@
-<a class="button" href="@Url.Action("Register", "Account")">
-    Зарегестрироватся
-</a>

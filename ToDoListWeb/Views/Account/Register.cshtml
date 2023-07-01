@@ -1,30 +1,35 @@
 ﻿@model ToDoListWeb.Models.UserRegistration;
 
 <h1>Зарегайся</h1>
+<html>
+    <head>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
+    </head>
+    <body>
+        <form action="/Account/Register" method="post">
+            @Html.AntiForgeryToken()
 
-    <div>
-        @Html.LabelFor(m => m.LoginProp)
-        @Html.TextBoxFor(m => m.LoginProp)
-        @Html.ValidationMessageFor(m => m.LoginProp)
-    </div>
+            <div>
+                <label for="LoginProp">Логин:</label>
+                <input type="text" id="LoginProp" name="LoginProp" required />
+            </div>
 
-    <div>
-        @Html.LabelFor(m => m.Password)
-        @Html.PasswordFor(m => m.Password)
-        @Html.ValidationMessageFor(m => m.Password)
-    </div>
+            <div>
+                <label for="Password">Пароль:</label>
+                <input type="password" id="Password" name="Password" required />
+            </div>
+            <div>
+                <label for="ConfirmPassword">Повторите пороль:</label>
+                <input type="password" id="ConfirmPassword" name="ConfirmPassword" required />
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        @*Кнопка для того что б перейти к регестрации(На случай если нет аккаунта) знаю так делают просто*@
+        <a class="button" href="@Url.Action("Login", "Account")">
+        Войти в аккаунт
+        </a>
+    </body>
 
-    <div>
-        @Html.LabelFor(m => m.ConfirmPassword)
-        @Html.PasswordFor(m => m.ConfirmPassword)
-        @Html.ValidationMessageFor(m => m.ConfirmPassword)
-    </div>
+</html>
 
-    <div>
-        <input type="submit" value="Register" />
-    </div>
-}
+

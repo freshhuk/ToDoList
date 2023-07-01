@@ -10,3 +10,10 @@
 <a class="button" href="@Url.Action("Register", "Account")">
     Register
 </a>
+@*Если ты разеганый пользователь то показывается кнопка через которую можно перейти на главную страницу*@
+@if (User.Identity.IsAuthenticated)
+{
+    <a class="button" href="@Url.Action("Index", "Home")">
+        Home
+    </a>
+}

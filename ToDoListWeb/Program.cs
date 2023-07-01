@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ToDoListWeb.Entity;
@@ -42,6 +43,10 @@ builder.Services.AddIdentity<User, IdentityRole>()
     //Config
     builder.Services.Configure<IdentityOptions>(options =>
     {
+        options.Password.RequireDigit = false;             // Требовать цифры
+        options.Password.RequireLowercase = true;          // Требовать строчные буквы
+        options.Password.RequireUppercase = false;          // Требовать прописные буквы
+        options.Password.RequireNonAlphanumeric = false;   // Требовать специальные символы
         //минимальноя длина пороля
         options.Password.RequiredLength = 8;
         //максимум повторных попыток ввода пороля-имени
@@ -64,7 +69,10 @@ builder.Services.AddIdentity<User, IdentityRole>()
     });
 #endregion
 
-
+builder.Services.Configure<MvcViewOptions>(options =>
+{
+    options.HtmlHelperOptions.ClientValidationEnabled = true;
+});
 
 var app = builder.Build();
 
