@@ -44,7 +44,7 @@ builder.Services.AddIdentity<User, IdentityRole>()
     builder.Services.Configure<IdentityOptions>(options =>
     {
         options.Password.RequireDigit = false;             // Требовать цифры
-        options.Password.RequireLowercase = true;          // Требовать строчные буквы
+        options.Password.RequireLowercase = false;          // Требовать строчные буквы
         options.Password.RequireUppercase = false;          // Требовать прописные буквы
         options.Password.RequireNonAlphanumeric = false;   // Требовать специальные символы
         //минимальноя длина пороля
