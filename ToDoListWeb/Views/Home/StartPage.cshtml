@@ -1,19 +1,44 @@
 ﻿@*Страница первоначальная на которой будет авторизация
 не унаследуем от Loyout так как нам не нужно что б тут было видно наши все функции.Кнопки и тд*@
-<h1>To Do List</h1>
-<p>Якась інфа сайту </p>
-<p>8===3</p>
 
-<a class="button" href="@Url.Action("Login", "Account")">
-    Login
-</a>
-<a class="button" href="@Url.Action("Register", "Account")">
-    Register
-</a>
-@*Если ты разеганый пользователь то показывается кнопка через которую можно перейти на главную страницу*@
-@if (User.Identity.IsAuthenticated)
-{
-    <a class="button" href="@Url.Action("Index", "Home")">
-        Home
-    </a>
-}
+<link rel="stylesheet" href="~/css/site.css" />
+
+<header class="main-header start-header">
+    <h1>To Do List</h1>
+    <div class="button-container">
+        @*Если ты зареганый пользователь то показывается кнопка через которую можно перейти на главную страницу*@
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a class="button" href="@Url.Action("Index", "Home")">
+                Home
+            </a>
+        }
+        <a class="button" href="@Url.Action("Login", "Account")">
+            Login
+        </a>
+        <a class="button" href="@Url.Action("Register", "Account")">
+            Register
+        </a>
+    </div>
+</header>
+
+<main class="main-content start-content">
+    <div class="par-container">
+        <h2 class="primary">
+            "To Do List" is a website where you can store and create your notes
+        </h2>
+
+        <p class="secondary">
+            Our website will help you to keep in mind your tasks so you will not mess up!
+        </p>
+    </div>
+    <div class="pic-container">
+
+    </div>
+    
+</main>
+
+
+
+
+

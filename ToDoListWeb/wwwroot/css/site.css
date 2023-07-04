@@ -64,7 +64,7 @@ a{
     font-size: 20px;
 }
 
-a:hover{
+a:hover, .start-header .button:hover{
     color: blue;
 }
 
@@ -206,3 +206,73 @@ a:hover{
         border: 2px solid red;
         border-radius: 25px;
     }
+
+.log-out:hover {
+    background: rgb(255, 89, 89);
+    box-shadow: rgb(255, 89, 89) 0px 0px 1.5px, rgb(255, 89, 89) 0px 0px 0px 1.5px;
+    color: whitesmoke;
+}
+
+/*Login, register*/
+
+.start-header .button{
+    color: whitesmoke;
+}
+
+.start-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top:0;
+}
+
+    .start-header .button-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 15%;
+    }
+
+.main-content .pic-container {
+    background: url("https://media.npr.org/assets/img/2022/12/22/lk_harlan_to-do-list_final_slide-6aaf506ab59a595f8f3494bdcc51b1a98ab40789.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+}
+
+.main-content .par-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+}
+
+.main-content .par-container .secondary{
+    padding: 20px;
+}
+
+.start-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.registration{
+    padding:120px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.account-form{
+    margin: 20px;
+}
+
+.registration .button{
+    margin-bottom: 90px;
+}

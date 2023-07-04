@@ -35,15 +35,18 @@
                 </select>
             </label>
 
-            <input type="submit" value="Save changes" class="submit">
+            <div class="button-container">
+                <input type="submit" value="Save changes" class="submit">
+                @*Выход из аккаунта*@
+
+                <form action="/Account/Logout" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Log out" class="submit log-out">
+                </form>
+            </div>
 
         </form>
-        @*Выход из аккаунта*@
-        <form action="/Account/Logout" method="post">
-            @Html.AntiForgeryToken()
-            <input type="submit" value="Sign out" class="submit">
-
-        </form>
+        
     </div>
 
     
