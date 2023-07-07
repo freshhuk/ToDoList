@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
@@ -46,6 +47,7 @@ namespace ToDoListWeb.Controllers
                     lockoutOnFailure: false);
                 if (loginResult.Succeeded)
                 {
+                    await _dbContext.Database.EnsureCreatedAsync();
                     if (Url.IsLocalUrl(model.ReturnUrl))
                     {
                         return Redirect(model.ReturnUrl);
@@ -117,7 +119,8 @@ namespace ToDoListWeb.Controllers
                     if (createResult.Succeeded)
                     {
                         _logger.LogInformation(message: "Успешно 2x");
-                        await _dbContext.Database.EnsureCreatedAsync();
+                        await _dbContext.Database.MigrateAsync();
+                        //await _dbContext.Database.EnsureCreatedAsync();
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index", "Home");
                     }

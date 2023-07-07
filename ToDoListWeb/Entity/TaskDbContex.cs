@@ -20,5 +20,6 @@ namespace ToDoListWeb.Entity
             optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
 
         }
+        
     }
 }

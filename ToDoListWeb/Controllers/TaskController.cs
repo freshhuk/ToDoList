@@ -20,7 +20,7 @@ namespace ToDoListWeb.Controllers
             _dbContext = dbContext;
             _logger = logger;
         }
-
+        
 
 
 
@@ -28,6 +28,7 @@ namespace ToDoListWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> GetTaskDb(string TaskName, string TaskDescription, DateTime TaskData)
         {
+            
             if (TaskName != null && TaskDescription != null)
             {
                 using (var TaskDb = _dbContext)
@@ -53,7 +54,7 @@ namespace ToDoListWeb.Controllers
             }
             //в поле где статус мы автоматом пишим в процесе так как
             //ее только создали и она в процесе выполнения
-            return Redirect("~/");
+            return Redirect("~/Home/Index");
         }
 
         //удалаяем нашу задачу из бд
@@ -67,12 +68,12 @@ namespace ToDoListWeb.Controllers
                 {
                     TaskDb.ToDoTask.Remove(Task);
                     await TaskDb.SaveChangesAsync();
-                    return Redirect("~/");
+                    return Redirect("~/Home/Index");
                 }
                 else
                 {
                     //потом можно вывести какую то ошибку но покачто просто кидает на главную
-                    return Redirect("~/");
+                    return Redirect("~/Home/Index");
                 }
             }
         }
@@ -97,7 +98,7 @@ namespace ToDoListWeb.Controllers
                         
                         await TaskDb.SaveChangesAsync();
                         _logger.LogInformation(message: "Данные записались");
-                        return Redirect("~/");
+                        return Redirect("~/Home/Index");
                     }
                     else
                     {
@@ -113,11 +114,12 @@ namespace ToDoListWeb.Controllers
                 {
                     //потом можно вывести какую то ошибку но покачто просто кидает на главную
                     _logger.LogError(message: "Error задача не найдена");
-                    return Redirect("~/");
+                    return Redirect("~/Home/Index");
 
                 }
             }
 
         }
+    
     }
 }

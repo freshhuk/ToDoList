@@ -29,6 +29,7 @@ namespace ToDoListWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> StartPage()
         {
+            await _dbContext.Database.EnsureCreatedAsync();
             await _userdbContext.Database.EnsureCreatedAsync();
             return View();
         }
@@ -36,9 +37,9 @@ namespace ToDoListWeb.Controllers
         //отсылаем наши данные на страницу
         [HttpGet]
         
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            await _dbContext.Database.EnsureCreatedAsync();
+            CheckDateTask();
             ViewBag.AllTask = _dbContext.ToDoTask;
             return View();
         }
@@ -93,6 +94,16 @@ namespace ToDoListWeb.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        private void CheckDateTask()
+        {
+            foreach (var task in _dbContext.ToDoTask)
+            {
+                if (task.TaskTime <= DateTime.Now)
+                {
+                    task.Status = "Not done";
+                }
+            }
         }
     }
 }

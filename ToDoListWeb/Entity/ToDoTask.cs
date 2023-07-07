@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToDoListWeb.Entity
 {
@@ -8,7 +10,8 @@ namespace ToDoListWeb.Entity
         public string NameTask { get; set; }
         public string DescriptionTask { get; set; }
         public string Status { get; set; }
-        
+        [DataType(DataType.Date)]
+        [Column(TypeName = "date")]
         public DateTime TaskTime { get; set; }
 
     }
