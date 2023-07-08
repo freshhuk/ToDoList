@@ -27,7 +27,13 @@
         <h2 class="primary">
             "To Do List" is a website where you can store and create your notes
         </h2>
+        @*Имя пользователя*@
+        @if (User.Identity.IsAuthenticated)
+        {
+            <h2>Hello chel @User.Identity.Name!</h2>
+        }
 
+        
         <p class="secondary">
             Our website will help you to keep in mind your tasks so you will not mess up!
         </p>
