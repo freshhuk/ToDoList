@@ -118,6 +118,7 @@ namespace ToDoListWeb.Controllers
                     var createResult = await _userManager.CreateAsync(user, model.Password);
                     if (createResult.Succeeded)
                     {
+                        
                         _logger.LogInformation(message: "Успешно 2x");
                         await _dbContext.Database.MigrateAsync();
                         //await _dbContext.Database.EnsureCreatedAsync();

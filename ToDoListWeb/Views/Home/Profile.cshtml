@@ -9,38 +9,8 @@
 
 <main class="main">
     <div class="editor">
-        <form action="~/Task/GetTaskDb" method="post">
-
-            @*(Это каментарий на Razor если что) в теге Label там где поле name не меняй его, это
-            переменая на которую я ссылаюсь что б принять данные и записать их в базу данных
-            ну и во всех Labal name это моя переменная
-            *@
-
-            <label>
-                Your name
-                <input type="text" placeholder="Your name" class="text-input" />
-            </label>
-
-            <label>
-                Date of birth
-                <input type="date" placeholder="Date of birth" class="text-input" />
-            </label>
-
-            <label>
-                Your sex
-                <select class="text-input">
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Choose your sex" selected disabled hidden>Choose your sex</option>
-                </select>
-            </label>
-
-            <div class="button-container">
-                <input type="submit" value="Save changes" class="submit">
-                
-            </div>
-
-        </form>
+        @*Инфа пользователя*@
+        <h2>Login: @User.Identity.Name!</h2>
         @*Выход из аккаунта*@
 
         <form action="/Account/Logout" method="post">
