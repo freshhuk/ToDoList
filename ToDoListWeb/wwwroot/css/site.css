@@ -90,7 +90,7 @@ a:hover, .start-header .button:hover{
     background: white;
 }
 
-.editor form{
+.editor form, .editor .container{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -275,4 +275,16 @@ a:hover, .start-header .button:hover{
 
 .registration .button{
     margin-bottom: 90px;
+}
+
+.login-notif{
+    background-color: #dfdfdf;
+    border: 2px solid #9b9b9b;
+    border-radius: 10px;
+    position: fixed;
+    top: 100px;
+    right: 75px;
+    z-index: 100;
+    padding: 10px;
+    opacity: 0.8;
 }

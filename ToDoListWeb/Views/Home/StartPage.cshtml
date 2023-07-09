@@ -28,9 +28,15 @@
             "To Do List" is a website where you can store and create your notes
         </h2>
         @*Имя пользователя*@
+
         @if (User.Identity.IsAuthenticated)
         {
-            <h2>Hello chel @User.Identity.Name!</h2>
+            <div class="login-notif">
+                <p>
+                    Hello, @User.Identity.Name!
+                </p>
+            </div>
+            
         }
 
         
