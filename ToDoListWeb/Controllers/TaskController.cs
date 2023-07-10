@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
-
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ToDoListWeb.Controllers
 {
     public class TaskController : Controller
     {
-        /// <summary>
-        /// For Logging
-        /// </summary>
+        
         private readonly ILogger<TaskController> _logger;
         private readonly TaskDbContex _dbContext;
 
@@ -119,6 +117,15 @@ namespace ToDoListWeb.Controllers
                 }
             }
 
+        }
+        //метод для филтрации заданий по дате
+        [HttpGet]
+        public IActionResult SortTaskDate()
+        {
+            _logger.LogInformation(message: "Попали в метод сортировки");
+            List<ToDoTask> sortedTasks = _dbContext.ToDoTask.OrderBy(t => t.TaskTime).ToList();
+            ViewBag.SortTasks = sortedTasks;
+            return View("~/Views/Home/Index.cshtml");
         }
     
     }

@@ -11,10 +11,67 @@
 
 <header class="header">
     <h2>Your tasks</h2>
+    @*Кнопка для сортировки по дате  нашей задачи от мелкой даты  к большой*@
+    <form method="get" action="~/Task/SortTaskDate">
+        <button type="submit">SortByDate</button>
+    </form>
+
 </header>
 
 <main class="main">
-    
+    @*Если мы получили отсартированый список то он показывается, иначе показываются стандартные задачи*@
+    @if (ViewBag.SortTasks != null)
+    {
+        var sortedTasks = ViewBag.SortTasks as List<ToDoTask>;
+        @foreach (ToDoTask item in sortedTasks)
+        {
+            @if (item.Status != "Выполнено")
+            {
+                <div class="task-container">
+
+                    <div class="task">
+                        <h3 class="task-id" style="display: inline;">@item.Id</h3>
+                        <h2 style="display: inline;">@item.NameTask</h2>
+                        <p>@item.DescriptionTask</p>
+                        <p>@item.TaskTime</p>
+                        <p>@item.Status</p>
+
+                    </div>
+
+                    <div class="button-container">
+
+                        @*Кнопка которая переносит на страницу редоктировавние задачи*@
+                        <form method="get" action="~/Home/ChangeTaskPage">
+                            <input type="hidden" name="Id" value="@item.Id" />
+
+                            <button type="submit" class="edit submit-button">
+                                <span class="material-symbols-rounded">
+                                    edit_note
+                                </span>
+                            </button>
+
+                        </form>
+
+                        @*Кнопка для удаления нашего Task, я думаю луче ее сделать сбоку*@
+                        <form method="post" action="~/Task/DeleteTaskDBb">
+                            <input type="hidden" name="Id" value="@item.Id" />
+
+                            <button type="submit" class="delete submit-button">
+                                <span class="material-symbols-rounded">
+                                    delete
+                                </span>
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+            }
+
+        }
+    }
+    else
+    {
         @foreach (ToDoTask item in ViewBag.AllTask)
         {
             @if(item.Status != "Выполнено")
@@ -61,6 +118,8 @@
             }
         
         }
+    }
+    
     
 
 </main>
