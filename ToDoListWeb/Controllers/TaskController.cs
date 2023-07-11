@@ -3,9 +3,11 @@ using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ToDoListWeb.Controllers
 {
+    [Authorize]
     public class TaskController : Controller
     {
         

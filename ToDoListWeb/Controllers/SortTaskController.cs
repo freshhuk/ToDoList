@@ -12,8 +12,7 @@ namespace ToDoListWeb.Controllers
 
 
         public SortTaskController([FromServices] TaskDbContex dbContext, ILogger<TaskController> logger)
-        {
-            
+        {   
             _logger = logger;
             _dbContext = dbContext; 
         }

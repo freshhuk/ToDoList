@@ -96,6 +96,7 @@ namespace ToDoListWeb.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        //метод если текущая дата совпадает с датой в задаче то статус не выполнено
         private void CheckDateTask()
         {
             foreach (var task in _dbContext.ToDoTask)

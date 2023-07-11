@@ -96,7 +96,6 @@ namespace ToDoListWeb.Controllers
         //открывает форму для регестрации
         
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Register()
         {
             return View(new UserRegistration());
