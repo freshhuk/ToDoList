@@ -118,15 +118,6 @@ namespace ToDoListWeb.Controllers
             }
 
         }
-        //метод для филтрации заданий по дате
-        [HttpGet]
-        public IActionResult SortTaskDate()
-        {
-            _logger.LogInformation(message: "Попали в метод сортировки");
-            List<ToDoTask> sortedTasks = _dbContext.ToDoTask.OrderBy(t => t.TaskTime).ToList();
-            ViewBag.SortTasks = sortedTasks;
-            return View("~/Views/Home/Index.cshtml");
-        }
-    
+     
     }
 }

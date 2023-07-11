@@ -40,7 +40,8 @@ namespace ToDoListWeb.Controllers
         public IActionResult Index()
         {
             CheckDateTask();
-            ViewBag.AllTask = _dbContext.ToDoTask;
+            List<ToDoTask> sortedTasks = _dbContext.ToDoTask.ToList();
+            ViewBag.NoSortTask = sortedTasks;
             return View();
         }
 
