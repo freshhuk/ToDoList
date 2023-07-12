@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
 
@@ -37,10 +38,10 @@ namespace ToDoListWeb.Controllers
         //отсылаем наши данные на страницу
         [HttpGet]
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            CheckDateTask();
-            List<ToDoTask> sortedTasks = _dbContext.ToDoTask.ToList();
+            await CheckDateTask();
+            List<ToDoTask> sortedTasks = await _dbContext.ToDoTask.ToListAsync();
             ViewBag.NoSortTask = sortedTasks;
             return View();
         }
@@ -97,15 +98,18 @@ namespace ToDoListWeb.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         //метод если текущая дата совпадает с датой в задаче то статус не выполнено
-        private void CheckDateTask()
+        private async Task CheckDateTask()
         {
+            //можно и использовать linq но покачто хай будет через условие 
+            //var tasksToUpdate = await _dbContext.ToDoTask.Where(task => task.TaskTime <= DateTime.Now).ToListAsync();
             foreach (var task in _dbContext.ToDoTask)
             {
                 if (task.TaskTime <= DateTime.Now)
                 {
                     task.Status = "Not done";
-                }
+                }           
             }
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

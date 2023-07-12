@@ -13,12 +13,16 @@
                 Home
             </a>
         }
-        <a class="button" href="@Url.Action("Login", "Account")">
-            Login
-        </a>
-        <a class="button" href="@Url.Action("Register", "Account")">
-            Register
-        </a>
+        else
+        {
+            <a class="button" href="@Url.Action("Login", "Account")">
+                Login
+            </a>
+            <a class="button" href="@Url.Action("Register", "Account")">
+                Register
+            </a>
+        }
+        
     </div>
 </header>
 
