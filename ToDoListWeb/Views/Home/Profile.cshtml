@@ -9,17 +9,15 @@
 
 <main class="main">
     <div class="editor">
-        <div class="container">
-            @*Инфа пользователя*@
-            <h2>Login: @User.Identity.Name</h2>
-            @*Выход из аккаунта*@
+        @*Выход из аккаунта*@
 
-            <form action="/Account/Logout" method="post">
-                @Html.AntiForgeryToken()
-                <input type="submit" value="Log out" class="submit log-out">
-            </form>
-        </div>
-        
+        <form action="/Account/Logout" method="post">
+            @Html.AntiForgeryToken()
+            <label>
+                Your login: @User.Identity.Name
+            </label>
+            <input type="submit" value="Log out" class="submit log-out">
+        </form>
     </div>
 
     

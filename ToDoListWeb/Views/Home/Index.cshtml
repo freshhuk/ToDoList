@@ -12,26 +12,26 @@
 
 <header class="header">
     <h2>Your tasks</h2>
-    @*Кнопка для сортировки по дате  нашей задачи от мелкой даты  к большой*@
-    <form method="post" action="~/SortTask/GetSortEnum">
-        <label>
-            Sort Task By
-            <select name="SortType" class="text-input">
-                <option value="No Sort" selected>No Sort</option>
-                <option value="Date(Descending)">Date(Descending)</option>
-                <option value="Date(ascending)">Date(ascending)</option>
-                <option value="Recently added">Recently added</option>
-                <option value="Added long ago">Added long ago</option>
-
-            </select>
-        </label>
-        <input type="submit" value="Sort" class="submit log-out">
-        
-    </form>
-
 </header>
 
 <main class="main">
+    @*Кнопка для сортировки по дате  нашей задачи от мелкой даты  к большой*@
+    <div class="container sort">
+        <form method="post" action="~/SortTask/GetSortEnum">
+            <select name="SortType" class="text-input">
+                <option value="No Sort" selected disabled>Choose sort option</option>
+                <option value="Date(Descending)">Date (Descending)</option>
+                <option value="Date(ascending)">Date (Ascending)</option>
+                <option value="Recently added">Recently added</option>
+                <option value="Added long ago">Added long time ago</option>
+
+            </select>
+            <input type="submit" value="Sort" class="submit">
+
+        </form>
+    </div>
+   
+
     @*Показ задач по сортировки, по умолчанию они не отсартированые*@
 
     @if (ViewBag.SortType == SortTaskEnum.SortTaskType.NoSort || ViewBag.NoSortTask != null)

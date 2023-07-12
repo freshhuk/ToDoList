@@ -288,3 +288,9 @@ a:hover, .start-header .button:hover{
     padding: 10px;
     opacity: 0.8;
 }
+
+/*sort*/
+
+.container.sort{
+    padding-left: 20px;
+}
