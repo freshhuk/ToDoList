@@ -6,7 +6,9 @@ namespace ToDoListWeb.Models
     {
         [Required, MaxLength(20)]
         public string LoginProp { get; set; }
-
+        [Required, DataType(DataType.EmailAddress, ErrorMessage = "Please enter a valid email address")]
+        [RegularExpression(@"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$", ErrorMessage = "Wrong email format")]
+        public string EmailProp { get; set; }
         [Required, DataType(DataType.Password)]
         public string Password { get; set; }
 

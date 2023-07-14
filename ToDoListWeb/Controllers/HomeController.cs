@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -57,6 +58,7 @@ namespace ToDoListWeb.Controllers
 
         public IActionResult Profile()
         {
+
             return View();
         }
         public IActionResult Settings()

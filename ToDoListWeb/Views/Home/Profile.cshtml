@@ -1,8 +1,12 @@
 ﻿@{
     Layout = "_Layout";
 }
-@using ToDoListWeb.Entity;
+@using System.Security.Claims
 
+@using ToDoListWeb.Entity;
+@{
+    var userEmail = (User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.Email)?.Value;
+}
 <header class="header">
     <h2>Profile</h2>
 </header>
@@ -15,6 +19,9 @@
             @Html.AntiForgeryToken()
             <label>
                 Your login: @User.Identity.Name
+            </label>
+            <label>
+                Your Email: @userEmail
             </label>
             <input type="submit" value="Log out" class="submit log-out">
         </form>

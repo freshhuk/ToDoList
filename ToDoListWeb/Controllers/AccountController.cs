@@ -41,8 +41,9 @@ namespace ToDoListWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _logger.LogWarning(message: "Медель не валидна");
-                var loginResult = await _signInManager.PasswordSignInAsync(model.LoginProp, model.Password,
+                _logger.LogWarning(message: "Медель валидна");
+                var loginResult = await _signInManager.PasswordSignInAsync(model.LoginProp,
+                    model.Password,
                     false,
                     lockoutOnFailure: false);
                 if (loginResult.Succeeded)
@@ -110,7 +111,7 @@ namespace ToDoListWeb.Controllers
             if (ModelState.IsValid)
             {
                 _logger.LogInformation(message: "Успешно1");
-                var user = new User { UserName = model.LoginProp };
+                var user = new User { UserName = model.LoginProp, Email = model.EmailProp };
 
                 try
                 {
