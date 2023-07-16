@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using ToDoListWeb.EmailServices;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
 
@@ -39,6 +41,9 @@ namespace ToDoListWeb.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLogin model)
         {
+
+            //EmailService emailService = new EmailService();
+            //await emailService.SendEmailAsync("somemail@mail.ru", "Тема письма", "Тест письма: тест!");
             if (ModelState.IsValid)
             {
                 _logger.LogWarning(message: "Медель валидна");
@@ -107,7 +112,21 @@ namespace ToDoListWeb.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegistration model)
         {
+            #region ForEmailSystem
+            var EmailExempl = new EmailService();
+            var from = "Excited User <sandbox9540eb10bbac451fa6ff98598559289d.mailgun.org>";
+            var to = model.EmailProp;
+            var subject = "Register";
+            var body = "You have successfully registered! Thank you for choosing us";
+            #endregion
+            
 
+            
+
+
+
+
+            //создаем екземпляр класа для отправки смс на почту
             if (ModelState.IsValid)
             {
                 _logger.LogInformation(message: "Успешно1");
@@ -118,7 +137,8 @@ namespace ToDoListWeb.Controllers
                     var createResult = await _userManager.CreateAsync(user, model.Password);
                     if (createResult.Succeeded)
                     {
-                        
+                        //Отправляем смс 
+                        await EmailExempl.SendSimpleMessageAsync(from, to, subject, body);
                         _logger.LogInformation(message: "Успешно 2x");
                         await _dbContext.Database.MigrateAsync();
                         //await _dbContext.Database.EnsureCreatedAsync();

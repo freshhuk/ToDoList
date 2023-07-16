@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MailKit" Version="4.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.8" />
@@ -24,11 +23,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="RestSharp" Version="110.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\NewFolder\" />
-    <Folder Include="EmailServices\" />
   </ItemGroup>
 
 </Project>
