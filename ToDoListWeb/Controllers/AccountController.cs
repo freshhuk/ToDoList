@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using System.Security.Claims;
-using ToDoListWeb.EmailServices;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
 
