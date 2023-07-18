@@ -125,7 +125,6 @@ namespace ToDoListWeb.Controllers
                        
                         _logger.LogInformation(message: "Успешно 2x");
                         await _dbContext.Database.MigrateAsync();
-                        //await _dbContext.Database.EnsureCreatedAsync();
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index", "Home");
                     }

@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Enums;
 
 namespace ToDoListWeb.Controllers
 {
+    [Authorize]
     public class SortTaskController : Controller
     {
         private readonly TaskDbContex _dbContext;

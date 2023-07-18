@@ -38,7 +38,6 @@ namespace ToDoListWeb.Controllers
         
         //отсылаем наши данные на страницу
         [HttpGet]
-        
         public async Task<IActionResult> Index()
         {
             await CheckDateTask();
@@ -65,7 +64,7 @@ namespace ToDoListWeb.Controllers
         {
             return View();
         }
-
+        [HttpPost]
         public IActionResult ChangeTaskPage(int Id)
         {
 
