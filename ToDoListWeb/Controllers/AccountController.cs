@@ -26,7 +26,12 @@ namespace ToDoListWeb.Controllers
             _signInManager = signInManager;
             _logger = logger;
         }
-
+        //Для открытия формочки изминения данных
+        [HttpGet]
+        public IActionResult EditUserData()
+        {
+            return View();
+        }
         //метод открывает форму для логина
         [HttpGet]
         public IActionResult Login(string returnUrl)

@@ -6,6 +6,8 @@
 @using ToDoListWeb.Entity;
 @{
     var userEmail = (User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.Email)?.Value;
+    var currentUserEmail = TempData["CurrentUserEmail"] as string ?? userEmail;
+
 }
 <header class="header">
     <h2>Profile</h2>
@@ -21,10 +23,13 @@
                 Your login: @User.Identity.Name
             </label>
             <label>
-                Your Email: @userEmail
+                Your Email: @currentUserEmail
             </label>
             <input type="submit" value="Log out" class="submit log-out">
         </form>
+        <a class="button" href="@Url.Action("EditUserData", "Account")">
+            Edit Account
+        </a>
     </div>
 
     
