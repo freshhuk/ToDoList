@@ -20,7 +20,7 @@
         <form action="/Account/Logout" method="post">
             @Html.AntiForgeryToken()
             <label>
-                Your login: @User.Identity.Name
+                Your login: @User.Identity?.Name
             </label>
             <label>
                 Your Email: @currentUserEmail
