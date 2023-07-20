@@ -65,7 +65,7 @@ a{
 }
 
 a:hover, .start-header .button:hover{
-    color: blue;
+    color: #6262ff;
 }
 
 .container{
@@ -154,6 +154,7 @@ a:hover, .start-header .button:hover{
     border-bottom: 2px solid #9b9b9b;
     padding: 20px 40px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: #222;
 }
 
 /*For CreatTask.cshtml*/
@@ -217,6 +218,7 @@ a:hover, .start-header .button:hover{
 
 .start-header .button{
     color: whitesmoke;
+    margin-left: 20px;
 }
 
 .start-header{
@@ -233,7 +235,7 @@ a:hover, .start-header .button:hover{
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        width: 15%;
+        width: max-content;
     }
 
 .main-content .pic-container {
