@@ -1,19 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ToDoListWeb.Interfaces;
 using Microsoft.Extensions.Configuration;
 using ToDoListWeb.Models;
 
 namespace ToDoListWeb.Entity
 {
-    public class TaskDbContex : DbContext
+    public class TaskDbContex : DbContext, IDataContext
     {
         public DbSet<ToDoTask> ToDoTask { get; set; }
-        
 
         private readonly IConfiguration _configuration;
 
         public TaskDbContex(IConfiguration configuration)
         {
             _configuration = configuration;
+        }
+        //метод реализации интрефейса для добовление сущностей в бд
+        public async Task AddAsync<TEntity>(TEntity entity) where TEntity : class
+        {
+            await Set<TEntity>().AddAsync(entity);
+        }
+        //метод реализации интерфейса для сохранений данных в бд
+        public async Task SaveChangesAsync()
+        {
+            await base.SaveChangesAsync();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ToDoListWeb.Interfaces;
 using Microsoft.Extensions.Configuration;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
@@ -17,7 +18,7 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddEnvironmentVariables();
 
 // Create DbContext with configuration
-builder.Services.AddDbContext<TaskDbContex>(options =>
+builder.Services.AddDbContext<IDataContext, TaskDbContex>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddDbContext<UserDbContext>(options =>

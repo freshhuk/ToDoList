@@ -64,7 +64,7 @@ namespace ToDoListWeb.Controllers
         {
             return View();
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult ChangeTaskPage(int Id)
         {
 
