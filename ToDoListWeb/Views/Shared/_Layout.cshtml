@@ -57,6 +57,18 @@
     <script src="~/js/site.js" type="text/javascript">
 
     </script>
+    <script>
+        // Обновляем код для установки текущей темы при загрузке страницы
+        // Этот код будет запускаться каждый раз при загрузке новой страницы
+        window.onload = function () {
+            var themeFromLocalStorage = localStorage.getItem("SettingsTheme");
+            if (themeFromLocalStorage) {
+                var themeSelect = document.querySelector("[name=themeSelect]");
+                themeSelect.value = themeFromLocalStorage;
+                changeFunc();
+            }
+        };
+    </script>
 </body>
 
 </html>

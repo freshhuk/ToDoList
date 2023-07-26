@@ -15,8 +15,8 @@ namespace ToDoListWeb.CookieFiles
                     // Настройки куки (например, время жизни и доступность)
                     Expires = DateTime.Now.AddDays(7) // Здесь можно установить желаемое время жизни куки
                 });
-            } 
-            return View();
+            }
+            return RedirectToAction("Settings", "Home");
         }
 
     }

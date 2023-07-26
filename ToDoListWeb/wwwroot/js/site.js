@@ -77,11 +77,21 @@ function turnLight() {
 }
 
 function changeFunc() {
-    var selectBox = document.querySelector(".editor form label select");
+    var selectBox = document.getElementById("themeSelect");
     var selectedValue = selectBox.options[selectBox.selectedIndex].value;
     if (selectedValue == "Black") {
         turnBlack();
-    } if (selectedValue == "Light") {
+    } else if (selectedValue == "Light") {
         turnLight();
     }
+    localStorage.setItem("SettingsTheme", selectedValue); // Сохраняем выбранную тему в localStorage
 }
+// Вызываем функцию для установки текущей темы при загрузке страницы
+window.onload = function () {
+    var themeFromLocalStorage = localStorage.getItem("SettingsTheme");
+    if (themeFromLocalStorage) {
+        var themeSelect = document.getElementById("themeSelect");
+        themeSelect.value = themeFromLocalStorage;
+        changeFunc(); // Вызываем функцию для установки текущей темы
+    }
+};
