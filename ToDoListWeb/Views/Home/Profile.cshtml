@@ -25,11 +25,16 @@
             <label>
                 Your Email: @currentUserEmail
             </label>
-            <input type="submit" value="Log out" class="submit log-out">
+
+            <div class="button-container">
+                <a class="button submit" href="@Url.Action("EditUserData", "Account")">
+                    Edit Account
+                </a>
+                <input type="submit" value="Log out" class="submit log-out">
+            </div>
+
         </form>
-        <a class="button" href="@Url.Action("EditUserData", "Account")">
-            Edit Account
-        </a>
+        
     </div>
 
     

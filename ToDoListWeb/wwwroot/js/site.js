@@ -39,10 +39,6 @@ function turnBlack() {
     aside.style.background = "#222";
     aside.style.borderRight = "2px solid #111";
 
-    button.style.color = "whitesmoke";
-
-    materialSymbol.style.color = "whitesmoke";
-
 }
 function turnLight() {
     labels.forEach(label => label.style.color = "#222");
@@ -69,10 +65,6 @@ function turnLight() {
 
     aside.style.background = "white"
     aside.style.borderRight = "2px solid #9b9b9b"
-
-    button.style.color = "#222";
-
-    materialSymbol.style.color = "#222";
 
 }
 
