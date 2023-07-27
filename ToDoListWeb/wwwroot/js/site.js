@@ -69,21 +69,28 @@ function turnLight() {
 }
 
 function changeFunc() {
-    var selectBox = document.getElementById("themeSelect");
-    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-    if (selectedValue == "Black") {
+    var themeSelect = document.getElementById("themeSelect");
+    var selectedTheme = themeSelect.value;
+
+    if (selectedTheme === "Black") {
         turnBlack();
-    } else if (selectedValue == "Light") {
+    } else if (selectedTheme === "Light") {
         turnLight();
     }
-    localStorage.setItem("SettingsTheme", selectedValue); // Сохраняем выбранную тему в localStorage
+
+    // Сохраняем выбранную тему в localStorage
+    localStorage.setItem("SettingsTheme", selectedTheme);
 }
+
 // Вызываем функцию для установки текущей темы при загрузке страницы
 window.onload = function () {
-    var themeFromLocalStorage = localStorage.getItem("SettingsTheme");
-    if (themeFromLocalStorage) {
-        var themeSelect = document.getElementById("themeSelect");
-        themeSelect.value = themeFromLocalStorage;
-        changeFunc(); // Вызываем функцию для установки текущей темы
+    var themeSelect = document.getElementById("themeSelect");
+    if (themeSelect) {
+        var themeFromLocalStorage = localStorage.getItem("SettingsTheme");
+        if (themeFromLocalStorage) {
+            themeSelect.value = themeFromLocalStorage;
+            changeFunc(); // Вызываем функцию для установки текущей темы
+        }
     }
+
 };
