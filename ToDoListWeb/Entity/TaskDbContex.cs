@@ -20,6 +20,11 @@ namespace ToDoListWeb.Entity
         {
             await Set<TEntity>().AddAsync(entity);
         }
+        //метод для получения наших данных
+        public List<ToDoTask> GetToDoTasks()
+        {
+            return ToDoTask.OrderBy(t => t.Id).ToList();
+        }
         //метод реализации интерфейса для сохранений данных в бд
         public async Task SaveChangesAsync()
         {

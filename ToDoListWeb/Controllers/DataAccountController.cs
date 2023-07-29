@@ -45,8 +45,8 @@ namespace ToDoListWeb.Controllers
                             // Изменения успешно применены
 
                             // Обновление идентификационных данных пользователя с новым логином
-                            (User.Identity as ClaimsIdentity).RemoveClaim((User.Identity as ClaimsIdentity).FindFirst(ClaimTypes.Name));
-                            (User.Identity as ClaimsIdentity).AddClaim(new Claim(ClaimTypes.Name, NewLoginProp));
+                            (User.Identity as ClaimsIdentity)?.RemoveClaim((User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.Name));
+                            (User.Identity as ClaimsIdentity)?.AddClaim(new Claim(ClaimTypes.Name, NewLoginProp));
                             TempData["CurrentUserEmail"] = user.Email;
 
                             // Перезапись идентификационных данных в текущем контексте аутентификации

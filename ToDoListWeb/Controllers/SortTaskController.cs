@@ -2,18 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Enums;
+using ToDoListWeb.Interfaces;
 
 namespace ToDoListWeb.Controllers
 {
     [Authorize]
     public class SortTaskController : Controller
     {
-        private readonly TaskDbContex _dbContext;
+        private readonly IDataContext _dbContext;
         public SortTaskEnum.SortTaskType taskEnum;
-        private readonly ILogger<TaskController> _logger;
+        private readonly ILogger<SortTaskController> _logger;
 
 
-        public SortTaskController([FromServices] TaskDbContex dbContext, ILogger<TaskController> logger)
+        public SortTaskController([FromServices] IDataContext dbContext, ILogger<SortTaskController> logger)
         {   
             _logger = logger;
             _dbContext = dbContext; 
@@ -54,43 +55,42 @@ namespace ToDoListWeb.Controllers
             return View("~/Views/Home/Index.cshtml");
         }
         //No Sort
-        [HttpGet]
+        
         public IActionResult NoSort()
         {
-            List<ToDoTask> sortedTasks = _dbContext.ToDoTask.ToList();
+            List<ToDoTask> sortedTasks = _dbContext.GetToDoTasks().ToList();
             _logger.LogInformation(message: "Метод сортировки ");
             ViewBag.NoSortTask = sortedTasks;
             return View("~/Views/Home/Index.cshtml");
         }
         //метод для филтрации заданий по дате min - max
-        [HttpGet]
+       
         public IActionResult DateDescending()
         {
-            List<ToDoTask> sortedTasks = _dbContext.ToDoTask.OrderBy(t => t.TaskTime).ToList();
+            List<ToDoTask> sortedTasks = _dbContext.GetToDoTasks().OrderBy(t => t.TaskTime).ToList();
             ViewBag.SortTasksMinToMax = sortedTasks;
             return View("~/Views/Home/Index.cshtml");
         }
         //метод для сортировки по дате max - min
-        [HttpGet]
+       
         public IActionResult DateAascending()
         {
-            List<ToDoTask> sortedTasks = _dbContext.ToDoTask.OrderByDescending(t => t.TaskTime).ToList();
+            List<ToDoTask> sortedTasks = _dbContext.GetToDoTasks().OrderByDescending(t => t.TaskTime).ToList();
             ViewBag.SortTasksMaxToMin = sortedTasks;
             return View("~/Views/Home/Index.cshtml");
         }
         //метод сортировики по индексу недавно добавленые
-        [HttpGet]
+        
         public IActionResult RecentlyAdded()
         {
-            List<ToDoTask> sortedTasks = _dbContext.ToDoTask.OrderByDescending(t => t.Id).ToList();
+            List<ToDoTask> sortedTasks = _dbContext.GetToDoTasks().OrderByDescending(t => t.Id).ToList();
             ViewBag.SortTaskRecentlyAdded = sortedTasks;
             return View("~/Views/Home/Index.cshtml");
         }
         //метод сортировики по индексу давно добавленые
-        [HttpGet]
         public IActionResult AddedLongAgo()
         {
-            List<ToDoTask> sortedTasks = _dbContext.ToDoTask.OrderBy(t => t.Id).ToList();
+            List<ToDoTask> sortedTasks = _dbContext.GetToDoTasks().OrderBy(t => t.Id).ToList();
             ViewBag.SortTaskOldAdded = sortedTasks;
             return View("~/Views/Home/Index.cshtml");
         }
