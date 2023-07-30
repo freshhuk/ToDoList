@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using ToDoListWeb.Interfaces;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
 
@@ -12,15 +13,13 @@ namespace ToDoListWeb.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<TaskController> _logger;
-        private readonly TaskDbContex _dbContext;
-        private readonly UserDbContext _userdbContext;
+        private readonly ILogger<HomeController> _logger;
+        private readonly IDataContext _dbContext;
 
 
-        public HomeController([FromServices] TaskDbContex dbContext, ILogger<TaskController> logger, UserDbContext userdbContext)
+        public HomeController([FromServices] IDataContext dbContext, ILogger<HomeController> logger)
         {
             _dbContext = dbContext;
-            _userdbContext = userdbContext;
             _logger = logger;
         }
         
@@ -29,10 +28,9 @@ namespace ToDoListWeb.Controllers
  
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> StartPage()
+        public IActionResult StartPage()
         {
-            await _dbContext.Database.EnsureCreatedAsync();
-            await _userdbContext.Database.EnsureCreatedAsync();
+     
             return View();
         }
         
@@ -68,18 +66,15 @@ namespace ToDoListWeb.Controllers
         public IActionResult ChangeTaskPage(int Id)
         {
 
-            using (var TaskDb = _dbContext)
+            var changedTask = _dbContext.ToDoTask.Find(Id);
+            if (changedTask == null)
             {
-
-                var changedTask = TaskDb.ToDoTask.Find(Id);
-                if (changedTask == null)
-                {
-                    // В случае, если задача с указанным Id не найдена, перенаправляем на другую страницу или выводим сообщение об ошибке
-                    return RedirectToAction("Index", "Home");
-                }
-                ViewBag.ChangedTask = changedTask;
-                _logger.LogInformation(message: "Отправили данные о задаче которую изменяем");
+                // В случае, если задача с указанным Id не найдена, перенаправляем на другую страницу или выводим сообщение об ошибке
+                return RedirectToAction("Index", "Home");
             }
+            ViewBag.ChangedTask = changedTask;
+            _logger.LogInformation(message: "Отправили данные о задаче которую изменяем");
+            
             if (TempData.ContainsKey("ErrorMessage"))
             {
                 ViewBag.ErrorMessage = TempData["ErrorMessage"];
@@ -88,16 +83,9 @@ namespace ToDoListWeb.Controllers
             {
                 ViewBag.ErrorMessage = null;  
             }
-
             return View();
         }
 
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
         //метод если текущая дата совпадает с датой в задаче то статус не выполнено
         private async Task CheckDateTask()
         {

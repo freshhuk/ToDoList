@@ -13,15 +13,15 @@ namespace ToDoListWeb.Controllers
     public class AccountController : Controller
     {
         private readonly TaskDbContex _dbContext;
-
+        private readonly UserDbContext _userdbContext;
         private readonly ILogger<TaskController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(TaskDbContex dbContext, SignInManager<User> signInManager, UserManager<User> userManager, ILogger<TaskController> logger)
+        public AccountController(TaskDbContex dbContext, UserDbContext userdbContext, SignInManager<User> signInManager, UserManager<User> userManager, ILogger<TaskController> logger)
         {
             _dbContext = dbContext;
-            
+            _userdbContext = userdbContext;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -104,8 +104,9 @@ namespace ToDoListWeb.Controllers
         //открывает форму для регестрации
         
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
+            await _userdbContext.Database.EnsureCreatedAsync();
             return View(new UserRegistration());
         }
 

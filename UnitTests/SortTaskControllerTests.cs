@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ToDoListWeb.Enums;
 using ToDoListWeb.Controllers;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Interfaces;
@@ -15,7 +16,25 @@ namespace UnitTests
 {
     public class SortTaskControllerTests
     {
+        [Fact]
+        public void GetSortEnum()
+        {
+            //Arrange
+            var mockDbContext = new Mock<IDataContext>();
+            mockDbContext.Setup(m => m.GetToDoTasks()).Returns(GetTestTasks());
+            var mockLogger = new Mock<ILogger<SortTaskController>>();
 
+            var controller = new SortTaskController(mockDbContext.Object, mockLogger.Object);
+
+            //Act 
+            var result = controller.GetSortEnum("No Sort") as ViewResult;
+
+            //Assert
+            var actualSortType = result.ViewData["SortType"] as SortTaskEnum.SortTaskType?;
+            Assert.NotNull(result);
+            Assert.Equal(SortTaskEnum.SortTaskType.NoSort, actualSortType);
+
+        }
         [Fact]
         public void NoSortTest()
         {
