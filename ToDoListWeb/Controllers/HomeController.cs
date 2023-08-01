@@ -52,12 +52,13 @@ namespace ToDoListWeb.Controllers
             }
             return View();
         }
-
+        [HttpGet]
         public IActionResult Profile()
         {
 
             return View();
         }
+        [HttpGet]
         public IActionResult Settings()
         {
             return View();
@@ -75,6 +76,7 @@ namespace ToDoListWeb.Controllers
             ViewBag.ChangedTask = changedTask;
             _logger.LogInformation(message: "Отправили данные о задаче которую изменяем");
             
+            //for error
             if (TempData.ContainsKey("ErrorMessage"))
             {
                 ViewBag.ErrorMessage = TempData["ErrorMessage"];
@@ -89,16 +91,22 @@ namespace ToDoListWeb.Controllers
         //метод если текущая дата совпадает с датой в задаче то статус не выполнено
         private async Task CheckDateTask()
         {
-            //можно и использовать linq но покачто хай будет через условие 
-            //var tasksToUpdate = await _dbContext.ToDoTask.Where(task => task.TaskTime <= DateTime.Now).ToListAsync();
-            foreach (var task in _dbContext.ToDoTask)
+            if(_dbContext.GetToDoTasks() != null)
             {
-                if (task.TaskTime <= DateTime.Now)
+                foreach (var task in _dbContext.GetToDoTasks())
                 {
-                    task.Status = "Not done";
-                }           
+                    if (task.TaskTime <= DateTime.Now)
+                    {
+                        task.Status = "Not done";
+                    }           
+                }
+                await _dbContext.SaveChangesAsync();
             }
-            await _dbContext.SaveChangesAsync();
+            else
+            {
+                _logger.LogWarning(message: "_dbContext.ToDoTask is null");
+            }
+            
         }
     }
 }
