@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using ToDoListWeb.Entity;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Http;
 
 namespace UnitTests
 {
@@ -31,6 +33,24 @@ namespace UnitTests
             Assert.IsType<ViewResult>(result);
         }
         [Fact]
+        public async Task IndexTest()
+        {
+            //Arrange
+            var mockDbContext = new Mock<IDataContext>();
+            var mockLogger = new Mock<ILogger<HomeController>>();
+            mockDbContext.Setup(m => m.GetToDoTasks()).Returns(GetTestTasks());
+            var controller = new HomeController(mockDbContext.Object, mockLogger.Object);
+
+            //Act
+            var result = await controller.Index() as ViewResult;
+
+            //Assert
+            Assert.NotNull(result);
+            var sortedTask = result.ViewData["NoSortTask"] as List<ToDoTask>;
+            Assert.NotNull(sortedTask);
+            Assert.NotEmpty(sortedTask);
+        }
+        [Fact]
         public void SettingsPageTest()
         {
             //Arrange
@@ -50,7 +70,6 @@ namespace UnitTests
         [Fact]
         public void CreateTaskPageTest()
         {
-            //дописатт тест
 
             //Arrange
             var mockDbContext = new Mock<IDataContext>();
@@ -58,12 +77,27 @@ namespace UnitTests
 
             var controller = new HomeController(mockDbContext.Object, mockLogger.Object);
 
+            var expectedErrorMessage = "Error message to display in ViewBag";
+
+            // Создаем TempData с ключом "ErrorMessage"
+            var httpContext = new DefaultHttpContext();
+            var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
+            tempData["ErrorMessage"] = expectedErrorMessage;
+            controller.TempData = tempData;
+            controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = httpContext
+            };
+
             //Act
             var result = controller.CreateTask() as ViewResult;
 
             //Assert
             Assert.NotNull(result);
             Assert.IsType<ViewResult>(result);
+
+            var actualErrorMessage = result.ViewData["ErrorMessage"] as string;
+            Assert.Equal(expectedErrorMessage, actualErrorMessage);
         }
 
         [Fact]

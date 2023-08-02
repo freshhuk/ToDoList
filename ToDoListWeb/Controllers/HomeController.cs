@@ -39,7 +39,7 @@ namespace ToDoListWeb.Controllers
         public async Task<IActionResult> Index()
         {
             await CheckDateTask();
-            List<ToDoTask> sortedTasks = await _dbContext.ToDoTask.ToListAsync();
+            List<ToDoTask> sortedTasks =  _dbContext.GetToDoTasks().ToList();
             ViewBag.NoSortTask = sortedTasks;
             return View();
         }
