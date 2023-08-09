@@ -53,6 +53,11 @@ namespace ToDoListWeb.Controllers
             return View();
         }
         [HttpGet]
+        public IActionResult GeneralTasks()
+        {
+            return View();
+        }
+        [HttpGet]
         public IActionResult Profile()
         {
 

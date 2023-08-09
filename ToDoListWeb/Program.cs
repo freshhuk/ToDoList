@@ -6,6 +6,7 @@ using ToDoListWeb.Interfaces;
 using Microsoft.Extensions.Configuration;
 using ToDoListWeb.Entity;
 using ToDoListWeb.Models;
+using ToDoListWeb.ClientSide;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,11 @@ builder.Services.AddScoped<TaskDbContex>(provider =>
     var configuration = provider.GetRequiredService<IConfiguration>();
     return new TaskDbContex(configuration);
 });
-
+builder.Services.AddScoped<GeneralTasksDbContext>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    return new GeneralTasksDbContext(configuration);
+});
 builder.Services.AddScoped<UserDbContext>(provider =>
 {
     var configuration = provider.GetRequiredService<IConfiguration>();
@@ -75,6 +80,8 @@ builder.Services.Configure<MvcViewOptions>(options =>
     options.HtmlHelperOptions.ClientValidationEnabled = true;
 });
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -87,6 +94,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+//Маршрут для хаба
+app.MapHub<TasksHub>("/GeneralTasks");
+
 
 app.UseRouting();
 app.UseAuthentication();

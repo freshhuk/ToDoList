@@ -99,7 +99,22 @@ namespace UnitTests
             var actualErrorMessage = result.ViewData["ErrorMessage"] as string;
             Assert.Equal(expectedErrorMessage, actualErrorMessage);
         }
+        [Fact]
+        public void GeneralTasksPageTest()
+        {
+            //Arrange
+            var mockDbContext = new Mock<IDataContext>();
+            var mockLogger = new Mock<ILogger<HomeController>>();
 
+            var controller = new HomeController(mockDbContext.Object, mockLogger.Object);
+
+            //Act
+            var result = controller.GeneralTasks() as ViewResult;
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.IsType<ViewResult>(result);
+        }
         [Fact]
         public void ProfilePageTest()
         {
