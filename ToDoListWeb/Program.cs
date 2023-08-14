@@ -26,6 +26,9 @@ builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UserConnection")));
 
 
+builder.Services.AddDbContext<GeneralTasksDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("GeneralTaskConnection")));
+
 builder.Services.AddScoped<TaskDbContex>(provider =>
 {
     var configuration = provider.GetRequiredService<IConfiguration>();

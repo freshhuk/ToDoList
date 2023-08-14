@@ -106,7 +106,7 @@ namespace ToDoListWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Register()
         {
-            await _userdbContext.Database.EnsureCreatedAsync();
+            await _userdbContext.Database.MigrateAsync();
             return View(new UserRegistration());
         }
 
