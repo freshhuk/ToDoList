@@ -1,0 +1,27 @@
+﻿@using ToDoListWeb.Entity;
+@using ToDoListWeb.Enums;
+@using ToDoListWeb.Models;
+@*Тут мы подключаем наш слой который находится в папке Shared*@
+@{
+    Layout = "_Layout";
+}
+
+<header class="header">
+    <h2>Your tasks</h2>
+</header>
+<main class="main">
+    @*Кнопка для приглашение пользователя*@
+    <div class="container sort">
+        <form method="post" action="~/UserService/InviteUserToHubByLoginAsync">
+
+            <label>
+                User login
+                <input type="text" name="TaskName" placeholder="Task name" class="text-input" />
+            </label>
+
+            <input type="submit" value="Add" class="submit">
+
+        </form>
+
+    </div>
+</main>

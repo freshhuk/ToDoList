@@ -2,10 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ToDoListWeb.Interfaces;
 using Microsoft.Extensions.Configuration;
-using ToDoListWeb.Entity;
-using ToDoListWeb.Models;
+
 using ToDoListWeb.ClientSide;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,32 +16,7 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
-// Create DbContext with configuration
-builder.Services.AddDbContext<IDataContext, TaskDbContex>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDbContext<UserDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("UserConnection")));
-
-
-builder.Services.AddDbContext<GeneralTasksDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("GeneralTaskConnection")));
-
-builder.Services.AddScoped<TaskDbContex>(provider =>
-{
-    var configuration = provider.GetRequiredService<IConfiguration>();
-    return new TaskDbContex(configuration);
-});
-builder.Services.AddScoped<GeneralTasksDbContext>(provider =>
-{
-    var configuration = provider.GetRequiredService<IConfiguration>();
-    return new GeneralTasksDbContext(configuration);
-});
-builder.Services.AddScoped<UserDbContext>(provider =>
-{
-    var configuration = provider.GetRequiredService<IConfiguration>();
-    return new UserDbContext(configuration);
-});
 #region for logging aand register
 //Role
 builder.Services.AddIdentity<User, IdentityRole>()

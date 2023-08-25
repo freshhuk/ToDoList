@@ -3,9 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListWeb", "ToDoListWeb\ToDoListWeb.csproj", "{9D7937BB-492B-417B-9D2C-35B49FB6BC29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListWebAPI", "ToDoListWeb\ToDoListWebAPI.csproj", "{9D7937BB-492B-417B-9D2C-35B49FB6BC29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{08B0A7A2-9A62-4D68-AE18-44A57623BDF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{08B0A7A2-9A62-4D68-AE18-44A57623BDF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListWebDomain", "ToDoListWebDomain\ToDoListWebDomain.csproj", "{8E89BAE2-3C22-422F-9433-EC9A6635E3E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListWebInfrastructure", "ToDoListWebInfrastructure\ToDoListWebInfrastructure.csproj", "{EFB3BB27-1988-43DF-BBB2-5066E36FFC67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListWebServices", "ToDoListWebServices\ToDoListWebServices.csproj", "{FBDF6FB7-E58E-4556-9DBB-74F578A38C91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToListWebUI", "ToListWebUI\ToListWebUI.csproj", "{337D272A-2C21-4D72-85EF-A54406D47718}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +29,22 @@ Global
 		{08B0A7A2-9A62-4D68-AE18-44A57623BDF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08B0A7A2-9A62-4D68-AE18-44A57623BDF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08B0A7A2-9A62-4D68-AE18-44A57623BDF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E89BAE2-3C22-422F-9433-EC9A6635E3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E89BAE2-3C22-422F-9433-EC9A6635E3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E89BAE2-3C22-422F-9433-EC9A6635E3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E89BAE2-3C22-422F-9433-EC9A6635E3E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFB3BB27-1988-43DF-BBB2-5066E36FFC67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFB3BB27-1988-43DF-BBB2-5066E36FFC67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFB3BB27-1988-43DF-BBB2-5066E36FFC67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFB3BB27-1988-43DF-BBB2-5066E36FFC67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBDF6FB7-E58E-4556-9DBB-74F578A38C91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBDF6FB7-E58E-4556-9DBB-74F578A38C91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBDF6FB7-E58E-4556-9DBB-74F578A38C91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBDF6FB7-E58E-4556-9DBB-74F578A38C91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{337D272A-2C21-4D72-85EF-A54406D47718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{337D272A-2C21-4D72-85EF-A54406D47718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{337D272A-2C21-4D72-85EF-A54406D47718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{337D272A-2C21-4D72-85EF-A54406D47718}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

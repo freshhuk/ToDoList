@@ -1,0 +1,42 @@
+﻿@*Применяем наш слой*@
+@{
+    Layout = "_Layout";
+}
+@using System.Security.Claims
+
+@using To;
+@{
+    var userEmail = (User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.Email)?.Value;
+}
+
+
+<header class="header">
+    <h2>Change your account</h2>
+</header>
+
+<main class="main">
+    <div class="editor">
+        <form action="~/DataAccount/ChangeDataAccount" method="post">
+            <label>
+                New Login
+                <input type="text" name="NewLoginProp" placeholder="@User.Identity?.Name" class="text-input" />
+            </label>
+
+
+            <label>
+                New Email
+                <input type="text" name="NewEmailProp" placeholder="@userEmail" class="text-input" />
+            </label>
+            <label>
+                Password
+                <input type="text" name="PassWord" class="text-input" />
+            </label>
+            <label>
+                New password
+                <input type="text" name="NewPassword" class="text-input" />
+            </label>
+            <input type="submit" value="Submit" class="submit">
+        </form>
+
+    </div>
+</main>

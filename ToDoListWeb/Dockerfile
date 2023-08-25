@@ -4,8 +4,7 @@ WORKDIR /src
 
 # Копируем файл проекта
 COPY ["ToDoListWeb.csproj", "ToDoListWeb/"]
-
-RUN dotnet restore "ToDoListWeb.csproj"
+RUN dotnet restore "ToDoListWeb/ToDoListWeb.csproj"
 
 # Копируем остальные файлы
 COPY . .
@@ -13,8 +12,8 @@ COPY . .
 # Переходим в папку проекта
 WORKDIR "/src/ToDoListWeb"
 
-# Собираем проект
-RUN dotnet build "ToDoListWeb.csproj" -c Release -o /app/build
+# Собираем проект без использования выходной директории
+RUN dotnet build "ToDoListWeb.csproj" -c Release
 
 # Этап для настройки SQL Server
 FROM mcr.microsoft.com/mssql/server:2022-latest-windows AS sqlserver
@@ -26,10 +25,16 @@ EXPOSE 1433
 
 # Этап для создания финального образа с ASP.NET Core и SQL Server
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
+
+# Создаем рабочую директорию
 WORKDIR /app
 
 # Копируем скомпилированные файлы из другой папки
-COPY --from=build /D:/PublishProject/ToDoListProd .
+COPY D:/PublishProject/ToDoListProd .
 
 EXPOSE 80
 EXPOSE 443
+
+# Запускаем веб-приложение
+ENTRYPOINT ["dotnet", "ToDoListWeb.dll"]
+
