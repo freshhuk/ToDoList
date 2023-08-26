@@ -12,4 +12,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoListWebDomain\ToDoListWebDomain.csproj" />
+    <ProjectReference Include="..\ToDoListWebInfrastructure\ToDoListWebInfrastructure.csproj" />
+    <ProjectReference Include="..\ToDoListWebServices\ToDoListWebServices.csproj" />
+    <ProjectReference Include="..\ToDoListWeb\ToDoListWebAPI.csproj" />
+  </ItemGroup>
+
 </Project>

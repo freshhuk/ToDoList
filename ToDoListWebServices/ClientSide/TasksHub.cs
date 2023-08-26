@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Authorization;
-using ToDoListWeb.Entity;
-using ToDoListWeb.Models;
+using ToDoListWebDomain.Domain.Entity;
 
-namespace ToDoListWeb.ClientSide
+
+namespace ToDoListWebServices.ClientSide
 {
     [Authorize]
     public class TasksHub : Hub

@@ -3,7 +3,9 @@
 }
 @using System.Security.Claims
 
-@using ToDoListWeb.Entity;
+
+@using ToDoListWebDomain.Domain.Entity;
+
 @{
     var userEmail = (User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.Email)?.Value;
     var currentUserEmail = TempData["CurrentUserEmail"] as string ?? userEmail;

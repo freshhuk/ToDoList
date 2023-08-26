@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using ToDoListWeb.Interfaces;
-using ToDoListWeb.Entity;
-using ToDoListWeb.Models;
+using ToDoListWebDomain.Domain.Entity;
+using ToDoListWebInfrastructure.Interfaces;
 
 namespace ToDoListWeb.Controllers
 {
@@ -14,10 +13,10 @@ namespace ToDoListWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IDataContext _dbContext;
+        private readonly IDataContext<ToDoTask> _dbContext;
 
 
-        public HomeController([FromServices] IDataContext dbContext, ILogger<HomeController> logger)
+        public HomeController([FromServices] IDataContext<ToDoTask> dbContext, ILogger<HomeController> logger)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -30,7 +29,6 @@ namespace ToDoListWeb.Controllers
         [HttpGet]
         public IActionResult StartPage()
         {
-     
             return View();
         }
         
@@ -39,7 +37,7 @@ namespace ToDoListWeb.Controllers
         public async Task<IActionResult> Index()
         {
             await CheckDateTask();
-            List<ToDoTask> sortedTasks =  _dbContext.GetToDoTasks().ToList();
+            List<ToDoTask> sortedTasks =  _dbContext.GetAll().ToList();
             ViewBag.NoSortTask = sortedTasks;
             return View();
         }
@@ -72,7 +70,7 @@ namespace ToDoListWeb.Controllers
         public IActionResult ChangeTaskPage(int Id)
         {
 
-            var changedTask = _dbContext.ToDoTask.Find(Id);
+            var changedTask = _dbContext.Get(Id);
             if (changedTask == null)
             {
                 // В случае, если задача с указанным Id не найдена, перенаправляем на другую страницу или выводим сообщение об ошибке
@@ -96,9 +94,9 @@ namespace ToDoListWeb.Controllers
         //метод если текущая дата совпадает с датой в задаче то статус не выполнено
         private async Task CheckDateTask()
         {
-            if(_dbContext.GetToDoTasks() != null)
+            if(_dbContext.GetAll() != null)
             {
-                foreach (var task in _dbContext.GetToDoTasks())
+                foreach (var task in _dbContext.GetAll())
                 {
                     if (task.TaskTime <= DateTime.Now)
                     {

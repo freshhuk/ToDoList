@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using ToDoListWeb.Controllers;
-using ToDoListWeb.Entity;
-using ToDoListWeb.Models;
 
-namespace ToDoListWeb.ClientSide
+using ToDoListWebInfrastructure.Context;
+using ToDoListWebDomain.Domain.Models;
+
+namespace ToDoListWebServices.ClientSide
 {
     [Authorize]
     public class UserService

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ToDoListWeb.Entity;
-using ToDoListWeb.Interfaces;
-using ToDoListWeb.Models;
+using ToDoListWebInfrastructure.Interfaces;
+using ToDoListWebDomain.Domain.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -9,14 +8,14 @@ using Microsoft.AspNetCore.Authorization;
 namespace ToDoListWeb.Controllers
 {
     [Authorize]
-    public class TaskController : Controller, ITaskController
+    public class TaskController : Controller
     {
         
         private readonly ILogger<TaskController> _logger;
-        private readonly IDataContext _dbContext;
+        private readonly IDataContext<ToDoTask> _dbContext;
 
 
-        public TaskController([FromServices] IDataContext dbContext, ILogger<TaskController> logger)
+        public TaskController([FromServices] IDataContext<ToDoTask> dbContext, ILogger<TaskController> logger)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -63,10 +62,10 @@ namespace ToDoListWeb.Controllers
         {
             
             
-            var Task = await _dbContext.ToDoTask.FindAsync(Id);
+            var Task =  _dbContext.Get(Id);
             if (Task != null)
             {
-                _dbContext.ToDoTask.Remove(Task);
+                _dbContext.Delete(Id);
                 await _dbContext.SaveChangesAsync();
                 return Redirect("~/Home/Index");
             }
@@ -82,7 +81,7 @@ namespace ToDoListWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeTaskDb(int Id, string TaskName, string TaskDescription, DateTime TaskData, string TaskStatus)
         {
-            var Task = _dbContext.ToDoTask.Find(Id);
+            var Task = _dbContext.Get(Id);
             if (Task != null)
             {
                  _logger.LogInformation(message: "мы попали в метод записи ");

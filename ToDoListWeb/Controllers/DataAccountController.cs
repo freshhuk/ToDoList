@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ToDoListWeb.Entity;
-using ToDoListWeb.Models;
+using ToDoListWebInfrastructure.Context;
+using ToDoListWebDomain.Domain.Models;
 
 namespace ToDoListWeb.Controllers
 {

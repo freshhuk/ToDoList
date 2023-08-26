@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using Moq;
 using ToDoListWeb.Controllers;
-using ToDoListWeb.Interfaces;
+using ToDoListWebInfrastructure.Interfaces;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
-using ToDoListWeb.Entity;
+using ToDoListWebDomain.Domain.Entity;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Http;
 

@@ -1,4 +1,4 @@
-﻿namespace ToDoListWeb.ClientSide
+﻿namespace ToDoListWebServices.ClientSide
 {
     public class HubParticipant
     {
