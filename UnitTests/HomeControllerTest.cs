@@ -20,7 +20,7 @@ namespace UnitTests
         public void StartPageTest()
         {
             //Arrange
-            var mockDbContext = new Mock<IDataContext>();
+            var mockDbContext = new Mock<IDataContext<MockToDoTask>>();
             var mockLogger = new Mock<ILogger<HomeController>>();
 
             var controller = new HomeController(mockDbContext.Object, mockLogger.Object);
@@ -36,7 +36,7 @@ namespace UnitTests
         public async Task IndexTest()
         {
             //Arrange
-            var mockDbContext = new Mock<IDataContext>();
+            var mockDbContext = new Mock<IDataContext<MockToDoTask>>();
             var mockLogger = new Mock<ILogger<HomeController>>();
             mockDbContext.Setup(m => m.GetToDoTasks()).Returns(GetTestTasks());
             var controller = new HomeController(mockDbContext.Object, mockLogger.Object);
@@ -54,7 +54,7 @@ namespace UnitTests
         public void SettingsPageTest()
         {
             //Arrange
-            var mockDbContext = new Mock<IDataContext>();
+            var mockDbContext = new Mock<IDataContext<MockToDoTask>>();
             var mockLogger = new Mock<ILogger<HomeController>>();
 
             var controller = new HomeController(mockDbContext.Object, mockLogger.Object);
@@ -72,7 +72,7 @@ namespace UnitTests
         {
 
             //Arrange
-            var mockDbContext = new Mock<IDataContext>();
+            var mockDbContext = new Mock<IDataContext<MockToDoTask>>();
             var mockLogger = new Mock<ILogger<HomeController>>();
 
             var controller = new HomeController(mockDbContext.Object, mockLogger.Object);
@@ -103,7 +103,7 @@ namespace UnitTests
         public void GeneralTasksPageTest()
         {
             //Arrange
-            var mockDbContext = new Mock<IDataContext>();
+            var mockDbContext = new Mock<IDataContext<MockToDoTask>>();
             var mockLogger = new Mock<ILogger<HomeController>>();
 
             var controller = new HomeController(mockDbContext.Object, mockLogger.Object);
@@ -119,7 +119,7 @@ namespace UnitTests
         public void ProfilePageTest()
         {
             //Arrange
-            var mockDbContext = new Mock<IDataContext>();
+            var mockDbContext = new Mock<IDataContext<MockToDoTask>>();
             var mockLogger = new Mock<ILogger<HomeController>>();
 
             var controller = new HomeController(mockDbContext.Object, mockLogger.Object);
