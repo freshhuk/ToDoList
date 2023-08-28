@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using ToDoListWebDomain.Domain.Entity;
+using ToDoListWebDomain.Domain.Models;
 using ToDoListWebInfrastructure.Context;
 using ToDoListWebInfrastructure.Interfaces;
 
@@ -14,10 +16,10 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddEnvironmentVariables();
 
 // Create DbContext with configuration
-builder.Services.AddDbContext<IDataContext, TaskDbContex>(options =>
+builder.Services.AddDbContext<IDataContext<ToDoTask>, TaskDbContex>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDbContext<UserDbContext>(options =>
+builder.Services.AddDbContext< IDataContext<User>, UserDbContext >(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UserConnection")));
 
 

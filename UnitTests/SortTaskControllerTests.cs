@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ToDoListWeb.Enums;
 using ToDoListWeb.Controllers;
-using ToDoListWeb.Entity;
-using ToDoListWeb.Interfaces;
+using ToDoListWebDomain.Domain.Entity;
+using ToDoListWebInfrastructure.Interfaces;
 using Xunit;
 
 namespace UnitTests
@@ -20,8 +20,8 @@ namespace UnitTests
         public void GetSortEnum()
         {
             //Arrange
-            var mockDbContext = new Mock<IDataContext>();
-            mockDbContext.Setup(m => m.GetToDoTasks()).Returns(GetTestTasks());
+            var mockDbContext = new Mock<IDataContext<ToDoTask>>();
+            mockDbContext.Setup(m => m.GetAll()).Returns(GetAll());
             var mockLogger = new Mock<ILogger<SortTaskController>>();
 
             var controller = new SortTaskController(mockDbContext.Object, mockLogger.Object);
@@ -39,8 +39,8 @@ namespace UnitTests
         public void NoSortTest()
         {
             //Arrange
-            var mockDbContext = new Mock<IDataContext>();
-            mockDbContext.Setup(m => m.GetToDoTasks()).Returns(GetTestTasks());
+            var mockDbContext = new Mock<IDataContext<ToDoTask>>();
+            mockDbContext.Setup(m => m.GetAll()).Returns(GetAll());
             var mockLogger = new Mock<ILogger<SortTaskController>>();
 
             var controller = new SortTaskController(mockDbContext.Object, mockLogger.Object);
@@ -59,8 +59,8 @@ namespace UnitTests
         public void DateDescendingTest()
         {
             //Arrange
-            var mockDbContext = new Mock<IDataContext>();
-            mockDbContext.Setup(m => m.GetToDoTasks()).Returns(GetTestTasks());
+            var mockDbContext = new Mock<IDataContext<ToDoTask>>();
+            mockDbContext.Setup(m => m.GetAll()).Returns(GetAll());
             var mockLogger = new Mock<ILogger<SortTaskController>>();
 
             var controller = new SortTaskController(mockDbContext.Object, mockLogger.Object);
@@ -79,8 +79,8 @@ namespace UnitTests
         public void DateAascendingTest()
         {
             //Arrange
-            var mockDbContext = new Mock<IDataContext>();
-            mockDbContext.Setup(m => m.GetToDoTasks()).Returns(GetTestTasks());
+            var mockDbContext = new Mock<IDataContext<ToDoTask>>();
+            mockDbContext.Setup(m => m.GetAll()).Returns(GetAll());
             var mockLogger = new Mock<ILogger<SortTaskController>>();
             
             var controller = new SortTaskController(mockDbContext.Object, mockLogger.Object);
@@ -99,8 +99,8 @@ namespace UnitTests
         public void RecentlyAddedTest()
         {
             //Arrange
-            var mockDbContext = new Mock<IDataContext>();
-            mockDbContext.Setup(m => m.GetToDoTasks()).Returns(GetTestTasks());
+            var mockDbContext = new Mock<IDataContext<ToDoTask>>();
+            mockDbContext.Setup(m => m.GetAll()).Returns(GetAll());
             var mockLogger = new Mock<ILogger<SortTaskController>>();
 
             var controller = new SortTaskController(mockDbContext.Object, mockLogger.Object);
@@ -119,8 +119,8 @@ namespace UnitTests
         public void AddedLongAgo_ReturnsViewResult()
         {
             //Arraange
-            var mockDbContext = new Mock<IDataContext>();
-            mockDbContext.Setup(m => m.GetToDoTasks()).Returns(GetTestTasks());
+            var mockDbContext = new Mock<IDataContext<ToDoTask>>();
+            mockDbContext.Setup(m => m.GetAll()).Returns(GetAll());
 
             var mockLogger = new Mock<ILogger<SortTaskController>>();
 
@@ -138,7 +138,7 @@ namespace UnitTests
 
 
         // Вспомогательный метод для создания тестовых данных
-        private List<ToDoTask> GetTestTasks()
+        private List<ToDoTask> GetAll()
         {
             return new List<ToDoTask>
             {

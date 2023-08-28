@@ -23,18 +23,18 @@ namespace UnitTests
         public DateTime TaskTime { get; set; }
     }
 
-    internal class TestDbContext : DbContext, IDataContext<MockToDoTask>
+    internal class TestDbContext : DbContext, IDataContext<ToDoTask>
     {
         
-        public List<MockToDoTask> _testData = new List<MockToDoTask>()
+        public List<ToDoTask> _testData = new List<ToDoTask>()
         {
-           new MockToDoTask() { Id = 0, NameTask ="trtrt,", DescriptionTask="dfdfefe", TaskTime = DateTime.Now, Status ="penis" },
-           new MockToDoTask() { Id = 1, NameTask ="trtrt,", DescriptionTask="dfdfefe", TaskTime = DateTime.Now, Status ="penis"},
-           new MockToDoTask() { Id = 2, NameTask ="trtrt,", DescriptionTask="dfdfefe", TaskTime = DateTime.Now, Status ="penis"},
-           new MockToDoTask() { Id = 3, NameTask ="trtrt,", DescriptionTask="dfdfefe", TaskTime = DateTime.Now, Status ="penis"},
+           new ToDoTask() { Id = 0, NameTask ="trtrt,", DescriptionTask="dfdfefe", TaskTime = DateTime.Now, Status ="penis" },
+           new ToDoTask() { Id = 1, NameTask ="trtrt,", DescriptionTask="dfdfefe", TaskTime = DateTime.Now, Status ="penis"},
+           new ToDoTask() { Id = 2, NameTask ="trtrt,", DescriptionTask="dfdfefe", TaskTime = DateTime.Now, Status ="penis"},
+           new ToDoTask() { Id = 3, NameTask ="trtrt,", DescriptionTask="dfdfefe", TaskTime = DateTime.Now, Status ="penis"},
         };
 
-        public async Task AddAsync(MockToDoTask item)
+        public async Task AddAsync(ToDoTask item)
         {
             _testData.Add(item);
         }
@@ -46,7 +46,7 @@ namespace UnitTests
                 _testData.Remove(task);
         }
 
-        public MockToDoTask Get(int id)
+        public ToDoTask Get(int id)
         {
             var task = _testData.SingleOrDefault(t => t.Id == id);
             if (task == null)
@@ -56,7 +56,7 @@ namespace UnitTests
             return task;
         }
 
-        public IEnumerable<MockToDoTask> GetAll()
+        public IEnumerable<ToDoTask> GetAll()
         {
             return _testData.OrderBy(t => t.Id);
         }
@@ -67,7 +67,7 @@ namespace UnitTests
             return Task.CompletedTask;
         }
 
-        public async Task Update(MockToDoTask item)
+        public async Task Update(ToDoTask item)
         {
             var existingTask = _testData.FirstOrDefault(t => t.Id == item.Id);
             if (existingTask != null)
