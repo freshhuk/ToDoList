@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-
+using ToDoListWebDomain.Domain.Entity;
+using ToDoListWebDomain.Domain.Models;
+using ToDoListWebInfrastructure.Context;
+using ToDoListWebInfrastructure.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +20,33 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddEnvironmentVariables();
 
 
+
+// Create DbContext with configuration
+builder.Services.AddDbContext<IDataContext<ToDoTask>, TaskDbContex>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDbContext<IDataContext<User>, UserDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("UserConnection")));
+
+
+builder.Services.AddDbContext<GeneralTasksDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("GeneralTaskConnection")));
+
+builder.Services.AddScoped<TaskDbContex>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    return new TaskDbContex(configuration);
+});
+builder.Services.AddScoped<GeneralTasksDbContext>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    return new GeneralTasksDbContext(configuration);
+});
+builder.Services.AddScoped<UserDbContext>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    return new UserDbContext(configuration);
+});
 
 
 builder.Services.Configure<MvcViewOptions>(options =>
@@ -48,7 +78,8 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=StartPage}/{id?}");
-    
+    pattern: "api/{controller=Task}/{action=GetTaskDb}/{id?}");
+
+
 
 app.Run();

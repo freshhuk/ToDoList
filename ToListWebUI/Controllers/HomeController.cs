@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using ToDoListWebDomain.Domain.Entity;
 using ToDoListWebInfrastructure.Interfaces;
 
-namespace ToDoListWeb.Controllers
+namespace ToListWebUI.Controllers
 {
     [Authorize]
     public class HomeController : Controller
@@ -21,23 +18,20 @@ namespace ToDoListWeb.Controllers
             _dbContext = dbContext;
             _logger = logger;
         }
-        
 
-        
- 
         [AllowAnonymous]
         [HttpGet]
         public IActionResult StartPage()
         {
             return View();
         }
-        
+
         //отсылаем наши данные на страницу
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             await CheckDateTask();
-            List<ToDoTask> sortedTasks =  _dbContext.GetAll().ToList();
+            List<ToDoTask> sortedTasks = _dbContext.GetAll().ToList();
             ViewBag.NoSortTask = sortedTasks;
             return View();
         }
@@ -78,7 +72,7 @@ namespace ToDoListWeb.Controllers
             }
             ViewBag.ChangedTask = changedTask;
             _logger.LogInformation(message: "Отправили данные о задаче которую изменяем");
-            
+
             //for error
             if (TempData.ContainsKey("ErrorMessage"))
             {
@@ -86,7 +80,7 @@ namespace ToDoListWeb.Controllers
             }
             else
             {
-                ViewBag.ErrorMessage = null;  
+                ViewBag.ErrorMessage = null;
             }
             return View();
         }
@@ -94,14 +88,14 @@ namespace ToDoListWeb.Controllers
         //метод если текущая дата совпадает с датой в задаче то статус не выполнено
         private async Task CheckDateTask()
         {
-            if(_dbContext.GetAll() != null)
+            if (_dbContext.GetAll() != null)
             {
                 foreach (var task in _dbContext.GetAll())
                 {
                     if (task.TaskTime <= DateTime.Now)
                     {
                         task.Status = "Not done";
-                    }           
+                    }
                 }
                 await _dbContext.SaveChangesAsync();
             }
@@ -109,7 +103,7 @@ namespace ToDoListWeb.Controllers
             {
                 _logger.LogWarning(message: "_dbContext.ToDoTask is null");
             }
-            
+
         }
     }
 }

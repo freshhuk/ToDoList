@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace ToDoListWeb.Controllers
 {
     [Authorize]
+    [Route("api/[controller]")]
     public class TaskController : Controller
     {
         
@@ -57,7 +58,7 @@ namespace ToDoListWeb.Controllers
         }
 
         //удалаяем нашу задачу из бд
-        [HttpPost]
+        [HttpPost("{id}")]
         public async Task<IActionResult> DeleteTaskDBb(int Id)
         {
             

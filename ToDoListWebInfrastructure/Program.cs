@@ -5,7 +5,7 @@ using ToDoListWebInfrastructure.Context;
 using ToDoListWebInfrastructure.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -41,6 +41,9 @@ builder.Services.AddScoped<UserDbContext>(provider =>
     var configuration = provider.GetRequiredService<IConfiguration>();
     return new UserDbContext(configuration);
 });
+
+var app = builder.Build();
+
 app.MapGet("/", () => "Hello World!");
 
 app.Run();
