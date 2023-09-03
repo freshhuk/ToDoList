@@ -9,7 +9,8 @@ using ToDoListWebInfrastructure.Context;
 
 namespace ToDoListWebServices.Authorization
 {
-    
+    [ApiController]
+    [Route("api/[controller]")]
     public class AccountController : Controller
     {
         private readonly TaskDbContex _dbContext;
@@ -42,7 +43,8 @@ namespace ToDoListWebServices.Authorization
             });
         }
         //сам метод для логина
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost("Login")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLogin model)
         {
 
@@ -112,7 +114,8 @@ namespace ToDoListWebServices.Authorization
 
          
         //сам метод регестрации
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost("Register")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegistration model)
         {
            

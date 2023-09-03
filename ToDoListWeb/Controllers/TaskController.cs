@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace ToDoListWeb.Controllers
 {
     [Authorize]
+    [ApiController]
     [Route("api/[controller]")]
     public class TaskController : Controller
     {

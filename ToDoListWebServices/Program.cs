@@ -8,6 +8,9 @@ using ToDoListWebServices.ClientSide;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
+
+
 // Configure app configuration
 builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -73,7 +76,11 @@ var app = builder.Build();
 //Маршрут для хаба
 //app.MapHub<TasksHub>("/GeneralTasks");
 
+app.UseRouting();
 
-app.MapGet("/", () => "Hello World!");
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "api/{controller=Account}/{action=Register}/{id?}");
 
 app.Run();
