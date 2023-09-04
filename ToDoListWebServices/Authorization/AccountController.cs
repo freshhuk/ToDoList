@@ -10,7 +10,7 @@ using ToDoListWebInfrastructure.Context;
 namespace ToDoListWebServices.Authorization
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class AccountController : Controller
     {
         private readonly TaskDbContex _dbContext;
@@ -27,21 +27,7 @@ namespace ToDoListWebServices.Authorization
             _signInManager = signInManager;
             _logger = logger;
         }
-        //Для открытия формочки изминения данных
-        [HttpGet]
-        public IActionResult EditUserData()
-        {
-            return View();
-        }
-        //метод открывает форму для логина
-        [HttpGet]
-        public IActionResult Login(string returnUrl)
-        {
-            return View(new UserLogin()
-            {
-                ReturnUrl = !string.IsNullOrEmpty(returnUrl) ? returnUrl : "/"
-            });
-        }
+        
         //сам метод для логина
         [HttpPost("Login")]
         [ValidateAntiForgeryToken]
@@ -103,14 +89,7 @@ namespace ToDoListWebServices.Authorization
             return View(model);
 
         }
-        //открывает форму для регестрации
         
-        [HttpGet]
-        public async Task<IActionResult> Register()
-        {
-            await _userdbContext.Database.MigrateAsync();
-            return View(new UserRegistration());
-        }
 
          
         //сам метод регестрации
@@ -163,7 +142,8 @@ namespace ToDoListWebServices.Authorization
             return View(model);
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost("Logout")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             

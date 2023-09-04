@@ -15,10 +15,10 @@
         }
         else
         {
-            <a class="button" href="@Url.Action("Login", "Account")">
+            <a class="button" href="@Url.Action("Login", "Account", new { area = "" })">
                 Login
             </a>
-            <a class="button" href="@Url.Action("Register", "Account")">
+            <a class="button" href="@Url.Action("Register", "Account", new { area = "" })">
                 Register
             </a>
         }
