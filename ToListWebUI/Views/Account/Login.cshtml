@@ -14,7 +14,7 @@
 
         <main class="main-content registration">
             <div class="editor account-form">
-                <form action="/Account/Login" method="post">
+            <form action="/api/Account/LoginAccount" method="post">
                     @Html.AntiForgeryToken()
 
                     <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />

@@ -10,7 +10,7 @@ using ToDoListWebInfrastructure.Context;
 namespace ToDoListWebServices.Authorization
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AccountController : Controller
     {
         private readonly TaskDbContex _dbContext;
@@ -29,7 +29,7 @@ namespace ToDoListWebServices.Authorization
         }
         
         //сам метод для логина
-        [HttpPost("Login")]
+        [HttpPost("LoginAccount")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLogin model)
         {
@@ -48,7 +48,7 @@ namespace ToDoListWebServices.Authorization
                     {
                         return Redirect(model.ReturnUrl);
                     }
-                    return RedirectToAction("Index", "Home");
+                    return Redirect("/");
                 }
                 else if (loginResult.IsLockedOut)
                 {
@@ -93,7 +93,7 @@ namespace ToDoListWebServices.Authorization
 
          
         //сам метод регестрации
-        [HttpPost("Register")]
+        [HttpPost("RegisterAccount")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegistration model)
         {
@@ -113,7 +113,7 @@ namespace ToDoListWebServices.Authorization
                         _logger.LogInformation(message: "Успешно 2x");
                         await _dbContext.Database.MigrateAsync();
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Index", "Home");
+                        return Redirect("/");
                     }
                     if (!createResult.Succeeded)
                     {
@@ -142,13 +142,13 @@ namespace ToDoListWebServices.Authorization
             return View(model);
         }
 
-        [HttpPost("Logout")]
+        [HttpPost("LogoutAccount")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             
             await _signInManager.SignOutAsync();
-            return RedirectToAction("StartPage", "Home");
+            return Redirect("/");
         }
 
     }

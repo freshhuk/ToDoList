@@ -43,7 +43,9 @@ builder.Services.AddScoped<UserDbContext>(provider =>
 //Role
 builder.Services.AddIdentity<User, IdentityRole>()
         .AddEntityFrameworkStores<UserDbContext>()
+        .AddSignInManager<SignInManager<User>>()
         .AddDefaultTokenProviders();
+
 //Config
 builder.Services.Configure<IdentityOptions>(options =>
 {
