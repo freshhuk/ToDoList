@@ -11,15 +11,15 @@ namespace ToDoListWebServices.Authorization
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AccountController : Controller
+    public class APIAccountController : Controller
     {
         private readonly TaskDbContex _dbContext;
         private readonly UserDbContext _userdbContext;
-        private readonly ILogger<AccountController> _logger;
+        private readonly ILogger<APIAccountController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(TaskDbContex dbContext, UserDbContext userdbContext, SignInManager<User> signInManager, UserManager<User> userManager, ILogger<AccountController> logger)
+        public APIAccountController(TaskDbContex dbContext, UserDbContext userdbContext, SignInManager<User> signInManager, UserManager<User> userManager, ILogger<APIAccountController> logger)
         {
             _dbContext = dbContext;
             _userdbContext = userdbContext;
