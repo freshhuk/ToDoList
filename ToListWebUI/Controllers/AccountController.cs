@@ -25,7 +25,6 @@ namespace ToListWebUI.Controllers
             return View();
         }
         //открывает форму для регестрации
-        [AllowAnonymous]
 
         [HttpGet]
         public async Task<IActionResult> Register()
@@ -34,7 +33,6 @@ namespace ToListWebUI.Controllers
             return View(new UserRegistration());
         }
         //метод открывает форму для логина
-        [AllowAnonymous]
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {

@@ -1,6 +1,3 @@
-
-
-
 using Microsoft.EntityFrameworkCore;
 using ToDoListWebDomain.Domain.Entity;
 using ToDoListWebDomain.Domain.Models;
