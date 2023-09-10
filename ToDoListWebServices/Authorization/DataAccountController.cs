@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 using ToDoListWebInfrastructure.Context;
 using ToDoListWebDomain.Domain.Models;
 
-namespace ToDoListWeb.Controllers
+namespace ToDoListWebServices.Authorization
 {
     public class DataAccountController : Controller
     {
         private readonly UserDbContext _userdbContext;
-        private readonly ILogger<TaskController> _logger;
+        private readonly ILogger<DataAccountController> _logger;
         private readonly UserManager<User> _userManager;
 
-        public DataAccountController(UserDbContext userdbContext, ILogger<TaskController> logger, UserManager<User> userManager)
+        public DataAccountController(UserDbContext userdbContext, ILogger<DataAccountController> logger, UserManager<User> userManager)
         {
             _userManager = userManager;
             _userdbContext = userdbContext;
