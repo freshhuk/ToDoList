@@ -22,7 +22,7 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
 builder.Services.AddDbContext<IDataContext<ToDoTask>, TaskDbContex>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDbContext<IDataContext<User>, UserDbContext>(options =>
+builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UserConnection")));
 
 
@@ -39,11 +39,11 @@ builder.Services.AddScoped<UserDbContext>(provider =>
     return new UserDbContext(configuration);
 });
 
-#region for logging aand register
+#region for logging and register
 //Role
 builder.Services.AddIdentity<User, IdentityRole>()
-        .AddEntityFrameworkStores<UserDbContext>()
         .AddSignInManager<SignInManager<User>>()
+        .AddEntityFrameworkStores<UserDbContext>()
         .AddDefaultTokenProviders();
 
 //Config
