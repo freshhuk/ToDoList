@@ -113,7 +113,7 @@ namespace ToDoListWebServices.Authorization
                         _logger.LogInformation(message: "Успешно 2x");
                         await _dbContext.Database.MigrateAsync();
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return Redirect("/");
+                        return Ok();
                     }
                     if (!createResult.Succeeded)
                     {

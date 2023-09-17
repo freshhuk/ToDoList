@@ -9,13 +9,23 @@ using ToDoListWebServices.ClientSide;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
+builder.Services.AddControllersWithViews();
 
 // Configure app configuration
 builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
+//HttpClient
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+    {
+        builder.WithOrigins("https://localhost:44339") // Замените на адрес вашего API или UI приложения.
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 
 
 // Create DbContext with configuration
@@ -41,6 +51,8 @@ builder.Services.AddScoped<UserDbContext>(provider =>
 
 #region for logging and register
 //Role
+
+
 builder.Services.AddIdentity<User, IdentityRole>()
         .AddSignInManager<SignInManager<User>>()
         .AddEntityFrameworkStores<UserDbContext>()
@@ -77,6 +89,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 var app = builder.Build();
 //Маршрут для хаба
 //app.MapHub<TasksHub>("/GeneralTasks");
+
+app.UseCors("AllowSpecificOrigin");//Используем для HttpClient
+
+app.UseAuthentication();   // добавление middleware аутентификации 
+app.UseAuthorization();   // добавление middleware авторизации 
 
 app.UseRouting();
 

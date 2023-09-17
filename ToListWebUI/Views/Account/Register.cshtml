@@ -1,5 +1,5 @@
 ﻿@model ToDoListWebDomain.Domain.Models.UserRegistration;
-
+@using ToListWebUI.HttpServisec;
 
 <html>
     <head>
@@ -12,7 +12,7 @@
         
         <main class="main-content registration">
             <div class="editor account-form">
-                <form action="/api/APIAccount/RegisterAccount" method="post">
+                <form id="registration-form">
                     @Html.AntiForgeryToken()
 
                     <div>
@@ -54,7 +54,55 @@
                 I have account already
             </a>
         </main>
-        
+    <script>
+        console.log("Script loaded");
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const registrationForm = document.getElementById("registration-form");
+
+            registrationForm.addEventListener("submit", async function (event) {
+                event.preventDefault(); // Отменить обычную отправку формы
+
+                // Получить данные из формы
+                const loginProp = document.getElementById("LoginProp").value;
+                const emailProp = document.getElementById("EmailProp").value;
+                const password = document.getElementById("Password").value;
+                const confirmPassword = document.getElementById("ConfirmPassword").value;
+
+                const userData = {
+                    LoginProp: loginProp,
+                    EmailProp: emailProp,
+                    Password: password,
+                    ConfirmPassword: confirmPassword
+                };
+
+                try {
+                    // Отправить данные на сервер API
+                    const response = await fetch("https://localhost:53807/api/APIAccount/RegisterAccount", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(userData),
+                    });
+
+                    if (response.ok) {
+                        // Регистрация успешна, выполните необходимые действия (например, перенаправление пользователя)
+                        window.location.href = "/Home/Index"; // Замените на свой URL
+                    } else {
+                        // Регистрация не удалась, выполните необходимые действия (например, отображение ошибки)
+                        alert("Ошибка при регистрации.");
+                    }
+                } catch (error) {
+                    console.error("Ошибка при выполнении запроса:", error);
+                    alert("Произошла ошибка при выполнении запроса.");
+                }
+            });
+        });
+
+
+    </script>
+
     
         
     </body>
