@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
 using ToDoListWebDomain.Domain.Entity;
 using ToDoListWebDomain.Domain.Models;
@@ -14,6 +15,12 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddEnvironmentVariables();
 
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.Strict; // или SameSiteMode.Lax
+    options.HttpOnly = HttpOnlyPolicy.Always;
+    options.Secure = CookieSecurePolicy.Always; // Устанавливает Secure для HTTPS
+});
 
 // Create DbContext with configuration
 builder.Services.AddDbContext<IDataContext<ToDoTask>, TaskDbContex>(options =>

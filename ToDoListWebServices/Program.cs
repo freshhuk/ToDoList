@@ -78,6 +78,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.None;
     //нужно заново войти в аккаунт после 7 дней бездействия
     options.ExpireTimeSpan = TimeSpan.FromDays(7);
     options.LoginPath = "/Account/Login";

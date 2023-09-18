@@ -46,9 +46,9 @@ namespace ToDoListWebServices.Authorization
                     await _dbContext.Database.EnsureCreatedAsync();
                     if (Url.IsLocalUrl(model.ReturnUrl))
                     {
-                        return Redirect(model.ReturnUrl);
+                        return Ok(model.ReturnUrl);
                     }
-                    return Redirect("/");
+                    return Ok();
                 }
                 else if (loginResult.IsLockedOut)
                 {
@@ -67,6 +67,7 @@ namespace ToDoListWebServices.Authorization
                     // Логика при неудачной аутентификации
                     _logger.LogError("Ошибка аутентификации.");
                     ModelState.AddModelError("", "Ошибка аутентификации.");
+                    return BadRequest();
                 }
             }
             else
@@ -83,10 +84,11 @@ namespace ToDoListWebServices.Authorization
                 }
 
                 ModelState.AddModelError("", "Пользователь не найден");
+                return BadRequest();
             }
 
             ModelState.AddModelError("", "Пользователь не найден");
-            return View(model);
+            return Ok(model);
 
         }
         
@@ -102,7 +104,7 @@ namespace ToDoListWebServices.Authorization
             //создаем екземпляр класа для отправки смс на почту
             if (ModelState.IsValid)
             {
-                _logger.LogInformation(message: "Успешно1");
+                _logger.LogInformation(message: "Модель валидна");
                 var user = new User { UserName = model.LoginProp, Email = model.EmailProp };
 
                 try
@@ -121,6 +123,7 @@ namespace ToDoListWebServices.Authorization
                         {
                             _logger.LogError(error.Description);
                         }
+                        return BadRequest();
                     }
                     else
                     {
@@ -129,6 +132,7 @@ namespace ToDoListWebServices.Authorization
                         {
                             ModelState.AddModelError("", identityError.Description);
                         }
+                        return BadRequest();
                     }
                 }
                 catch (Exception ex)
@@ -139,7 +143,7 @@ namespace ToDoListWebServices.Authorization
                 }
             }
 
-            return View(model);
+            return Ok(model);
         }
 
         [HttpPost("LogoutAccount")]
@@ -148,7 +152,7 @@ namespace ToDoListWebServices.Authorization
         {
             
             await _signInManager.SignOutAsync();
-            return Redirect("/");
+            return Ok();
         }
 
     }
