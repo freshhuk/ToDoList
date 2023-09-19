@@ -4,6 +4,7 @@ using ToDoListWebDomain.Domain.Entity;
 using ToDoListWebDomain.Domain.Models;
 using ToDoListWebInfrastructure.Context;
 using ToDoListWebInfrastructure.Interfaces;
+using ToListWebUI.HttpServisec;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,16 @@ builder.Services.AddScoped<UserDbContext>(provider =>
     var configuration = provider.GetRequiredService<IConfiguration>();
     return new UserDbContext(configuration);
 });
+
+//Создаем службу нашего Http сервиса
+builder.Services.AddScoped<AuthorizationHttpServisec>();
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<AuthorizationHttpServisec>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:55032/"); // Установите правильный базовый адрес вашего API
+                                                              // Другие настройки HttpClient, если необходимо
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
