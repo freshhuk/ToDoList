@@ -9,9 +9,8 @@ using ToDoListWebInfrastructure.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
+builder.Services.AddSwaggerGen();//Swagger
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 
 // Configure app configuration
 builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
@@ -44,18 +43,20 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-
     app.UseHsts();
+}
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-
 
 
 
 app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -63,7 +64,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "api/{controller=Task}/{action=GetTaskDb}/{id?}");
-
 
 
 app.Run();

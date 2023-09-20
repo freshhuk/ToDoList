@@ -25,7 +25,7 @@ namespace ToDoListWeb.Controllers
         
 
 
-
+        //возможно переписать на то что б я принимал обьект с полями а не поля по одному
         //Принимаем данные из формы , и заносим их в бд
         [HttpPost]
         public async Task<IActionResult> GetTaskDb(string TaskName, string TaskDescription, DateTime TaskData)
@@ -33,8 +33,6 @@ namespace ToDoListWeb.Controllers
             
             if (TaskName != null && TaskDescription != null)
             {
-                
-
                 await _dbContext.AddAsync(new ToDoTask()
                 {
                     NameTask = TaskName,
@@ -69,12 +67,13 @@ namespace ToDoListWeb.Controllers
             {
                 _dbContext.Delete(Id);
                 await _dbContext.SaveChangesAsync();
-                return Redirect("~/Home/Index");
+                return Ok();
+                //return Redirect("~/Home/Index"); 
             }
             else
             {
                 //потом можно вывести какую то ошибку но покачто просто кидает на главную
-                return Redirect("~/Home/Index");
+                return BadRequest();
             
             }
         }
@@ -97,13 +96,13 @@ namespace ToDoListWeb.Controllers
                         
                      await _dbContext.SaveChangesAsync();
                      _logger.LogInformation(message: "Данные записались");
-                     return Redirect("~/Home/Index");
+                     return Ok();
                  }
                  else
                  {
                      _logger.LogError(message:"Error data null");
                      TempData["ErrorMessage"] = "You have not completed all fields";
-                     return RedirectToAction("ChangeTaskPage", "Home");
+                     return BadRequest();
 
 
 
@@ -113,7 +112,7 @@ namespace ToDoListWeb.Controllers
             {
                 //потом можно вывести какую то ошибку но покачто просто кидает на главную
                 _logger.LogError(message: "Error задача не найдена");
-                return Redirect("~/Home/Index");
+                return BadRequest();
 
             }
                 

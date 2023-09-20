@@ -1,0 +1,18 @@
+version: '3.4'
+#инструкция запуска нашего приложения
+services:
+  todolistwebapi:
+    image: ${DOCKER_REGISTRY-}todolistwebapi
+    build:
+      context: .
+      dockerfile: ToDoListWebAPI\Dockerfile
+  client:
+    image: ${DOCKER_REGISTRY-}todolistwebui
+    build:
+      context: .
+      dockerfile: ToDoListWebUI\Dockerfile
+
+    
+   
+
+

@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  todolistwebapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+     # - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "5000:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:C:\Users\ContainerUser\AppData\Roaming\Microsoft\UserSecrets:ro
+      - ${APPDATA}/ASP.NET/Https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https:ro
+  client:
+    ports:
+      - "5001:80"
+     
+      
+   

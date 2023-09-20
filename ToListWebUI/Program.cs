@@ -55,7 +55,7 @@ builder.Services.AddScoped<AuthorizationHttpServisec>();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<AuthorizationHttpServisec>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:55032/"); // Установите правильный базовый адрес вашего API
+    client.BaseAddress = new Uri("https://localhost:53142/"); // Установите правильный базовый адрес вашего API
                                                               // Другие настройки HttpClient, если необходимо
 });
 
