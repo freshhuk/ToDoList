@@ -17,7 +17,16 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
-
+//HttpClient
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+    {
+        builder.WithOrigins("https://localhost:44339") // Замените на адрес вашего API или UI приложения.
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 
 // Create DbContext with configuration
 builder.Services.AddDbContext<IDataContext<ToDoTask>, TaskDbContex>(options =>
@@ -56,6 +65,8 @@ app.UseHttpsRedirection();
 
 
 app.UseRouting();
+
+app.UseCors("AllowSpecificOrigin");//Используем для HttpClient
 
 app.UseAuthentication();
 app.UseAuthorization();

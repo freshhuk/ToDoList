@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ToDoListWeb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class TaskController : Controller
@@ -28,7 +28,7 @@ namespace ToDoListWeb.Controllers
         //возможно переписать на то что б я принимал обьект с полями а не поля по одному
         //Принимаем данные из формы , и заносим их в бд
         [HttpPost]
-        public async Task<IActionResult> GetTaskDb(string TaskName, string TaskDescription, DateTime TaskData)
+        public async Task<IActionResult> GetTaskDb(ToDoTask TaskModel)
         {
             
             if (TaskName != null && TaskDescription != null)
@@ -42,18 +42,16 @@ namespace ToDoListWeb.Controllers
 
                 });
                 await _dbContext.SaveChangesAsync();
-                
+                return Ok();
                 
             }
             else
             {
                 TempData["ErrorMessage"] = "Fill the rest of fields!";
-                return RedirectToAction("CreateTask", "Home");
+                return BadRequest();
            
             }
-            //в поле где статус мы автоматом пишим в процесе так как
-            //ее только создали и она в процесе выполнения
-            return Redirect("~/Home/Index");
+            
         }
 
         //удалаяем нашу задачу из бд

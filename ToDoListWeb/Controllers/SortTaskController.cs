@@ -6,7 +6,7 @@ using ToDoListWebInfrastructure.Interfaces;
 
 namespace ToDoListWeb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class SortTaskController : Controller
     {
         private readonly IDataContext<ToDoTask> _dbContext;
