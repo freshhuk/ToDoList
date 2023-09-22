@@ -2,6 +2,7 @@
 @{
     Layout = "_Layout";
 }
+@model ToDoListWebDomain.Domain.Entity.ToDoTask;
 
 <header class="header">
     <h2>Create new task</h2>
@@ -9,7 +10,7 @@
 
 <main class="main">
     <div class="editor">
-        <form action="https://localhost:7165/api/Task/GetTaskDb" method="post">
+        <form action="https://localhost:7165/api/Task/AddTaskDb" method="post">
 
             @*(Это каментарий на Razor если что) в теге Label там где поле name не меняй его, это
             переменая на которую я ссылаюсь что б принять данные и записать их в базу данных
@@ -18,17 +19,17 @@
 
             <label>
                 Task name
-                <input type="text" name="TaskName" placeholder="Task name" class="text-input" />
+                <input type="text" asp-for="NameTask" placeholder="Task name" class="text-input" />
             </label>
 
             <label>
                 Task description
-                <textarea rows="10" cols="50" class="textarea text-input" type="text" name="TaskDescription" placeholder="Description"></textarea>
+                <textarea rows="10" cols="50" class="textarea text-input" type="text" asp-for="DescriptionTask" placeholder="Description"></textarea>
             </label>
 
             <label>
                 Date of completion
-                <input type="date" name="TaskData" placeholder="Date" class="text-input" />
+                <input type="date" asp-for="TaskTime" placeholder="Date" class="text-input" />
             </label>
             @*Сообщение об ошибки если пользователь не ввел данные во все поля*@
             @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))

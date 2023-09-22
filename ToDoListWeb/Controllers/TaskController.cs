@@ -28,16 +28,16 @@ namespace ToDoListWeb.Controllers
         //возможно переписать на то что б я принимал обьект с полями а не поля по одному
         //Принимаем данные из формы , и заносим их в бд
         [HttpPost]
-        public async Task<IActionResult> GetTaskDb(ToDoTask TaskModel)
+        public async Task<IActionResult> AddTaskDb(ToDoTask TaskModel)
         {
             
-            if (TaskName != null && TaskDescription != null)
+            if (TaskModel.NameTask != null && TaskModel.DescriptionTask != null)
             {
                 await _dbContext.AddAsync(new ToDoTask()
                 {
-                    NameTask = TaskName,
-                    DescriptionTask = TaskDescription,
-                    TaskTime = TaskData.Date,
+                    NameTask = TaskModel.NameTask,
+                    DescriptionTask = TaskModel.DescriptionTask,
+                    TaskTime = TaskModel.TaskTime,
                     Status = "In progress"
 
                 });
@@ -55,7 +55,7 @@ namespace ToDoListWeb.Controllers
         }
 
         //удалаяем нашу задачу из бд
-        [HttpPost("{id}")]
+        [HttpPost("delete/{id}")]
         public async Task<IActionResult> DeleteTaskDBb(int Id)
         {
             
