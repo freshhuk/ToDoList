@@ -22,7 +22,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", builder =>
     {
-        builder.WithOrigins("https://localhost:44339") // Замените на адрес вашего API или UI приложения.
+        builder.WithOrigins("https://localhost:44339") //адрес  UI приложения.
                .AllowAnyHeader()
                .AllowAnyMethod();
     });
@@ -74,7 +74,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "api/{controller=Task}/{action=GetTaskDb}/{id?}");
+    pattern: "api/{controller=Task}/{action=AddTaskDb}/{id?}");
 
 
 app.Run();

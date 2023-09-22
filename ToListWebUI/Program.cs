@@ -50,12 +50,22 @@ builder.Services.AddScoped<UserDbContext>(provider =>
     return new UserDbContext(configuration);
 });
 
-//Создаем службу нашего Http сервиса
+//Создаем службу нашего Http сервиса авторизации
+
+builder.Services.AddHttpClient();//Это просто настройка http
+
 builder.Services.AddScoped<AuthorizationHttpServisec>();
-builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<AuthorizationHttpServisec>(client =>
 {
     client.BaseAddress = new Uri("https://localhost:53142/"); // Установите правильный базовый адрес вашего API
+                                                              // Другие настройки HttpClient, если необходимо
+});
+
+//Создаем службу нашего Http сервиса апишки
+builder.Services.AddScoped<APIToDoListHttpServices>();
+builder.Services.AddHttpClient<APIToDoListHttpServices>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7165/"); // Установите правильный базовый адрес вашего API
                                                               // Другие настройки HttpClient, если необходимо
 });
 

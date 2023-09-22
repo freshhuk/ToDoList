@@ -66,7 +66,7 @@ namespace ToDoListWeb.Controllers
                 _dbContext.Delete(Id);
                 await _dbContext.SaveChangesAsync();
                 return Ok();
-                //return Redirect("~/Home/Index"); 
+                
             }
             else
             {
@@ -119,3 +119,6 @@ namespace ToDoListWeb.Controllers
       
     }
 }
+
+
+

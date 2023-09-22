@@ -3,6 +3,7 @@ using ToDoListWebDomain.Domain.Models;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ToDoListWebDomain.Domain.Entity;
 
 namespace ToListWebUI.HttpServisec
 {
@@ -16,7 +17,7 @@ namespace ToListWebUI.HttpServisec
             _httpClient = httpClient;
             _logger = logger;
         }
-        public async Task<string> GetTaskDbAsync(UserRegistration model)
+        public async Task<string> AddTaskDbAsync(ToDoTask model)
         {
             try
             {
@@ -27,21 +28,21 @@ namespace ToListWebUI.HttpServisec
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 // Выполнить HTTP POST-запрос на сервер API
-                var response = await _httpClient.PostAsync("https://localhost:53142/api/Task/GetTaskDb", content);
-                _logger.LogInformation(message: "Регистрация  почти успешна");
+                var response = await _httpClient.PostAsync("https://localhost:7165/api/Task/AddTaskDb", content);
+                _logger.LogInformation(message: "Данные отправились");
                 if (response.IsSuccessStatusCode)
                 {
                     // Регистрация успешна, вернуть успешное сообщение
-                    _logger.LogInformation(message: "Регистрация успешна");
-                    return "Регистрация успешна.";
+                    _logger.LogInformation(message: "Успешно");
+                    return "successful";
                 }
                 else
                 {
                     // Получить текст ошибки из ответа сервера
                     var errorText = await response.Content.ReadAsStringAsync();
-                    _logger.LogInformation(message: "Ошибка регестрации");
+                    _logger.LogInformation(message: "Ошибка отправки данных");
                     // Регистрация не удалась, вернуть сообщение об ошибке
-                    return $"Ошибка при регистрации: {errorText}";
+                    return $"Ошибка отправки данных: {errorText}";
                 }
             }
             catch (Exception ex)
