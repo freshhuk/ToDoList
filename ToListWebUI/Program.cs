@@ -8,8 +8,10 @@ using ToListWebUI.HttpServisec;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
+builder.Services.AddMvc();
+
 // Configure app configuration
 builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -24,6 +26,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 
 // Create DbContext with configuration
+#region DbSettings
 builder.Services.AddDbContext<IDataContext<ToDoTask>, TaskDbContex>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -49,6 +52,8 @@ builder.Services.AddScoped<UserDbContext>(provider =>
     var configuration = provider.GetRequiredService<IConfiguration>();
     return new UserDbContext(configuration);
 });
+#endregion
+
 
 //Создаем службу нашего Http сервиса авторизации
 
