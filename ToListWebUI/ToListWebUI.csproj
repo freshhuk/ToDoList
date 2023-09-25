@@ -15,10 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ToDoListWebAPI\ToDoListWebAPI.csproj" />
     <ProjectReference Include="..\ToDoListWebDomain\ToDoListWebDomain.csproj" />
     <ProjectReference Include="..\ToDoListWebInfrastructure\ToDoListWebInfrastructure.csproj" />
     <ProjectReference Include="..\ToDoListWebServices\ToDoListWebServices.csproj" />
-    <ProjectReference Include="..\ToDoListWeb\ToDoListWebAPI.csproj" />
   </ItemGroup>
 
 </Project>

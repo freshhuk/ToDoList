@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToDoListWeb.Enums;
+using ToDoListWebAPI.Enums;
 using ToDoListWebDomain.Domain.Entity;
 using ToDoListWebInfrastructure.Interfaces;
 
-namespace ToDoListWeb.Controllers
+namespace ToDoListWebAPI.Controllers
 {
     //[Authorize]
     public class SortTaskController : Controller

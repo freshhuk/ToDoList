@@ -28,7 +28,7 @@ namespace ToListWebUI.HttpServisec
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 // Выполнить HTTP POST-запрос на сервер API
-                var response = await _httpClient.PostAsync("https://localhost:7165/api/Task/AddTaskDb", content);
+                var response = await _httpClient.PostAsync("http://localhost:5133/api/Task/AddTaskDb", content);
                 _logger.LogInformation(message: "Данные отправились");
                 if (response.IsSuccessStatusCode)
                 {
@@ -42,7 +42,9 @@ namespace ToListWebUI.HttpServisec
                     var errorText = await response.Content.ReadAsStringAsync();
                     _logger.LogInformation(message: "Ошибка отправки данных");
                     // Регистрация не удалась, вернуть сообщение об ошибке
-                    return $"Ошибка отправки данных: {errorText}";
+
+                    return "nosuccessful";
+                    //return $"Ошибка отправки данных: {errorText}";
                 }
             }
             catch (Exception ex)

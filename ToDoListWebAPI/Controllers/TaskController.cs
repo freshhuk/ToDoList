@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
-namespace ToDoListWeb.Controllers
+namespace ToDoListWebAPI.Controllers
 {
     //[Authorize]
     [ApiController]
@@ -28,30 +28,36 @@ namespace ToDoListWeb.Controllers
         //возможно переписать на то что б я принимал обьект с полями а не поля по одному
         //Принимаем данные из формы , и заносим их в бд
         [HttpPost]
+        [Route("AddTaskDb")]
         public async Task<IActionResult> AddTaskDb(ToDoTask TaskModel)
         {
-            
-            if (TaskModel.NameTask != null && TaskModel.DescriptionTask != null)
-            {
-                await _dbContext.AddAsync(new ToDoTask()
-                {
-                    NameTask = TaskModel.NameTask,
-                    DescriptionTask = TaskModel.DescriptionTask,
-                    TaskTime = TaskModel.TaskTime,
-                    Status = "In progress"
 
-                });
-                await _dbContext.SaveChangesAsync();
-                return Ok();
-                
+            if (!ModelState.IsValid)
+            {
+                // Если модель данных недействительна, вернуть BadRequest с информацией об ошибках
+                return BadRequest(ModelState);
             }
             else
             {
-                TempData["ErrorMessage"] = "Fill the rest of fields!";
-                return BadRequest();
-           
-            }
-            
+                if (TaskModel.NameTask != null && TaskModel.DescriptionTask != null)
+                {
+                    await _dbContext.AddAsync(new ToDoTask()
+                    {
+                        NameTask = TaskModel.NameTask,
+                        DescriptionTask = TaskModel.DescriptionTask,
+                        TaskTime = TaskModel.TaskTime,
+                        Status = "In progress"
+
+                    });
+                    await _dbContext.SaveChangesAsync();
+                    return Ok();
+
+                }
+                else
+                {
+                    return Ok();
+                }
+            }  
         }
 
         //удалаяем нашу задачу из бд

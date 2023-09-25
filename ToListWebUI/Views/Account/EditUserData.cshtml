@@ -4,7 +4,7 @@
 }
 @using System.Security.Claims
 
-@using ToDoListWeb.Controllers;
+@using ToDoListWebAPI.Controllers;
 @{
     var userEmail = (User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.Email)?.Value;
 }

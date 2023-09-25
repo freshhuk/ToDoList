@@ -1,28 +1,29 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using ToDoListWebDomain.Domain.Entity;
-using ToDoListWebDomain.Domain.Models;
 using ToDoListWebInfrastructure.Context;
 using ToDoListWebInfrastructure.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddSwaggerGen();//Swagger
 // Add services to the container.
+
+//Swagger
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 
 // Configure app configuration
 builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
-//HttpClient
+//HttpClient Cors
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", builder =>
     {
-        builder.WithOrigins("https://localhost:44339") //адрес  UI приложения.
+        builder.WithOrigins("http://localhost:5157/") //адрес  UI приложения.
                .AllowAnyHeader()
                .AllowAnyMethod();
     });
@@ -41,19 +42,10 @@ builder.Services.AddScoped<TaskDbContex>(provider =>
 
 
 
-builder.Services.Configure<MvcViewOptions>(options =>
-{
-    options.HtmlHelperOptions.ClientValidationEnabled = true;
-});
-
-
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseHsts();
-}
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -75,6 +67,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "api/{controller=Task}/{action=AddTaskDb}/{id?}");
-
 
 app.Run();

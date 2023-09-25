@@ -1,4 +1,4 @@
-﻿namespace ToDoListWeb.Enums
+﻿namespace ToDoListWebAPI.Enums
 {
     public class SortTaskEnum
     {

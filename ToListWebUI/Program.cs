@@ -12,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
 
+
 // Configure app configuration
 builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -84,6 +85,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -91,8 +94,14 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+//Маршруты
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=StartPage}/{id?}");
+
+app.MapControllerRoute(
+    name: "httpresult",
+    pattern: "httpresult/{*article}",
+    defaults: new { controller = "MyHttpResults", action = "ResultAddTaskDb" });
 
 app.Run();
