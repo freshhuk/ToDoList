@@ -35,29 +35,24 @@ namespace ToDoListWebAPI.Controllers
             if (!ModelState.IsValid)
             {
                 // Если модель данных недействительна, вернуть BadRequest с информацией об ошибках
+                _logger.LogError(message: "модель данных недействительна");
                 return BadRequest(ModelState);
+                
             }
-            else
+            if (string.IsNullOrWhiteSpace(TaskModel.NameTask) || string.IsNullOrWhiteSpace(TaskModel.DescriptionTask))
             {
-                if (TaskModel.NameTask != null && TaskModel.DescriptionTask != null)
-                {
-                    await _dbContext.AddAsync(new ToDoTask()
-                    {
-                        NameTask = TaskModel.NameTask,
-                        DescriptionTask = TaskModel.DescriptionTask,
-                        TaskTime = TaskModel.TaskTime,
-                        Status = "In progress"
+                // Если обязательные поля не заполнены, вернуть BadRequest
+                return BadRequest("NameTask and DescriptionTask are required fields.");
+            }
+            // Заполнить поле Status значением "In progress"
+            TaskModel.Status = "In progress";
 
-                    });
-                    await _dbContext.SaveChangesAsync();
-                    return Ok();
+            // Добавить задачу в базу данных
+            await _dbContext.AddAsync(TaskModel);
+            await _dbContext.SaveChangesAsync();
 
-                }
-                else
-                {
-                    return Ok();
-                }
-            }  
+            return Ok();
+
         }
 
         //удалаяем нашу задачу из бд

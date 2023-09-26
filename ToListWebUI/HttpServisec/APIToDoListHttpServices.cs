@@ -39,9 +39,9 @@ namespace ToListWebUI.HttpServisec
                 else
                 {
                     // Получить текст ошибки из ответа сервера
+                    _logger.LogError($"HTTP POST запрос завершился с ошибкой: {response.StatusCode}");
                     var errorText = await response.Content.ReadAsStringAsync();
-                    _logger.LogInformation(message: "Ошибка отправки данных");
-                    // Регистрация не удалась, вернуть сообщение об ошибке
+                    _logger.LogError($"Текст ошибки: {errorText}");
 
                     return "nosuccessful";
                     //return $"Ошибка отправки данных: {errorText}";
