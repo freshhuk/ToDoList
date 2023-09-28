@@ -35,5 +35,26 @@ namespace ToListWebUI.HttpServisec
 
 
         }
+        [HttpPost]
+        [Route("resultdeletetaskdb")]
+        public async Task<IActionResult> ResultDeleteTaskDbAsync([FromForm] int Id)
+        {
+            var result = await _apiHttpServisec.DeleteTaskDbAsync(Id);
+            if (result == "successful")
+            {
+                return Redirect("~/Home/Index");
+            }
+
+            else if (result == "nosuccessful")
+            {
+                //error
+                return Redirect("~/Home/Index");
+            }
+
+            else
+            {
+                return Redirect("~/Home/StartPage");
+            }
+        }
     }
 }

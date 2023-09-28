@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 using Moq;
-using ToDoListWeb.Controllers;
+using ToDoListWebAPI.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ToDoListWebDomain.Domain.Entity;
@@ -23,10 +23,9 @@ namespace UnitTests
         {
             // Arrange создаем скажем так обьект нашего класа
 
-            var mockDbContext = new Mock<IDataContext<ToDoTask>>();
+            var mockDbContext = new Mock<IDataContext<MockToDoTask>>();
             var loggerMock = new Mock<ILogger<TaskController>>();
-            mockDbContext.ClearTestData();
-            var controller = new TaskController(dbcontextMock, loggerMock.Object);
+            var controller = new TaskController(mockDbContext, loggerMock.Object);
 
             //Act выполняет метод
 

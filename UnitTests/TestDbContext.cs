@@ -23,10 +23,10 @@ namespace UnitTests
         public DateTime TaskTime { get; set; }
     }
 
-    internal class TestDbContext : DbContext, IDataContext<ToDoTask>
+    internal class TestDbContext : DbContext, IDataContext<MockToDoTask>
     {
         
-        public List<ToDoTask> _testData = new List<ToDoTask>()
+        public List<MockToDoTask> _testData = new List<MockToDoTask>()
         {
            new ToDoTask() { Id = 0, NameTask ="trtrt,", DescriptionTask="dfdfefe", TaskTime = DateTime.Now, Status ="penis" },
            new ToDoTask() { Id = 1, NameTask ="trtrt,", DescriptionTask="dfdfefe", TaskTime = DateTime.Now, Status ="penis"},

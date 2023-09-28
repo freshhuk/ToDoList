@@ -56,10 +56,9 @@ namespace ToDoListWebAPI.Controllers
         }
 
         //удалаяем нашу задачу из бд
-        [HttpPost("delete/{id}")]
-        public async Task<IActionResult> DeleteTaskDBb(int Id)
+        [HttpPost("DeleteTaskDb")]
+        public async Task<IActionResult> DeleteTaskDb([FromBody] int Id)
         {
-            
             
             var Task =  _dbContext.Get(Id);
             if (Task != null)
@@ -79,7 +78,8 @@ namespace ToDoListWebAPI.Controllers
 
         //метод для изминения нашей задачи в бд
         [HttpPost]
-        public async Task<IActionResult> ChangeTaskDb(int Id, string TaskName, string TaskDescription, DateTime TaskData, string TaskStatus)
+        [Route("ChangeTaskDb")]
+        public async Task<IActionResult> ChangeTaskDb([FromBody] int Id, string TaskName, string TaskDescription, [FromBody] DateTime TaskData, string TaskStatus)
         {
             var Task = _dbContext.Get(Id);
             if (Task != null)

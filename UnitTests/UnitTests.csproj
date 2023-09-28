@@ -25,7 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ToDoListWeb\ToDoListWebAPI.csproj" />
+    <ProjectReference Include="..\ToDoListWebAPI\ToDoListWebAPI.csproj" />
+    <ProjectReference Include="..\ToDoListWebServices\ToDoListWebServices.csproj" />
+    <ProjectReference Include="..\ToListWebUI\ToListWebUI.csproj" />
   </ItemGroup>
 
 </Project>
