@@ -16,19 +16,19 @@
 
             <label>
                 Task name
-                <input type="text" asp-for="NameTask" placeholder="Task name" class="text-input" required />
+                <input type="text" name="TaskName" id="TaskName" placeholder="Task name" class="text-input" required />
             </label>
 
             <label>
                 Task description
-                <textarea rows="10" cols="50" class="textarea text-input" type="text" asp-for="DescriptionTask" placeholder="Description" required></textarea>
+                <textarea rows="10" cols="50" class="textarea text-input" type="text" name="TaskDescription" id="TaskDescription" placeholder="Description" required></textarea>
             </label>
 
             <label>
                 Date of completion
-                <input required type="date" asp-for="TaskTime" placeholder="Date" class="text-input" />
+                <input required type="date" name="TaskStatus" id="TaskStatus" placeholder="Date" class="text-input" />
             </label>
-            <input type="hidden" asp-for="Status" value="In progress" />
+            <input type="hidden" name="TimeTask" id="TimeTask" value="In progress" />
             @*Сообщение об ошибки если пользователь не ввел данные во все поля*@
             @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
             {

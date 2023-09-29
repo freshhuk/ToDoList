@@ -4,6 +4,9 @@ using ToDoListWebDomain.Domain.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json;
+using ToDoListWebDomain.Domain.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ToDoListWebAPI.Controllers
 {
@@ -31,6 +34,7 @@ namespace ToDoListWebAPI.Controllers
         [Route("AddTaskDb")]
         public async Task<IActionResult> AddTaskDb(ToDoTask TaskModel)
         {
+            _logger.LogInformation($"Received task from UI: {JsonSerializer.Serialize(TaskModel)}");
 
             if (!ModelState.IsValid)
             {
@@ -79,19 +83,19 @@ namespace ToDoListWebAPI.Controllers
         //метод для изминения нашей задачи в бд
         [HttpPost]
         [Route("ChangeTaskDb")]
-        public async Task<IActionResult> ChangeTaskDb([FromBody] int Id, string TaskName, string TaskDescription, [FromBody] DateTime TaskData, string TaskStatus)
+        public async Task<IActionResult> ChangeTaskDb([FromBody] ChangeTaskModel chamgemodel)
         {
-            var Task = _dbContext.Get(Id);
+            var Task = _dbContext.Get(chamgemodel.Id);
             if (Task != null)
             {
                  _logger.LogInformation(message: "мы попали в метод записи ");
-                 if (!string.IsNullOrEmpty(TaskName) && !string.IsNullOrEmpty(TaskDescription) && !string.IsNullOrEmpty(TaskStatus))
+                 if (!string.IsNullOrEmpty(chamgemodel.TaskName) && !string.IsNullOrEmpty(chamgemodel.TaskDescription) && !string.IsNullOrEmpty(chamgemodel.TaskStatus))
                  {
-                     Task.Id = Id;
-                     Task.NameTask = TaskName;
-                     Task.DescriptionTask = TaskDescription;
-                     Task.TaskTime = TaskData;
-                     Task.Status = TaskStatus;
+                     Task.Id = chamgemodel.Id;
+                     Task.NameTask = chamgemodel.TaskName;
+                     Task.DescriptionTask = chamgemodel.TaskDescription;
+                     Task.TaskTime = chamgemodel.TaskData;
+                     Task.Status = chamgemodel.TaskStatus;
                         
                      await _dbContext.SaveChangesAsync();
                      _logger.LogInformation(message: "Данные записались");
@@ -102,9 +106,6 @@ namespace ToDoListWebAPI.Controllers
                      _logger.LogError(message:"Error data null");
                      TempData["ErrorMessage"] = "You have not completed all fields";
                      return BadRequest();
-
-
-
                  }
             }
             else

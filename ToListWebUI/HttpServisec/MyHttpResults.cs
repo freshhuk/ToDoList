@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using ToDoListWebDomain.Domain.Entity;
 
 namespace ToListWebUI.HttpServisec
@@ -7,16 +8,25 @@ namespace ToListWebUI.HttpServisec
     public class MyHttpResultsController : Controller
     {
         private readonly APIToDoListHttpServices _apiHttpServisec;
-
-        public MyHttpResultsController(APIToDoListHttpServices apiHttpServisec)
+        private readonly ILogger<MyHttpResultsController> _logger;
+        public MyHttpResultsController(APIToDoListHttpServices apiHttpServisec, ILogger<MyHttpResultsController> logger)
         {
             _apiHttpServisec = apiHttpServisec;
+            _logger = logger;
         }
         [HttpPost]
         [Route("resultaddtask")]
-        public async Task<IActionResult> ResultAddTaskDbAsync(ToDoTask model)
+        public async Task<IActionResult> ResultAddTaskDbAsync(string TaskName, string TaskDescription, DateTime TimeTask, string TaskStatus)
         {
+            var model = new ToDoTask()
+            {
+                NameTask = TaskName,
+                DescriptionTask = TaskDescription,
+                TaskTime = TimeTask.Date,
+                Status = TaskStatus
+            };
 
+            _logger.LogInformation($"Sending task to APIHttpServices: {JsonSerializer.Serialize(model)}");
             var result = await _apiHttpServisec.AddTaskDbAsync(model);
             if(result == "successful")
             {
@@ -25,7 +35,8 @@ namespace ToListWebUI.HttpServisec
             
             else if (result == "nosuccessful")
             {
-                return Redirect("~/Home/Settings");
+                //error
+                return Redirect("~/Home/Index");
             }
 
             else
@@ -36,9 +47,11 @@ namespace ToListWebUI.HttpServisec
 
         }
         [HttpPost]
-        [Route("resultdeletetaskdb")]
-        public async Task<IActionResult> ResultDeleteTaskDbAsync([FromForm] int Id)
+        [Route("resultchangetaskdb")]
+        public async Task<IActionResult> ResultChangeTaskDbAsync([FromForm] int Id, string TaskName, string TaskDescription, DateTime TimeTask, string TaskStatus)
         {
+            //создание модели и отпавка ее
+            //
             var result = await _apiHttpServisec.DeleteTaskDbAsync(Id);
             if (result == "successful")
             {
@@ -48,7 +61,7 @@ namespace ToListWebUI.HttpServisec
             else if (result == "nosuccessful")
             {
                 //error
-                return Redirect("~/Home/Index");
+                return Redirect("~/Home/Settings");
             }
 
             else
