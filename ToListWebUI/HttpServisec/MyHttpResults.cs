@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using ToDoListWebDomain.Domain.Entity;
-
+using ToDoListWebDomain.Domain.Models;
 namespace ToListWebUI.HttpServisec
 {
     [Route("myhttpresults")]
@@ -48,11 +48,19 @@ namespace ToListWebUI.HttpServisec
         }
         [HttpPost]
         [Route("resultchangetaskdb")]
-        public async Task<IActionResult> ResultChangeTaskDbAsync([FromForm] int Id, string TaskName, string TaskDescription, DateTime TimeTask, string TaskStatus)
+        public async Task<IActionResult> ResultChangeTaskDbAsync([FromForm] int _Id, string _TaskName, string _TaskDescription, DateTime _TimeTask, string _TaskStatus)
         {
-            //создание модели и отпавка ее
-            //
-            var result = await _apiHttpServisec.DeleteTaskDbAsync(Id);
+            var chamgemodel = new ChangeTaskModel()
+            {
+                Id = _Id,
+                TaskName = _TaskName,
+                TaskDescription = _TaskDescription,
+                TaskStatus = _TaskStatus,
+                TaskData = _TimeTask.Date,
+            };
+            _logger.LogInformation($"Sending task to APIHttpServices: {JsonSerializer.Serialize(chamgemodel)}");
+
+            var result = await _apiHttpServisec.ChangeTaskDbAsync(chamgemodel);
             if (result == "successful")
             {
                 return Redirect("~/Home/Index");
@@ -61,9 +69,8 @@ namespace ToListWebUI.HttpServisec
             else if (result == "nosuccessful")
             {
                 //error
-                return Redirect("~/Home/Settings");
+                return Redirect("~/Home/Index");
             }
-
             else
             {
                 return Redirect("~/Home/StartPage");

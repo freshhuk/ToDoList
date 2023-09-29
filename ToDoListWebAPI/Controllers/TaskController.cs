@@ -114,11 +114,8 @@ namespace ToDoListWebAPI.Controllers
                 _logger.LogError(message: "Error задача не найдена");
                 return BadRequest();
 
-            }
-                
+            }               
         }
-
-      
     }
 }
 
