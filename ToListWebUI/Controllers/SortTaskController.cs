@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToDoListWebAPI.Enums;
+using ToDoListWebDomain.Domain.Enums;
 using ToDoListWebDomain.Domain.Entity;
 using ToDoListWebInfrastructure.Interfaces;
 
-namespace ToDoListWebAPI.Controllers
+namespace ToListWebUI.Controllers
+
 {
     //[Authorize]
     public class SortTaskController : Controller
@@ -56,7 +57,7 @@ namespace ToDoListWebAPI.Controllers
         }
         //No Sort
         
-        public IActionResult NoSort()
+        private IActionResult NoSort()
         {
             List<ToDoTask> sortedTasks = _dbContext.GetAll().ToList();
             _logger.LogInformation(message: "Метод сортировки ");
@@ -64,31 +65,31 @@ namespace ToDoListWebAPI.Controllers
             return View("~/Views/Home/Index.cshtml");
         }
         //метод для филтрации заданий по дате min - max
-       
-        public IActionResult DateDescending()
+
+        private IActionResult DateDescending()
         {
             List<ToDoTask> sortedTasks = _dbContext.GetAll().OrderBy(t => t.TaskTime).ToList();
             ViewBag.SortTasksMinToMax = sortedTasks;
             return View("~/Views/Home/Index.cshtml");
         }
         //метод для сортировки по дате max - min
-       
-        public IActionResult DateAascending()
+
+        private IActionResult DateAascending()
         {
             List<ToDoTask> sortedTasks = _dbContext.GetAll().OrderByDescending(t => t.TaskTime).ToList();
             ViewBag.SortTasksMaxToMin = sortedTasks;
             return View("~/Views/Home/Index.cshtml");
         }
         //метод сортировики по индексу недавно добавленые
-        
-        public IActionResult RecentlyAdded()
+
+        private IActionResult RecentlyAdded()
         {
             List<ToDoTask> sortedTasks = _dbContext.GetAll().OrderByDescending(t => t.Id).ToList();
             ViewBag.SortTaskRecentlyAdded = sortedTasks;
             return View("~/Views/Home/Index.cshtml");
         }
         //метод сортировики по индексу давно добавленые
-        public IActionResult AddedLongAgo()
+        private IActionResult AddedLongAgo()
         {
             List<ToDoTask> sortedTasks = _dbContext.GetAll().OrderBy(t => t.Id).ToList();
             ViewBag.SortTaskOldAdded = sortedTasks;

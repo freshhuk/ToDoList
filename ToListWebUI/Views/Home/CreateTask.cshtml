@@ -26,9 +26,9 @@
 
             <label>
                 Date of completion
-                <input required type="date" name="TaskStatus" id="TaskStatus" placeholder="Date" class="text-input" />
+                <input required type="date" name="TaskTime" id="TaskTime" placeholder="Date" class="text-input" />
             </label>
-            <input type="hidden" name="TimeTask" id="TimeTask" value="In progress" />
+            <input type="hidden" name="TaskStatus" id="TaskStatus" value="In progress" />
             @*Сообщение об ошибки если пользователь не ввел данные во все поля*@
             @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
             {

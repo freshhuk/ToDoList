@@ -16,13 +16,13 @@ namespace ToListWebUI.HttpServisec
         }
         [HttpPost]
         [Route("resultaddtask")]
-        public async Task<IActionResult> ResultAddTaskDbAsync(string TaskName, string TaskDescription, DateTime TimeTask, string TaskStatus)
+        public async Task<IActionResult> ResultAddTaskDbAsync(string TaskName, string TaskDescription, DateTime TaskTime, string TaskStatus)
         {
             var model = new ToDoTask()
             {
                 NameTask = TaskName,
                 DescriptionTask = TaskDescription,
-                TaskTime = TimeTask.Date,
+                TaskTime = TaskTime.Date,
                 Status = TaskStatus
             };
 
