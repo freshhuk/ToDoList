@@ -15,19 +15,19 @@
 
         <main class="main-content registration">
             <div class="editor account-form">
-            <form asp-controller="Account" asp-action="Login" method="post">
+            <form method="post" action="/myhttpresults/ResultLoginUser">
                     @Html.AntiForgeryToken()
 
-                    <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+                    <input type="hidden" id="_ReturnUrl" name="_ReturnUrl" value="@Model.ReturnUrl" />
                     <div>
                         <label for="LoginProp">Login:</label>
-                        <input type="text" asp-for="LoginProp"  class="text-input" required placeholder="Login" />
+                        <input type="text" name="_Password" id="_Password" class="text-input" required placeholder="Login" />
 
                     </div>
 
                     <div>
                         <label for="Password">Password:
-                            <input type="password" asp-for="Password"  class="text-input" required placeholder="Password" />
+                            <input type="password" name="_LoginProp" id="_LoginProp" class="text-input" required placeholder="Password" />
                         </label>
                     </div>
 

@@ -73,8 +73,6 @@ namespace ToDoListWebServices.Authorization
             else
             {
                 // Код при невалидной модели
-                
-
                 foreach (var modelState in ModelState.Values)
                 {
                     foreach (var error in modelState.Errors)
@@ -82,14 +80,11 @@ namespace ToDoListWebServices.Authorization
                         _logger.LogWarning(error.ErrorMessage);
                     }
                 }
-
                 ModelState.AddModelError("", "Пользователь не найден");
                 return BadRequest();
             }
-
             ModelState.AddModelError("", "Пользователь не найден");
             return Ok(model);
-
         }
         
 
@@ -100,8 +95,6 @@ namespace ToDoListWebServices.Authorization
         public async Task<IActionResult> Register(UserRegistration model)
         {
            
-
-            //создаем екземпляр класа для отправки смс на почту
             if (ModelState.IsValid)
             {
                 _logger.LogInformation(message: "Модель валидна");

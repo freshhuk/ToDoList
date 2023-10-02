@@ -52,19 +52,20 @@ namespace ToListWebUI.HttpServisec
                 return $"Произошла ошибка при выполнении запроса: {ex.Message}";
             }
         }
+
+
         //метод для отправки Post запроса на сервер для логина
         public async Task<string> LoginUserAsync(UserLogin model)
         {
             try
             {
-                // Преобразовать модель пользователя в JSON-строку
+                _logger.LogInformation($"Sending task to APIHttpServices: {JsonSerializer.Serialize(model)}");
+                
                 var json = JsonSerializer.Serialize(model);
-
-                // Создать строковое содержимое запроса
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 // Выполнить HTTP POST-запрос на сервер API
-                var response = await _httpClient.PostAsync("https://localhost:53142/api/APIAccount/LoginAccount", content);
+                var response = await _httpClient.PostAsync("https://localhost:56478/api/APIAccount/LoginAccount", content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -83,7 +84,6 @@ namespace ToListWebUI.HttpServisec
             }
             catch (Exception ex)
             {
-                // Обработка исключения, если что-то пошло не так
                 return $"Произошла ошибка при выполнении запроса: {ex.Message}";
             }
         }

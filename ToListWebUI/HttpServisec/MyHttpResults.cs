@@ -2,18 +2,25 @@
 using System.Text.Json;
 using ToDoListWebDomain.Domain.Entity;
 using ToDoListWebDomain.Domain.Models;
+using ToDoListWebServices.Authorization;
+
 namespace ToListWebUI.HttpServisec
 {
     [Route("myhttpresults")]
     public class MyHttpResultsController : Controller
     {
         private readonly APIToDoListHttpServices _apiHttpServisec;
+        private readonly AuthorizationHttpServisec _authorizationHttpServisec;
         private readonly ILogger<MyHttpResultsController> _logger;
-        public MyHttpResultsController(APIToDoListHttpServices apiHttpServisec, ILogger<MyHttpResultsController> logger)
+        public MyHttpResultsController(AuthorizationHttpServisec authorizationHttpServisec, APIToDoListHttpServices apiHttpServisec,  ILogger<MyHttpResultsController> logger)
         {
             _apiHttpServisec = apiHttpServisec;
+            _authorizationHttpServisec = authorizationHttpServisec;
             _logger = logger;
         }
+        #region API Results
+
+
         [HttpPost]
         [Route("resultaddtask")]
         public async Task<IActionResult> ResultAddTaskDbAsync(string TaskName, string TaskDescription, DateTime TaskTime, string TaskStatus)
@@ -25,14 +32,32 @@ namespace ToListWebUI.HttpServisec
                 TaskTime = TaskTime.Date,
                 Status = TaskStatus
             };
-
             _logger.LogInformation($"Sending task to APIHttpServices: {JsonSerializer.Serialize(model)}");
             var result = await _apiHttpServisec.AddTaskDbAsync(model);
-            if(result == "successful")
+            if (result == "successful")
             {
                 return Redirect("~/Home/Index");
             }
-            
+            else if (result == "nosuccessful")
+            {
+                //error
+                return Redirect("~/Home/Index");
+            }
+            else
+            {
+                return Redirect("~/Home/StartPage");
+            }
+        }
+        [HttpPost]
+        [Route("resultdeletetaskdb")]
+        public async Task<IActionResult> ResultDeleteTaskDbAsync([FromForm] int Id)
+        {
+            var result = await _apiHttpServisec.DeleteTaskDbAsync(Id);
+            if (result == "successful")
+            {
+                return Redirect("~/Home/Index");
+            }
+
             else if (result == "nosuccessful")
             {
                 //error
@@ -43,9 +68,8 @@ namespace ToListWebUI.HttpServisec
             {
                 return Redirect("~/Home/StartPage");
             }
-
-
         }
+
         [HttpPost]
         [Route("resultchangetaskdb")]
         public async Task<IActionResult> ResultChangeTaskDbAsync([FromForm] int _Id, string _TaskName, string _TaskDescription, DateTime _TimeTask, string _TaskStatus)
@@ -76,5 +100,37 @@ namespace ToListWebUI.HttpServisec
                 return Redirect("~/Home/StartPage");
             }
         }
+        #endregion
+
+        #region AuthorizationServices
+
+        [HttpPost]
+        [Route("ResultLoginUser")]
+        public async Task<IActionResult> ResultLoginUserAsync(string _LoginProp, string _Password, string _ReturnUrl)
+        {
+            var model = new UserLogin()
+            {
+                LoginProp = _LoginProp,
+                Password = _Password,
+                ReturnUrl = _ReturnUrl
+            };
+            _logger.LogInformation($"Sending task to APIHttpServices: {JsonSerializer.Serialize(model)}");
+            var result = await _authorizationHttpServisec.LoginUserAsync(model);
+            if (result == "successful")
+            {
+                return Redirect("~/Home/Index");
+            }
+            else if (result == "nosuccessful")
+            {
+                //error
+                return Redirect("~/Home/Settings");
+            }
+            else
+            {
+                return Redirect("~/Home/StartPage");
+            }
+        }
+        #endregion
+
     }
 }

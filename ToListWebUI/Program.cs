@@ -71,7 +71,7 @@ builder.Services.AddHttpClient<AuthorizationHttpServisec>(client =>
 builder.Services.AddScoped<APIToDoListHttpServices>();
 builder.Services.AddHttpClient<APIToDoListHttpServices>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:5133/"); // Установите правильный базовый адрес вашего API
+    client.BaseAddress = new Uri("https://localhost:56478/"); // Установите правильный базовый адрес вашего API
                                                               // Другие настройки HttpClient, если необходимо
 });
 
