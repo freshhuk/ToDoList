@@ -8,6 +8,7 @@ using ToDoListWebDomain.Domain.Models;
 
 namespace ToDoListWebServices.Authorization
 {
+    [Route("dataaccount")]
     public class DataAccountController : Controller
     {
         private readonly UserDbContext _userdbContext;

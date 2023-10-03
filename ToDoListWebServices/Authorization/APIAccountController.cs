@@ -30,7 +30,7 @@ namespace ToDoListWebServices.Authorization
         
         //сам метод для логина
         [HttpPost("LoginAccount")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLogin model)
         {
 
@@ -90,57 +90,53 @@ namespace ToDoListWebServices.Authorization
 
          
         //сам метод регестрации
-        [HttpPost("RegisterAccount")]
-        [ValidateAntiForgeryToken]
+        [HttpPost("Register")]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegistration model)
         {
-           
-            if (ModelState.IsValid)
-            {
-                _logger.LogInformation(message: "Модель валидна");
-                var user = new User { UserName = model.LoginProp, Email = model.EmailProp };
 
-                try
-                {
-                    var createResult = await _userManager.CreateAsync(user, model.Password);
-                    if (createResult.Succeeded)
-                    {                      
-                        _logger.LogInformation(message: "Успешно 2x");
-                        await _dbContext.Database.MigrateAsync();
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return Ok();
-                    }
-                    if (!createResult.Succeeded)
-                    {
-                        foreach (var error in createResult.Errors)
-                        {
-                            _logger.LogError(error.Description);
-                        }
-                        return BadRequest();
-                    }
-                    else
-                    {
-                        _logger.LogInformation(message: "Регистрация прошла с ошибкой");
-                        foreach (var identityError in createResult.Errors)
-                        {
-                            ModelState.AddModelError("", identityError.Description);
-                        }
-                        return BadRequest();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Ошибка при создании пользователя");
-                    // Обработка исключения или возврат пользователю сообщения об ошибке
-                    ModelState.AddModelError("", "Произошла ошибка при создании пользователя.");
-                }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
             }
 
-            return Ok(model);
+            _logger.LogInformation("Модель валидна");
+
+            var user = new User { UserName = model.LoginProp, Email = model.EmailProp };
+
+            try
+            {
+                var createResult = await _userManager.CreateAsync(user, model.Password);
+
+                if (createResult.Succeeded)
+                {
+                    _logger.LogInformation("Успешно создан пользователь");
+                    await _dbContext.Database.MigrateAsync();
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return Ok();
+                }
+                else
+                {
+                    _logger.LogInformation("Регистрация прошла с ошибкой");
+
+                    foreach (var error in createResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при создании пользователя");
+                ModelState.AddModelError("", "Произошла ошибка при создании пользователя.");
+                return BadRequest(ModelState);
+            }
         }
 
         [HttpPost("LogoutAccount")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             

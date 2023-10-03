@@ -103,7 +103,33 @@ namespace ToListWebUI.HttpServisec
         #endregion
 
         #region AuthorizationServices
-
+        [HttpPost]
+        [Route("ResultRegisterUser")]
+        public async Task<IActionResult> ResultRegisterUserAsync(string _LoginProp, string _Password, string _ReturnUrl, string _Email, string _ConfirmPassword)
+        {
+            var model = new UserRegistration()
+            {
+                LoginProp =  _LoginProp,
+                Password = _Password,
+                EmailProp = _Email, 
+                ConfirmPassword = _ConfirmPassword
+            };
+            _logger.LogInformation($"Sending task to APIHttpServices: {JsonSerializer.Serialize(model)}");
+            var result = await _authorizationHttpServisec.RegisterUserAsync(model);
+            if (result == "successful")
+            {
+                return Redirect("~/Home/Index");
+            }
+            else if (result == "nosuccessful")
+            {
+                //error
+                return Redirect("~/Home/Settings");
+            }
+            else
+            {
+                return Redirect("~/Home/StartPage");
+            }
+        }
         [HttpPost]
         [Route("ResultLoginUser")]
         public async Task<IActionResult> ResultLoginUserAsync(string _LoginProp, string _Password, string _ReturnUrl)

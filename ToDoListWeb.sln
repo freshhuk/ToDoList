@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToListWebUI", "ToListWebUI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListWebAPI", "ToDoListWebAPI\ToDoListWebAPI.csproj", "{CFDB5680-C490-40D3-B4A0-1265B3CAFDE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{61B9C2C9-2A21-4515-885F-25C7F78FC8BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{A7D37DC0-5DE9-4D03-A4F9-2AFA3B4FDD90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{CFDB5680-C490-40D3-B4A0-1265B3CAFDE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFDB5680-C490-40D3-B4A0-1265B3CAFDE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFDB5680-C490-40D3-B4A0-1265B3CAFDE7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{61B9C2C9-2A21-4515-885F-25C7F78FC8BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{61B9C2C9-2A21-4515-885F-25C7F78FC8BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{61B9C2C9-2A21-4515-885F-25C7F78FC8BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{61B9C2C9-2A21-4515-885F-25C7F78FC8BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7D37DC0-5DE9-4D03-A4F9-2AFA3B4FDD90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7D37DC0-5DE9-4D03-A4F9-2AFA3B4FDD90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7D37DC0-5DE9-4D03-A4F9-2AFA3B4FDD90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7D37DC0-5DE9-4D03-A4F9-2AFA3B4FDD90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

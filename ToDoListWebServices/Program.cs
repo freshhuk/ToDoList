@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using ToDoListWebDomain.Domain.Entity;
 using ToDoListWebDomain.Domain.Models;
 using ToDoListWebInfrastructure.Context;
@@ -7,6 +8,15 @@ using ToDoListWebInfrastructure.Interfaces;
 using ToDoListWebServices.ClientSide;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Swagger
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+});
+
 
 builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
@@ -93,6 +103,14 @@ var app = builder.Build();
 
 app.UseCors("AllowSpecificOrigin");//Используем для HttpClient
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger().UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    });
+}
+
 app.UseAuthentication();   // добавление middleware аутентификации 
 app.UseAuthorization();   // добавление middleware авторизации 
 
@@ -101,6 +119,11 @@ app.UseRouting();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "api/{controller=Account}/{action=Register}/{id?}");
+    pattern: "api/{controller=APIAccount}/{action=Register}/{id?}");
+
+app.MapControllerRoute(
+    name: "dataaccount",
+    pattern: "dataaccount/{*article}",
+    defaults: new { controller = "DataAccount", action = "ChangeDataAccount" });
 
 app.Run();
