@@ -8,11 +8,11 @@ using ToDoListWebInfrastructure.Interfaces;
 
 namespace UnitTests.MockEntities
 {
-    internal class MockTestDbContext : IDataContext<MockToDoTask>
+    internal class MockTestDbContext : IDataContext<ToDoTask>
     {
-        private List<MockToDoTask> dataStore = new List<MockToDoTask>();
+        private List<ToDoTask> dataStore = new List<ToDoTask>();
 
-        public async Task AddAsync(MockToDoTask item)
+        public async Task AddAsync(ToDoTask item)
         {
             dataStore.Add(item);
         }
@@ -26,7 +26,7 @@ namespace UnitTests.MockEntities
             }
         }
 
-        public MockToDoTask Get(int id)
+        public ToDoTask Get(int id)
         {
             var item = dataStore.SingleOrDefault(entity => GetId(entity) == id);
             if (item == null)
@@ -36,7 +36,7 @@ namespace UnitTests.MockEntities
             return item;
         }
 
-        public IEnumerable<MockToDoTask> GetAll()
+        public IEnumerable<ToDoTask> GetAll()
         {
             return dataStore;
         }
@@ -48,7 +48,7 @@ namespace UnitTests.MockEntities
             await Task.CompletedTask;
         }
 
-        public async Task Update(MockToDoTask item)
+        public async Task Update(ToDoTask item)
         {
             var id = GetId(item);
             var existingItem = dataStore.SingleOrDefault(entity => GetId(entity) == id);
@@ -60,13 +60,13 @@ namespace UnitTests.MockEntities
         }
 
         // Метод для получения уникального идентификатора элемента
-        private int GetId(MockToDoTask item)
+        private int GetId(ToDoTask item)
         {
             return item.Id;
         }
 
         // Метод для обновления полей существующего элемента
-        private void UpdateItem(MockToDoTask existingItem, MockToDoTask newItem)
+        private void UpdateItem(ToDoTask existingItem, ToDoTask newItem)
         {
 
             existingItem.Id = newItem.Id;

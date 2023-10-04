@@ -2,7 +2,11 @@ using Castle.Core.Logging;
 using Microsoft.Extensions.Logging;
 using Moq;
 using ToDoListWebAPI.Controllers;
+using ToDoListWebInfrastructure.Interfaces;
 using UnitTests.MockEntities;
+using ToDoListWebDomain.Domain.Entity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace UnitTests
 {
@@ -12,13 +16,23 @@ namespace UnitTests
         public void AddTaskDbTest()
         {
             //Arrange
-            var mockILogger = new Mock<ILogger<TaskController>>();
-            var mockDbContext = new MockToDoTask();
+            var loggerMock = new Mock<ILogger<TaskController>>();
 
-            //var controller = new TaskController(mockILogger.Object, mockDbContext.);
+            var controller = new TaskController(new MockTestDbContext(), loggerMock.Object);
+            var model = new ToDoTask()
+            {
+                Id = 1,
+                NameTask = "Test",
+                DescriptionTask = "Test",
+                Status = "In progress",
+                TaskTime = DateTime.Now,
+            };
+            //Act
+            var result = controller.AddTaskDb(model);
 
+            //Assert
 
-
+            Assert.IsType<Ok>(result);
         }
     }
 }
