@@ -7,13 +7,15 @@ using UnitTests.MockEntities;
 using ToDoListWebDomain.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
+using ToDoListWebDomain.Domain.Models;
 
 namespace UnitTests
 {
     public class APIControllerTest
     {
+        #region TrueTests(OkResult)
         [Fact]
-        public void AddTaskDbTest()
+        public async Task AddTaskDbTest()
         {
             //Arrange
             var loggerMock = new Mock<ILogger<TaskController>>();
@@ -28,11 +30,48 @@ namespace UnitTests
                 TaskTime = DateTime.Now,
             };
             //Act
-            var result = controller.AddTaskDb(model);
+            var result = await controller.AddTaskDb(model);
 
             //Assert
 
-            Assert.IsType<Ok>(result);
+            Assert.IsType<OkResult>(result);
         }
+        [Fact]
+        public async Task DeleteTaskDbTest()
+        {
+            //Arrange
+            var loggerMock = new Mock<ILogger<TaskController>>();
+
+            var controller = new TaskController(new MockTestDbContext(), loggerMock.Object);
+
+            //Act
+            var result = await controller.DeleteTaskDb(0);
+
+            //Assert
+            Assert.IsType<OkResult>(result);
+        }
+        [Fact]
+        public async Task ChangeTaskTest()
+        {
+            //Arrange
+            var loggerMock = new Mock<ILogger<TaskController>>();
+
+            var controller = new TaskController(new MockTestDbContext(), loggerMock.Object);
+            var model = new ChangeTaskModel()
+            {
+                Id = 0,
+                TaskName = "Test",
+                TaskDescription = "Test",
+                TaskStatus = "In progress",
+                TaskData = DateTime.Now,
+            };
+            //Act
+            var result = await controller.ChangeTaskDb(model);
+
+            //Assert
+            Assert.IsType<OkResult>(result);
+        }
+        #endregion
+
     }
 }
