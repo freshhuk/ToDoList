@@ -10,9 +10,12 @@ namespace UnitTests.MockEntities
 {
     internal class MockTestDbContext : IDataContext<ToDoTask>
     {
-        private List<ToDoTask> dataStore = new List<ToDoTask>() 
+        private List<ToDoTask> dataStore = new List<ToDoTask>()
         {
-            new ToDoTask(){Id = 0, NameTask ="test", DescriptionTask="test", Status="in progress", TaskTime = DateTime.Now} 
+                new ToDoTask { Id = 1, NameTask = "Задача 1", DescriptionTask = "Описание 1", TaskTime = DateTime.Now, Status = "Открыто" },
+                new ToDoTask { Id = 2, NameTask = "Задача 2", DescriptionTask = "Описание 2", TaskTime = DateTime.Now, Status = "Открыто" },
+                new ToDoTask { Id = 3, NameTask = "Задача 3", DescriptionTask = "Описание 3", TaskTime = DateTime.Now, Status = "Открыто" },
+                new ToDoTask { Id = 4, NameTask = "Задача 4", DescriptionTask = "Описание 4", TaskTime = DateTime.Now, Status = "Открыто" }
         };
 
         public async Task AddAsync(ToDoTask item)
