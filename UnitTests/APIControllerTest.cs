@@ -45,7 +45,7 @@ namespace UnitTests
             var controller = new TaskController(new MockTestDbContext(), loggerMock.Object);
 
             //Act
-            var result = await controller.DeleteTaskDb(0);
+            var result = await controller.DeleteTaskDb(2);
 
             //Assert
             Assert.IsType<OkResult>(result);
@@ -59,7 +59,7 @@ namespace UnitTests
             var controller = new TaskController(new MockTestDbContext(), loggerMock.Object);
             var model = new ChangeTaskModel()
             {
-                Id = 0,
+                Id = 1,
                 TaskName = "Test",
                 TaskDescription = "Test",
                 TaskStatus = "In progress",
@@ -74,9 +74,6 @@ namespace UnitTests
         #endregion
 
 
-        #region BadTests(BadRequest)
-        
-        #endregion
 
     }
 }
