@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListWebDomain", "ToDoListWebDomain\ToDoListWebDomain.csproj", "{8E89BAE2-3C22-422F-9433-EC9A6635E3E2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListWebInfrastructure", "ToDoListWebInfrastructure\ToDoListWebInfrastructure.csproj", "{EFB3BB27-1988-43DF-BBB2-5066E36FFC67}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListWebServices", "ToDoListWebServices\ToDoListWebServices.csproj", "{FBDF6FB7-E58E-4556-9DBB-74F578A38C91}"
@@ -13,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToListWebUI", "ToListWebUI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListWebAPI", "ToDoListWebAPI\ToDoListWebAPI.csproj", "{CFDB5680-C490-40D3-B4A0-1265B3CAFDE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{A7D37DC0-5DE9-4D03-A4F9-2AFA3B4FDD90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{A7D37DC0-5DE9-4D03-A4F9-2AFA3B4FDD90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListWebDomain", "ToDoListWebDomain\ToDoListWebDomain.csproj", "{9A121EC4-F553-47E7-A64B-0E7A9D9ECFD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8E89BAE2-3C22-422F-9433-EC9A6635E3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E89BAE2-3C22-422F-9433-EC9A6635E3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E89BAE2-3C22-422F-9433-EC9A6635E3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E89BAE2-3C22-422F-9433-EC9A6635E3E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EFB3BB27-1988-43DF-BBB2-5066E36FFC67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EFB3BB27-1988-43DF-BBB2-5066E36FFC67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFB3BB27-1988-43DF-BBB2-5066E36FFC67}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{A7D37DC0-5DE9-4D03-A4F9-2AFA3B4FDD90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7D37DC0-5DE9-4D03-A4F9-2AFA3B4FDD90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7D37DC0-5DE9-4D03-A4F9-2AFA3B4FDD90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A121EC4-F553-47E7-A64B-0E7A9D9ECFD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A121EC4-F553-47E7-A64B-0E7A9D9ECFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A121EC4-F553-47E7-A64B-0E7A9D9ECFD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A121EC4-F553-47E7-A64B-0E7A9D9ECFD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ToDoListWebDomain\ToDoListWebDomain.csproj" />
     <ProjectReference Include="..\ToDoListWebInfrastructure\ToDoListWebInfrastructure.csproj" />
   </ItemGroup>
 
