@@ -1,18 +1,41 @@
-version: '3.4'
-#инструкция запуска нашего приложения
+version: '3.9'
+networks:
+  deploy-guide-dev:
+    driver: bridge
+
 services:
   todolistwebapi:
     image: ${DOCKER_REGISTRY-}todolistwebapi
     build:
       context: .
       dockerfile: ToDoListWebAPI\Dockerfile
-  client:
+    
+    ports:
+     - "80:80"
+    networks:
+      - deploy-guide-dev
+    depends_on:
+      - sql-server
+  todolistwebui:
     image: ${DOCKER_REGISTRY-}todolistwebui
     build:
       context: .
-      dockerfile: ToDoListWebUI\Dockerfile
-
+      dockerfile: ToListWebUI\Dockerfile
     
-   
+    ports:
+     - "80:80"
+    networks:
+      - deploy-guide-dev
+    depends_on:
+      - sql-server
 
 
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      SA_PASSWORD: YourStrongPassword
+      ACCEPT_EULA: Y
+    ports:
+      - "1433:1433"
+    networks:
+      - deploy-guide-dev
