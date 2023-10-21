@@ -28,7 +28,7 @@ namespace ToListWebUI.HttpServisec
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 // Выполнить HTTP POST-запрос на сервер API
-                var response = await _httpClient.PostAsync("https://localhost:53142/api/APIAccount/RegisterAccount", content);
+                var response = await _httpClient.PostAsync("https://localhost:7212/api/APIAccount/RegisterAccount", content);
                 _logger.LogInformation(message: "Регистрация  почти успешна");
                 if (response.IsSuccessStatusCode)
                 {
@@ -49,6 +49,7 @@ namespace ToListWebUI.HttpServisec
             {
                 _logger.LogInformation(message: "Регистрация не успешна");
                 // Обработка исключения, если что-то пошло не так
+                _logger.LogError(message: $"{ex.Message}");
                 return $"Произошла ошибка при выполнении запроса: {ex.Message}";
             }
         }

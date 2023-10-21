@@ -105,7 +105,7 @@ namespace ToListWebUI.HttpServisec
         #region AuthorizationServices
         [HttpPost]
         [Route("ResultRegisterUser")]
-        public async Task<IActionResult> ResultRegisterUserAsync(string _LoginProp, string _Password, string _ReturnUrl, string _Email, string _ConfirmPassword)
+        public async Task<IActionResult> ResultRegisterUserAsync(string _LoginProp, string _Password, string _Email, string _ConfirmPassword)
         {
             var model = new UserRegistration()
             {
@@ -113,6 +113,7 @@ namespace ToListWebUI.HttpServisec
                 Password = _Password,
                 EmailProp = _Email, 
                 ConfirmPassword = _ConfirmPassword
+                
             };
             _logger.LogInformation($"Sending task to APIHttpServices: {JsonSerializer.Serialize(model)}");
             var result = await _authorizationHttpServisec.RegisterUserAsync(model);

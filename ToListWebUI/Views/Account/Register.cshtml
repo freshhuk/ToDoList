@@ -12,38 +12,37 @@
         <main class="main-content registration">
             <div class="editor account-form">
 
-                <form asp-controller="Account" asp-action="Register" method="post">
+                <form method="post" action="/myhttpresults/ResultRegisterUser">
                     @Html.AntiForgeryToken()
 
                     <div>
-                        <label asp-for="LoginProp">
+                        <label>
                             Login:
-                            <input type="text" asp-for="LoginProp"  class="text-input" required placeholder="Login" />
+                            <input type="text" name="_LoginProp" id="_LoginProp" class="text-input" required placeholder="Login" />
                         </label>
 
                     </div>
 
                     <div>
-                        <label asp-for="EmailProp">
+                        <label>
                             Email:
-                            <input type="text" asp-for"EmailProp"  class="text-input" required placeholder="Email" />
+                            <input type="text" name="_Email" id="_Email" class="text-input" required placeholder="Email" />
                         </label>
 
                     </div>
 
                     <div>
-                        <label asp-for="Password">
+                        <label>
                             Password:
-                            <input type="password" asp-for="Password"  class="text-input" required placeholder="Password" />
+                            <input type="password" name="_Password" id="_Password" class="text-input" required placeholder="Password" />
                         </label>
 
                     </div>
                     <div>
-                        <label asp-for="ConfirmPassword">
+                        <label>
                             Confirm password:
-                            <input type="password" asp-for="ConfirmPassword"  class="text-input" required placeholder="Confirm password" />
+                            <input type="password" name="_ConfirmPassword" id="_ConfirmPassword" class="text-input" required placeholder="Confirm password" />
                         </label>
-
                     </div>
                     <button type="submit" class="submit">Register</button>
                 </form>

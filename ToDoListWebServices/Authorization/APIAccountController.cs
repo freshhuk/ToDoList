@@ -28,9 +28,8 @@ namespace ToDoListWebServices.Authorization
             _logger = logger;
         }
         
-        //сам метод для логина
         [HttpPost("LoginAccount")]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLogin model)
         {
 
@@ -89,9 +88,8 @@ namespace ToDoListWebServices.Authorization
         
 
          
-        //сам метод регестрации
         [HttpPost("Register")]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegistration model)
         {
 
@@ -136,7 +134,7 @@ namespace ToDoListWebServices.Authorization
         }
 
         [HttpPost("LogoutAccount")]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             
