@@ -88,16 +88,15 @@ namespace ToListWebUI.HttpServisec
                 return $"Произошла ошибка при выполнении запроса: {ex.Message}";
             }
         }
-        //метод для отправки Post запроса на сервер для логаута
+        //метод для отправки Post запроса на сервер для logout
         public async Task<string> LogoutAsync()
         {
             try
             {
-                
-               
+                var content = new StringContent("");
 
                 // Выполнить HTTP POST-запрос на сервер API
-                var response = await _httpClient.PostAsync("https://localhost:7212/api/APIAccount/LoginAccount");
+                var response = await _httpClient.PostAsync("https://localhost:7212/api/APIAccount/LogoutAccount", content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -116,8 +115,7 @@ namespace ToListWebUI.HttpServisec
             }
             catch (Exception ex)
             {
-                return $"Произошла ошибка при выполнении запроса: {ex.Message}";
+                return $"Произошла ошибка при выполнении запроса: {ex.Message}"; 
             }
         }
-    }
 }

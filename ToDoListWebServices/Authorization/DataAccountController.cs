@@ -5,17 +5,18 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ToDoListWebInfrastructure.Context;
 using ToDoListWebDomain.Domain.Models;
+using ToDoListWebInfrastructure.Interfaces;
 
 namespace ToDoListWebServices.Authorization
 {
     [Route("dataaccount")]
     public class DataAccountController : Controller
     {
-        private readonly UserDbContext _userdbContext;
+        private readonly IDataContext<User> _userdbContext;
         private readonly ILogger<DataAccountController> _logger;
         private readonly UserManager<User> _userManager;
 
-        public DataAccountController(UserDbContext userdbContext, ILogger<DataAccountController> logger, UserManager<User> userManager)
+        public DataAccountController(IDataContext<User> userdbContext, ILogger<DataAccountController> logger, UserManager<User> userManager)
         {
             _userManager = userManager;
             _userdbContext = userdbContext;
@@ -59,14 +60,14 @@ namespace ToDoListWebServices.Authorization
 
                             _logger.LogInformation(message: "Данные аккаунта были изменены");
                             await _userdbContext.SaveChangesAsync();
-                            return Redirect("~/Home/Profile");
+                            return Ok();
                         }
                         
                         else
                         {
                             // Обработка ошибок изменений
                             _logger.LogInformation(message: "Данные аккаунта были he изменены");
-                            return Redirect("~/Home/Index");
+                            return BadRequest();
                         }
                         
                     }
@@ -74,12 +75,12 @@ namespace ToDoListWebServices.Authorization
                     {
                         _logger.LogError(message: "Error data null");
                         TempData["ErrorMessage"] = "You have not completed all fields";
-                        return RedirectToAction("ChangeTaskPage", "Home");
+                        return BadRequest();
                     }
                 }
                 else
                 {
-                    return Redirect("~/Home/Index");
+                    return BadRequest();
                 }
                 
             }

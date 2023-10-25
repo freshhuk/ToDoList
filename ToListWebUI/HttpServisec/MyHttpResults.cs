@@ -150,11 +150,30 @@ namespace ToListWebUI.HttpServisec
             else if (result == "nosuccessful")
             {
                 //error
-                return Redirect("~/Home/Settings");
+                return Redirect("~/Home/Index");
             }
             else
             {
                 return Redirect("~/Home/StartPage");
+            }
+        }
+        [HttpPost]
+        [Route("ResultLogout")]
+        public async Task<IActionResult> ResultLogoutAsync()
+        {
+            var result = await _authorizationHttpServisec.LogoutAsync();
+            if (result == "successful")
+            {
+                return Redirect("~/Home/StartPage");
+            }
+            else if (result == "nosuccessful")
+            {
+                //error
+                return Redirect("~/Home/Settings");
+            }
+            else
+            {
+                return Redirect("~/Home/Index");
             }
         }
         #endregion

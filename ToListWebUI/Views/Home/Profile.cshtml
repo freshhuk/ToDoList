@@ -19,7 +19,7 @@
     <div class="editor">
         @*Выход из аккаунта*@
 
-        <form action="/api/Account/Logout" method="post">
+        <form action="/myhttpresults/ResultLogout" method="post">
             @Html.AntiForgeryToken()
             <label>
                 Your login: @User.Identity?.Name
