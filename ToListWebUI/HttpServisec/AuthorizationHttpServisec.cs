@@ -61,7 +61,7 @@ namespace ToListWebUI.HttpServisec
             try
             {
                 _logger.LogInformation($"Sending task to APIHttpServices: {JsonSerializer.Serialize(model)}");
-                
+
                 var json = JsonSerializer.Serialize(model);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -115,7 +115,40 @@ namespace ToListWebUI.HttpServisec
             }
             catch (Exception ex)
             {
-                return $"Произошла ошибка при выполнении запроса: {ex.Message}"; 
+                return $"Произошла ошибка при выполнении запроса: {ex.Message}";
             }
         }
+        public async Task<string> ChangeDataAccountAsync(ChangeDataAccountModel model)
+        {
+            try
+            {
+                _logger.LogInformation($"Sending task to APIHttpServices: {JsonSerializer.Serialize(model)}");
+
+                var json = JsonSerializer.Serialize(model);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                // Выполнить HTTP POST-запрос на сервер API
+                var response = await _httpClient.PostAsync("https://localhost:7212/dataaccount/ChangeDataAccount", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Регистрация успешна, вернуть успешное сообщение
+                    _logger.LogInformation(message: "Регистрация успешна");
+                    return "successful";
+                }
+                else
+                {
+                    // Получить текст ошибки из ответа сервера
+                    var errorText = await response.Content.ReadAsStringAsync();
+                    _logger.LogInformation(message: "Ошибка регестрации");
+                    // Регистрация не удалась, вернуть сообщение об ошибке
+                    return $"Ошибка при регистрации: {errorText}";
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"Произошла ошибка при выполнении запроса: {ex.Message}";
+            }
+        }
+    }
 }

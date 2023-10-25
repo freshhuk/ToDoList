@@ -176,6 +176,32 @@ namespace ToListWebUI.HttpServisec
                 return Redirect("~/Home/Index");
             }
         }
+
+        [HttpPost("ResultChangeDataAccount")]
+        public async Task<IActionResult> ResultChangeDataAccountAsync(string _NewLoginProp, string _NewEmailProp, string _PassWord, string _NewPassword)
+        {
+            var model = new ChangeDataAccountModel() 
+            {
+                NewEmailProp = _NewLoginProp ,
+                NewLoginProp = _NewLoginProp,
+                PassWord = _PassWord,
+                NewPassword = _NewPassword
+            };
+            var result = await _authorizationHttpServisec.ChangeDataAccountAsync(model);
+            if (result == "successful")
+            {
+                return Redirect("~/Home/StartPage");
+            }
+            else if (result == "nosuccessful")
+            {
+                //error
+                return Redirect("~/Home/Settings");
+            }
+            else
+            {
+                return Redirect("~/Home/Index");
+            }
+        }
         #endregion
 
     }

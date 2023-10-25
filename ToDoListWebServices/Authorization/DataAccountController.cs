@@ -23,8 +23,8 @@ namespace ToDoListWebServices.Authorization
             _logger = logger;
         }
         
-        [HttpPost]
-        public async Task<IActionResult> ChangeDataAccount(string NewLoginProp, string NewEmailProp,string PassWord, string NewPassword)
+        [HttpPost("ChangeDataAccount")]
+        public async Task<IActionResult> ChangeDataAccount(ChangeDataAccountModel _changemodel)
         {
             var user = await _userManager.GetUserAsync(User);
             try
@@ -32,13 +32,13 @@ namespace ToDoListWebServices.Authorization
                 
                 if(user != null)
                 {
-                    if (!string.IsNullOrEmpty(NewLoginProp) && !string.IsNullOrEmpty(NewEmailProp) && !string.IsNullOrEmpty(PassWord) && !string.IsNullOrEmpty(NewPassword))
+                    if (!string.IsNullOrEmpty(_changemodel.NewLoginProp) && !string.IsNullOrEmpty(_changemodel.NewEmailProp) && !string.IsNullOrEmpty(_changemodel.PassWord) && !string.IsNullOrEmpty(_changemodel.NewPassword))
                     {
-                        user.UserName = NewLoginProp;
-                        user.Email = NewEmailProp;
-                        user.NormalizedEmail = _userManager.NormalizeEmail(NewEmailProp);
+                        user.UserName = _changemodel.NewLoginProp;
+                        user.Email = _changemodel.NewEmailProp;
+                        user.NormalizedEmail = _userManager.NormalizeEmail(_changemodel.NewEmailProp);
 
-                        var changePasswordResult = await _userManager.ChangePasswordAsync(user, PassWord, NewPassword);
+                        var changePasswordResult = await _userManager.ChangePasswordAsync(user, _changemodel.PassWord, _changemodel.NewPassword);
 
                         // Обновление пользователя
                         var updateUserResult = await _userManager.UpdateAsync(user);
@@ -48,8 +48,7 @@ namespace ToDoListWebServices.Authorization
 
                             // Обновление идентификационных данных пользователя с новым логином
                             (User.Identity as ClaimsIdentity)?.RemoveClaim((User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.Name));
-                            (User.Identity as ClaimsIdentity)?.AddClaim(new Claim(ClaimTypes.Name, NewLoginProp));
-                            TempData["CurrentUserEmail"] = user.Email;
+                            (User.Identity as ClaimsIdentity)?.AddClaim(new Claim(ClaimTypes.Name, _changemodel.NewLoginProp));
 
                             // Перезапись идентификационных данных в текущем контексте аутентификации
                             await HttpContext.SignOutAsync();
@@ -74,7 +73,6 @@ namespace ToDoListWebServices.Authorization
                     else 
                     {
                         _logger.LogError(message: "Error data null");
-                        TempData["ErrorMessage"] = "You have not completed all fields";
                         return BadRequest();
                     }
                 }

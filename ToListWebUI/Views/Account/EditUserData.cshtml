@@ -16,24 +16,24 @@
 
 <main class="main">
     <div class="editor">
-        <form action="~/DataAccount/ChangeDataAccount" method="post">
+        <form method="post" action="/myhttpresults/ResultChangeDataAccount">
             <label>
                 New Login
-                <input type="text" name="NewLoginProp" placeholder="@User.Identity?.Name" class="text-input" />
+                <input type="text" id="_NewLoginProp" name="_NewLoginProp" placeholder="@User.Identity?.Name" class="text-input" />
             </label>
 
 
             <label>
                 New Email
-                <input type="text" name="NewEmailProp" placeholder="@userEmail" class="text-input" />
+                <input type="text" id="_NewEmailProp" name="_NewEmailProp" placeholder="@userEmail" class="text-input" />
             </label>
             <label>
                 Password
-                <input type="text" name="PassWord" class="text-input" />
+                <input type="text" id="_PassWord" name="_PassWord" class="text-input" />
             </label>
             <label>
                 New password
-                <input type="text" name="NewPassword" class="text-input" />
+                <input type="text" id="_NewPassword" name="_NewPassword" class="text-input" />
             </label>
             <input type="submit" value="Submit" class="submit">
         </form>
