@@ -88,7 +88,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
         };
     });
-
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
 
 
@@ -164,7 +164,7 @@ app.MapControllerRoute(
 
 app.Run();
 
-
+//Class for JWT token
 public class AuthOptions
 {
     public const string ISSUER = "MyAuthServer"; // издатель токена

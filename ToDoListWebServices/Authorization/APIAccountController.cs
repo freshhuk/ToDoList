@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using ToDoListWebDomain.Domain.Models;
 using ToDoListWebInfrastructure.Context;
 
@@ -101,6 +104,16 @@ namespace ToDoListWebServices.Authorization
             _logger.LogInformation("Модель валидна");
 
             var user = new User { UserName = model.LoginProp, Email = model.EmailProp };
+
+
+            var claims = new List<Claim> { new Claim(ClaimTypes.Name, username) };
+            var jwt = new JwtSecurityToken(
+                    issuer: AuthOptions.ISSUER,
+                    audience: AuthOptions.AUDIENCE,
+                    claims: claims,
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)), // время действия 2 минуты
+                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+
 
             try
             {
