@@ -4,5 +4,6 @@ namespace ToDoListWebDomain.Domain.Models
 {
     public class User : IdentityUser
     {
+
     }
 }

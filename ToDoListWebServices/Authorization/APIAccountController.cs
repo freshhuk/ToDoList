@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,6 +15,7 @@ namespace ToDoListWebServices.Authorization
 {
     [ApiController]
     [Route("api/[controller]")]
+    [AllowAnonymous]
     public class APIAccountController : Controller
     {
         private readonly TaskDbContex _dbContext;
@@ -21,9 +23,12 @@ namespace ToDoListWebServices.Authorization
         private readonly ILogger<APIAccountController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private IConfiguration _config;
+        private const string Secret = "db3OIsj+BXE9NZDy0t8W3TcNekrF+2d/1sFnWG4HnV8TZY30iTOdtVWJG8abWvB1GlOgJuQZdcF2Luqm/hccMw==";
 
-        public APIAccountController(TaskDbContex dbContext, UserDbContext userdbContext, SignInManager<User> signInManager, UserManager<User> userManager, ILogger<APIAccountController> logger)
+        public APIAccountController(IConfiguration config, TaskDbContex dbContext, UserDbContext userdbContext, SignInManager<User> signInManager, UserManager<User> userManager, ILogger<APIAccountController> logger)
         {
+            _config = config;
             _dbContext = dbContext;
             _userdbContext = userdbContext;
             _userManager = userManager;
@@ -32,7 +37,6 @@ namespace ToDoListWebServices.Authorization
         }
         
         [HttpPost("LoginAccount")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLogin model)
         {
 
@@ -92,7 +96,6 @@ namespace ToDoListWebServices.Authorization
 
          
         [HttpPost("Register")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegistration model)
         {
 
@@ -101,42 +104,10 @@ namespace ToDoListWebServices.Authorization
                 return BadRequest(ModelState);
             }
 
-            _logger.LogInformation("Модель валидна");
-
-            var user = new User { UserName = model.LoginProp, Email = model.EmailProp };
-
-
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, username) };
-            var jwt = new JwtSecurityToken(
-                    issuer: AuthOptions.ISSUER,
-                    audience: AuthOptions.AUDIENCE,
-                    claims: claims,
-                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)), // время действия 2 минуты
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-
 
             try
             {
-                var createResult = await _userManager.CreateAsync(user, model.Password);
-
-                if (createResult.Succeeded)
-                {
-                    _logger.LogInformation("Успешно создан пользователь");
-                    await _dbContext.Database.MigrateAsync();
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return Ok();
-                }
-                else
-                {
-                    _logger.LogInformation("Регистрация прошла с ошибкой");
-
-                    foreach (var error in createResult.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
-
-                    return BadRequest(ModelState);
-                }
+                
             }
             catch (Exception ex)
             {
@@ -147,7 +118,6 @@ namespace ToDoListWebServices.Authorization
         }
 
         [HttpPost("LogoutAccount")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             
@@ -155,5 +125,26 @@ namespace ToDoListWebServices.Authorization
             return Ok();
         }
 
-    }
+        private string CreateToken(string username)
+        {
+
+            List<Claim> claims = new()
+            {                    
+                //list of Claims - we only checking username - more claims can be added.
+                new Claim("username", Convert.ToString(username)),
+            };
+
+            var key = new Convert.FromBase64String(Secret);
+            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddHours(2),
+                signingCredentials: cred
+            );
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwt;
+
+        }
 }
