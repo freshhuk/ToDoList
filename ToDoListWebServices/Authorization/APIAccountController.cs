@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using ToDoListWebDomain.Domain.Models;
 using ToDoListWebInfrastructure.Context;
 
@@ -24,7 +25,6 @@ namespace ToDoListWebServices.Authorization
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private IConfiguration _config;
-        private const string Secret = "db3OIsj+BXE9NZDy0t8W3TcNekrF+2d/1sFnWG4HnV8TZY30iTOdtVWJG8abWvB1GlOgJuQZdcF2Luqm/hccMw==";
 
         public APIAccountController(IConfiguration config, TaskDbContex dbContext, UserDbContext userdbContext, SignInManager<User> signInManager, UserManager<User> userManager, ILogger<APIAccountController> logger)
         {
@@ -35,7 +35,7 @@ namespace ToDoListWebServices.Authorization
             _signInManager = signInManager;
             _logger = logger;
         }
-        
+
         [HttpPost("LoginAccount")]
         public async Task<IActionResult> Login(UserLogin model)
         {
@@ -92,22 +92,40 @@ namespace ToDoListWebServices.Authorization
             ModelState.AddModelError("", "Пользователь не найден");
             return Ok(model);
         }
-        
 
-         
+
+
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(UserRegistration model)
+        public async Task<IActionResult> Register([FromBody] UserRegistration model)
         {
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-
             try
             {
-                
+                if (ModelState.IsValid)
+                {
+                    var user = new User()
+                    {
+                        UserName = model.LoginProp,
+                        Email = model.EmailProp                       
+                    };
+
+                    var result = await _userManager.CreateAsync(user, model.Password);
+
+                    if (result.Succeeded)
+                    {
+                        // Успешно создан пользователь, генерируем JWT токен
+                        var token = GenerateJwtToken(user);
+                        _logger.LogInformation(message: $"token -- {token}");
+                        return Ok(new { token });
+                    }
+                    else
+                    {
+                        return BadRequest("Register not Succeeded");
+                    }
+                }
+                else
+                {
+                    return BadRequest("User model not valid");
+                }
             }
             catch (Exception ex)
             {
@@ -120,31 +138,28 @@ namespace ToDoListWebServices.Authorization
         [HttpPost("LogoutAccount")]
         public async Task<IActionResult> Logout()
         {
-            
+
             await _signInManager.SignOutAsync();
             return Ok();
         }
 
-        private string CreateToken(string username)
+        private string GenerateJwtToken(User user)
         {
-
-            List<Claim> claims = new()
-            {                    
-                //list of Claims - we only checking username - more claims can be added.
-                new Claim("username", Convert.ToString(username)),
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var secret = _config["Jwt:Secret"];                    
+            var key = Encoding.ASCII.GetBytes(secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+            {
+             new Claim(ClaimTypes.Name, user.UserName),
+                // Другие утверждения (claims) пользователя
+            }),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-
-            var key = new Convert.FromBase64String(Secret);
-            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddHours(2),
-                signingCredentials: cred
-            );
-
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return jwt;
-
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
+    }
 }

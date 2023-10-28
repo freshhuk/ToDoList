@@ -10,7 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace ToDoListWebAPI.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class TaskController : Controller

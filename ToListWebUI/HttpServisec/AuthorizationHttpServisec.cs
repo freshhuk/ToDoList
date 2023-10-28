@@ -3,6 +3,8 @@ using ToDoListWebDomain.Domain.Models;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure;
+using Microsoft.AspNetCore.Http;
 
 namespace ToListWebUI.HttpServisec
 {
@@ -10,11 +12,13 @@ namespace ToListWebUI.HttpServisec
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<AuthorizationHttpServisec> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthorizationHttpServisec(HttpClient httpClient, ILogger<AuthorizationHttpServisec> logger)
+        public AuthorizationHttpServisec(IHttpContextAccessor httpContextAccessor, HttpClient httpClient, ILogger<AuthorizationHttpServisec> logger)
         {
             _httpClient = httpClient;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
         //метод для отправки Post запроса на сервер для  регестрации
         public async Task<string> RegisterUserAsync(UserRegistration model)
@@ -28,13 +32,17 @@ namespace ToListWebUI.HttpServisec
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 // Выполнить HTTP POST-запрос на сервер API
-                var response = await _httpClient.PostAsync("https://localhost:7212/api/APIAccount/RegisterAccount", content);
+                var response = await _httpClient.PostAsync("https://localhost:7212/api/APIAccount/Register", content);
                 _logger.LogInformation(message: "Регистрация  почти успешна");
                 if (response.IsSuccessStatusCode)
                 {
                     // Регистрация успешна, вернуть успешное сообщение
                     _logger.LogInformation(message: "Регистрация успешна");
-                    return "Регистрация успешна.";
+                    var token = await response.Content.ReadAsStringAsync();
+
+                    // Сохраняем JWT токен в cookie с использованием HttpContext
+                    _httpContextAccessor.HttpContext.Response.Cookies.Append("jwtToken", token);
+                    return "successful";
                 }
                 else
                 {
@@ -42,7 +50,7 @@ namespace ToListWebUI.HttpServisec
                     var errorText = await response.Content.ReadAsStringAsync();
                     _logger.LogInformation(message: "Ошибка регестрации");
                     // Регистрация не удалась, вернуть сообщение об ошибке
-                    return $"Ошибка при регистрации: {errorText}";
+                    return "nosuccessful";
                 }
             }
             catch (Exception ex)

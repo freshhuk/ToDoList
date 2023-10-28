@@ -60,7 +60,7 @@ builder.Services.AddScoped<UserDbContext>(provider =>
 //Создаем службу нашего Http сервиса авторизации
 
 builder.Services.AddHttpClient();//Это просто настройка http
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AuthorizationHttpServisec>();
 builder.Services.AddHttpClient<AuthorizationHttpServisec>(client =>
 {
