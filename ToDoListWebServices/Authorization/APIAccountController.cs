@@ -19,18 +19,18 @@ namespace ToDoListWebServices.Authorization
     [AllowAnonymous]
     public class APIAccountController : Controller
     {
-        private readonly TaskDbContex _dbContext;
-        private readonly UserDbContext _userdbContext;
+        //private readonly TaskDbContex _dbContext;
+      //  private readonly UserDbContext _userdbContext;
         private readonly ILogger<APIAccountController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private IConfiguration _config;
 
-        public APIAccountController(IConfiguration config, TaskDbContex dbContext, UserDbContext userdbContext, SignInManager<User> signInManager, UserManager<User> userManager, ILogger<APIAccountController> logger)
+        public APIAccountController(IConfiguration config, /*TaskDbContex dbContext, UserDbContext userdbContext,*/ SignInManager<User> signInManager, UserManager<User> userManager, ILogger<APIAccountController> logger)
         {
             _config = config;
-            _dbContext = dbContext;
-            _userdbContext = userdbContext;
+            //_dbContext = dbContext;
+           // _userdbContext = userdbContext;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -49,7 +49,7 @@ namespace ToDoListWebServices.Authorization
                     lockoutOnFailure: false);
                 if (loginResult.Succeeded)
                 {
-                    await _dbContext.Database.EnsureCreatedAsync();
+                    //await _dbContext.Database.EnsureCreatedAsync();
                     if (Url.IsLocalUrl(model.ReturnUrl))
                     {
                         return Ok(model.ReturnUrl);
@@ -107,9 +107,8 @@ namespace ToDoListWebServices.Authorization
                         UserName = model.LoginProp,
                         Email = model.EmailProp                       
                     };
-
+                    
                     var result = await _userManager.CreateAsync(user, model.Password);
-
                     if (result.Succeeded)
                     {
                         // Успешно создан пользователь, генерируем JWT токен
@@ -117,9 +116,10 @@ namespace ToDoListWebServices.Authorization
                         _logger.LogInformation(message: $"token -- {token}");
                         return Ok(new { token });
                     }
+                    
                     else
                     {
-                        return BadRequest("Register not Succeeded");
+                        return BadRequest($"Register not Succeeded - {result.ToString()}");
                     }
                 }
                 else
