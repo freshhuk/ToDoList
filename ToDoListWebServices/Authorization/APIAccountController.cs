@@ -19,18 +19,14 @@ namespace ToDoListWebServices.Authorization
     [AllowAnonymous]
     public class APIAccountController : Controller
     {
-        //private readonly TaskDbContex _dbContext;
-      //  private readonly UserDbContext _userdbContext;
         private readonly ILogger<APIAccountController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private IConfiguration _config;
 
-        public APIAccountController(IConfiguration config, /*TaskDbContex dbContext, UserDbContext userdbContext,*/ SignInManager<User> signInManager, UserManager<User> userManager, ILogger<APIAccountController> logger)
+        public APIAccountController(IConfiguration config, SignInManager<User> signInManager, UserManager<User> userManager, ILogger<APIAccountController> logger)
         {
             _config = config;
-            //_dbContext = dbContext;
-           // _userdbContext = userdbContext;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -40,40 +36,26 @@ namespace ToDoListWebServices.Authorization
         public async Task<IActionResult> Login(UserLogin model)
         {
 
+            
             if (ModelState.IsValid)
             {
-                _logger.LogWarning(message: "Медель валидна");
-                var loginResult = await _signInManager.PasswordSignInAsync(model.LoginProp,
-                    model.Password,
-                    false,
-                    lockoutOnFailure: false);
-                if (loginResult.Succeeded)
+                var user = await _userManager.FindByNameAsync(model.LoginProp);
+                if (user == null)
                 {
-                    //await _dbContext.Database.EnsureCreatedAsync();
-                    if (Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Ok(model.ReturnUrl);
-                    }
-                    return Ok();
+                    return BadRequest("Uncorrect account data.");
                 }
-                else if (loginResult.IsLockedOut)
+
+                var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+                if (result.Succeeded)
                 {
-                    // Логика при заблокированной учетной записи
-                    _logger.LogWarning("Учетная запись заблокирована.");
-                    ModelState.AddModelError("", "Учетная запись заблокирована.");
-                }
-                else if (loginResult.IsNotAllowed)
-                {
-                    // Логика, если пользователь не разрешен для входа
-                    _logger.LogWarning("Пользователь не разрешен для входа.");
-                    ModelState.AddModelError("", "Пользователь не разрешен для входа.");
+                    // Успешная аутентификация, генерируем JWT-токен
+                    var token = GenerateJwtToken(user);
+                    _logger.LogInformation(message: $"Токен - {token}");
+                    return Ok(new { token });
                 }
                 else
                 {
-                    // Логика при неудачной аутентификации
-                    _logger.LogError("Ошибка аутентификации.");
-                    ModelState.AddModelError("", "Ошибка аутентификации.");
-                    return BadRequest();
+                    return BadRequest("Неверные учетные данные.");
                 }
             }
             else
@@ -89,8 +71,7 @@ namespace ToDoListWebServices.Authorization
                 ModelState.AddModelError("", "Пользователь не найден");
                 return BadRequest();
             }
-            ModelState.AddModelError("", "Пользователь не найден");
-            return Ok(model);
+           
         }
 
 

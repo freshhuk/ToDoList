@@ -84,11 +84,8 @@ namespace ToListWebUI.HttpServisec
                 }
                 else
                 {
-                    // Получить текст ошибки из ответа сервера
-                    var errorText = await response.Content.ReadAsStringAsync();
                     _logger.LogInformation(message: "Ошибка регестрации");
-                    // Регистрация не удалась, вернуть сообщение об ошибке
-                    return $"Ошибка при регистрации: {errorText}";
+                    return "no successful";
                 }
             }
             catch (Exception ex)
