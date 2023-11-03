@@ -48,10 +48,9 @@ namespace UnitTests.AuthorizeTest
             var result = await controller.Register(userRegistration);
 
             // Assert
+            Assert.IsType<OkResult>(result);
             var okResult = result as OkObjectResult;
             Assert.NotNull(okResult);
-            Assert.Equal(200, okResult.StatusCode);
-
             var token = okResult.Value.ToString();
             Assert.NotEmpty(token);
         }

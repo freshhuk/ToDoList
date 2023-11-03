@@ -24,7 +24,7 @@ namespace ToDoListWebServices.Authorization
         }
         
         [HttpPost("ChangeDataAccount")]
-        public async Task<IActionResult> ChangeDataAccount(ChangeDataAccountModel _changemodel)
+        public async Task<IActionResult> ChangeDataAccount([FromBody]ChangeDataAccountModel _changemodel)
         {
             var user = await _userManager.GetUserAsync(User);
             try
@@ -32,7 +32,7 @@ namespace ToDoListWebServices.Authorization
                 
                 if(user != null)
                 {
-                    if (!string.IsNullOrEmpty(_changemodel.NewLoginProp) && !string.IsNullOrEmpty(_changemodel.NewEmailProp) && !string.IsNullOrEmpty(_changemodel.PassWord) && !string.IsNullOrEmpty(_changemodel.NewPassword))
+                    if (ModelState.IsValid)
                     {
                         user.UserName = _changemodel.NewLoginProp;
                         user.Email = _changemodel.NewEmailProp;
@@ -65,8 +65,8 @@ namespace ToDoListWebServices.Authorization
                         else
                         {
                             // Обработка ошибок изменений
-                            _logger.LogInformation(message: "Данные аккаунта были he изменены");
-                            return BadRequest();
+                            _logger.LogInformation(message: "Данные аккаунта были ne изменены");
+                            return BadRequest("Данные аккаунта были ne изменены");
                         }
                         
                     }
@@ -78,14 +78,14 @@ namespace ToDoListWebServices.Authorization
                 }
                 else
                 {
-                    return BadRequest();
+                    return BadRequest("Error data null");
                 }
                 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка при создании пользователя");
-                return Redirect("~/Home/Index");
+                _logger.LogError(ex, "Ошибка при обновлении пользователя");
+                return BadRequest("Ошибка при обновлении пользователя");
             }
         }
 

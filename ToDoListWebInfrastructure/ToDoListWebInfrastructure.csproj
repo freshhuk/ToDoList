@@ -9,6 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\GeneralTasksDb\**" />
+    <Compile Remove="Migrations\UserDb\**" />
+    <Content Remove="Migrations\GeneralTasksDb\**" />
+    <Content Remove="Migrations\UserDb\**" />
+    <EmbeddedResource Remove="Migrations\GeneralTasksDb\**" />
+    <EmbeddedResource Remove="Migrations\UserDb\**" />
+    <None Remove="Migrations\GeneralTasksDb\**" />
+    <None Remove="Migrations\UserDb\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
@@ -22,11 +33,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\GeneralTasksDb\" />
-    <Folder Include="Migrations\UserDb\" />
   </ItemGroup>
 
   <ItemGroup>
