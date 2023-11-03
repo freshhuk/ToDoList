@@ -10,7 +10,7 @@ namespace ToDoListWebInfrastructure.Context
 {
     public class UserDbContext : IdentityDbContext<User>, IDataContext<User>
     {
-        public DbSet<User> Users { get; set; }
+        public override DbSet<User> Users { get; set; }
 
         private readonly IConfiguration _configuration;
 

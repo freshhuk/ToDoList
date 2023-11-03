@@ -23,19 +23,14 @@ builder.Services.AddDbContext< IDataContext<User>, UserDbContext >(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UserConnection")));
 
 
-builder.Services.AddDbContext<GeneralTasksDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("GeneralTaskConnection")));
+
 
 builder.Services.AddScoped<TaskDbContex>(provider =>
 {
     var configuration = provider.GetRequiredService<IConfiguration>();
     return new TaskDbContex(configuration);
 });
-builder.Services.AddScoped<GeneralTasksDbContext>(provider =>
-{
-    var configuration = provider.GetRequiredService<IConfiguration>();
-    return new GeneralTasksDbContext(configuration);
-});
+
 builder.Services.AddScoped<UserDbContext>(provider =>
 {
     var configuration = provider.GetRequiredService<IConfiguration>();
@@ -44,6 +39,6 @@ builder.Services.AddScoped<UserDbContext>(provider =>
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Site is working");
 
 app.Run();

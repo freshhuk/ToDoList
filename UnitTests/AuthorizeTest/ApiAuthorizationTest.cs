@@ -12,6 +12,8 @@ using ToDoListWebDomain.Domain.Models;
 using ToDoListWebServices.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ToDoListWebInfrastructure.Context;
 
 namespace UnitTests.AuthorizeTest
 {
@@ -29,15 +31,18 @@ namespace UnitTests.AuthorizeTest
             };
             var loggerMock = new Mock<ILogger<APIAccountController>>();
 
-            var userManager = new Mock<UserManager<User>>();
+            var configuration = new Mock<IConfiguration>();
+            configuration.Setup(c => c["Jwt:Secret"]).Returns("your-secret-key");
+
+            var userManager = new Mock<UserManager<User>>(new UserStore<User>(new UserDbContext(configuration.Object)), null, null, null, null, null, null, null, null);
             userManager.Setup(u => u.CreateAsync(It.IsAny<User>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
 
 
-            var configuration = new Mock<IConfiguration>();
-            configuration.Setup(c => c["Jwt:Secret"]).Returns("your-secret-key");
+            
 
-            var controller = new APIAccountController(configuration.Object, null, null, loggerMock.Object);
+
+            var controller = new APIAccountController(configuration.Object, null, userManager.Object, loggerMock.Object);
 
             // Act
             var result = await controller.Register(userRegistration);
@@ -47,7 +52,7 @@ namespace UnitTests.AuthorizeTest
             Assert.NotNull(okResult);
             Assert.Equal(200, okResult.StatusCode);
 
-            var token = okResult?.Value?.ToString();
+            var token = okResult.Value.ToString();
             Assert.NotEmpty(token);
         }
 

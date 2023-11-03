@@ -5,7 +5,6 @@ using ToDoListWebDomain.Domain.Entity;
 using ToDoListWebDomain.Domain.Models;
 using ToDoListWebInfrastructure.Context;
 using ToDoListWebInfrastructure.Interfaces;
-using ToDoListWebServices.ClientSide;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
