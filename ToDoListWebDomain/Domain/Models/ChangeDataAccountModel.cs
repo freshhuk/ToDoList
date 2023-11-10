@@ -8,9 +8,9 @@ namespace ToDoListWebDomain.Domain.Models
 {
     public class ChangeDataAccountModel
     {
-        public string? NewLoginProp { get; set; }
-        public string? NewEmailProp { get; set; }
-        public string? PassWord { get; set; }
-        public string? NewPassword { get; set; }
+        public string NewLoginProp { get; set; }
+        public string NewEmailProp { get; set; }
+        public string PassWord { get; set; }
+        public string NewPassword { get; set; }
     }
 }

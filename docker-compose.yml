@@ -1,41 +1,62 @@
-version: '3.9'
-networks:
-  deploy-guide-dev:
-    driver: bridge
+version: '3.4'
 
 services:
+
   todolistwebapi:
     image: ${DOCKER_REGISTRY-}todolistwebapi
     build:
       context: .
       dockerfile: ToDoListWebAPI\Dockerfile
-    
+    platform: windows
     ports:
-     - "80:80"
-    networks:
-      - deploy-guide-dev
+     - "5133:80"
     depends_on:
-      - sql-server
+      - mssql-server
+    
+
+
+  todolistwebinfrastructure:
+    image: ${DOCKER_REGISTRY-}todolistwebinfrastructure
+    build:
+      context: .
+      dockerfile: ToDoListWebInfrastructure\Dockerfile
+    platform: windows
+    ports:
+     - "8080:80"
+    depends_on:
+      - mssql-server
+
+  todolistwebservices:
+    image: ${DOCKER_REGISTRY-}todolistwebservices
+    build:
+      context: .
+      dockerfile: ToDoListWebInfrastructure\ToDoListWebServices
+    platform: windows
+    ports:
+     - "7212:80"
+    depends_on:
+      - mssql-server
+
   todolistwebui:
     image: ${DOCKER_REGISTRY-}todolistwebui
     build:
       context: .
-      dockerfile: ToListWebUI\Dockerfile
-    
+      dockerfile: ToDoListWebInfrastructure\ToListWebUI
+    platform: windows
     ports:
-     - "80:80"
-    networks:
-      - deploy-guide-dev
+     - "44339:80"
     depends_on:
-      - sql-server
+      - mssql-server
 
 
-  sql-server:
-    image: mcr.microsoft.com/mssql/server:latest
+
+  mssql-server:
+    image: mcr.microsoft.com/mssql/server
     environment:
-      SA_PASSWORD: YourStrongPassword
       ACCEPT_EULA: Y
+      MSSQL_PID: Express
+      MSSQL_SA_PASSWORD: YourPassword
+      MSSQL_USER: User
+      MSSQL_PASSWORD: ""
     ports:
       - "1433:1433"
-    networks:
-      - deploy-guide-dev

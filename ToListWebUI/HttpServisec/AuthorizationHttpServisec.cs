@@ -41,7 +41,7 @@ namespace ToListWebUI.HttpServisec
                     var token = await response.Content.ReadAsStringAsync();
 
                     // Сохраняем JWT токен в cookie с использованием HttpContext
-                    _httpContextAccessor.HttpContext.Response.Cookies.Append("jwtToken", token);
+                    _httpContextAccessor.HttpContext?.Response.Cookies.Append("jwtToken", token);
                     return "successful";
                 }
                 else
@@ -79,12 +79,14 @@ namespace ToListWebUI.HttpServisec
                 if (response.IsSuccessStatusCode)
                 {
                     // Регистрация успешна, вернуть успешное сообщение
-                    _logger.LogInformation(message: "Регистрация успешна");
+                    _logger.LogInformation(message: "Логин успешен");
+                    var token = await response.Content.ReadAsStringAsync();
+                    _httpContextAccessor.HttpContext?.Response.Cookies.Append("jwtToken", token);
                     return "successful";
                 }
                 else
                 {
-                    _logger.LogInformation(message: "Ошибка регестрации");
+                    _logger.LogInformation(message: "Ошибка логина");
                     return "no successful";
                 }
             }
@@ -106,14 +108,14 @@ namespace ToListWebUI.HttpServisec
                 if (response.IsSuccessStatusCode)
                 {
                     // Регистрация успешна, вернуть успешное сообщение
-                    _logger.LogInformation(message: "Регистрация успешна");
+                    _logger.LogInformation(message: "Логаут успешен");
                     return "successful";
                 }
                 else
                 {
                     // Получить текст ошибки из ответа сервера
                     var errorText = await response.Content.ReadAsStringAsync();
-                    _logger.LogInformation(message: "Ошибка регестрации");
+                    _logger.LogInformation(message: "Ошибка логаута");
                     // Регистрация не удалась, вернуть сообщение об ошибке
                     return $"Ошибка при регистрации: {errorText}";
                 }
