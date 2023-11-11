@@ -8,6 +8,7 @@ This project is written on a multi-tier architecture. Serves to track your tasks
 + .Net
 + SQL
 + Entity Framework
++ Docker
 ## 🗂 Repository Structure
 + ```ToDoListWebAPI```: This is an API where task management is implemented (Creation, deletion, updating).
 + ```ToDoListWebDomain```: All base models of the project are stored here.
